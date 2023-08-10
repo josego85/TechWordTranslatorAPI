@@ -1,6 +1,6 @@
 # Description
 
-## Tecnologies
+## Technologies
 
 - PHP 8.1.21
 - Composer 2.5.4
@@ -10,19 +10,32 @@
 
 ## Dev
 
-### Create Database
+### Create database
 
 ```bash
+CREATE DATABASE techword
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+```
+
+#### Create user
+
+```bash
+GRANT ALL PRIVILEGES ON techword.* TO 'techword-user'@'localhost' IDENTIFIED BY 'xxxxxx';
+FLUSH PRIVILEGES;
 ```
 
 #### Migration
 
 ```bash
+php artisan migrate
 ```
 
 ### Install
 
 ```bash
+cp .env.example .env
+php artisan key:generate 
 composer install
 ```
 
