@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('word', function (Blueprint $table) {
+        Schema::create('translations', function (Blueprint $table) {
             $table->id();
-            $table->string('english_word')->nullable();
+            $table->string('spanish_word')->nullable();;
+            $table->string('german_word')->nullable();;
             $table->timestamps();
+
+            $table->foreignId('word_id')->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
@@ -23,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('word');
+        Schema::dropIfExists('translations');
     }
 };
