@@ -13,7 +13,9 @@ class WordController extends Controller
      */
     public function index()
     {
-        $wordsWithTranslations = Word::with('translations')->get();
+        $wordsWithTranslations = Word::with(['translations' => function ($query) {
+            $query->select(['word_id', 'spanish_word', 'german_word']);
+        }])->select(['id', 'english_word'])->get();
 
         return response()->json($wordsWithTranslations);
     }
