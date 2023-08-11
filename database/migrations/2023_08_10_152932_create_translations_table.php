@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('translations', function (Blueprint $table) {
             $table->id();
-            $table->string('spanish_word')->nullable();;
-            $table->string('german_word')->nullable();;
+            $table->unsignedBigInteger('word_id');
+            $table->string('spanish_word')->nullable();
+            $table->string('german_word')->nullable();
             $table->timestamps();
 
-            $table->foreignId('word_id')->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->foreign('word_id')
+                ->references('id')
+                ->on('words');
         });
     }
 

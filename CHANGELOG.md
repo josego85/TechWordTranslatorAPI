@@ -3,6 +3,7 @@
 ## v1.1.0
 
 -   [feat] Add delete endpoint words
+-   [fix] Translations constraints on the database
 
 ## v1.0.0
 
