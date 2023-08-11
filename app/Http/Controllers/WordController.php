@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Word;
 use App\Http\Requests\WordTranslationRequest;
 
@@ -57,6 +58,31 @@ class WordController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $word = Word::find($id);
+
+            if (!$word) {
+                return response()->json([
+                    'message' => 'Word not found'
+                ], 404);
+            }
+
+            $word->translations()->delete();
+            $word->delete();
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Word and translations deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'message' => 'Error deleting word and translations'
+            ], 500);
+        }
     }
 }

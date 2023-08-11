@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('words', WordController::class)->only(['index', 'store']);
+Route::apiResource('words', WordController::class)->only(['index', 'store', 'destroy']);
