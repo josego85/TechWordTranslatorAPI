@@ -6,4 +6,5 @@
 - [feat] Add word migration
 - [docs] Update changelog file
 - [feat] Add POST and GET ALL endpoint words
-- [refactor] Endpoint without timestamps when GET ALL 
+- [refactor] Endpoint without timestamps when GET ALL
+- [feat] Only GET ALL and POST are enabled
