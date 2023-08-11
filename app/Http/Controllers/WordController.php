@@ -26,15 +26,27 @@ class WordController extends Controller
      */
     public function store(WordTranslationRequest $request)
     {
-        $word = Word::create($request->only('english_word'));
-        $word->translations()->create($request->only(
-            'spanish_word',
-            'german_word'
-        ));
+        DB::beginTransaction();
 
-        return response()->json([
-            'message' => 'Word and translations created successfully'
-        ], 201);
+        try {
+            $word = Word::create($request->only('english_word'));
+            $word->translations()->create($request->only(
+                'spanish_word',
+                'german_word'
+            ));
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Word and translations created successfully'
+            ], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'message' => 'Error creating word and translations'
+            ], 500);
+        }
     }
 
     /**

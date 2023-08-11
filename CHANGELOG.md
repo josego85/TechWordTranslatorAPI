@@ -4,6 +4,7 @@
 
 -   [feat] Add delete endpoint words
 -   [fix] Translations constraints on the database
+-   [fix] POST endpoint words 
 
 ## v1.0.0
 
