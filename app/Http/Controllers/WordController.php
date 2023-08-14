@@ -61,6 +61,29 @@ class WordController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id, WordService $wordService)
+    {
+        $englishWord = $request->input('english_word');
+        $translations = $request->input('translations', []);
+
+        $word = $wordService->updateWordWithTranslations(
+            $id,
+            $englishWord,
+            $translations
+        );
+
+        if (!$word) {
+            return response()->json([
+                'message' => 'Word not found'
+            ], 404);
+        }
+
+        return response()->json($word);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id, WordService $wordService)

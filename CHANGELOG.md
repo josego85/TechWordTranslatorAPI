@@ -4,6 +4,7 @@
 
 -   [feat] Add GET words endpoint
 -   [refactor] Add wordServices
+-   [feat] Add PUT words endpoint
 
 ## v1.1.0
 

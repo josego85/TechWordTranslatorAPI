@@ -24,4 +24,23 @@ class Word extends Model
     {
         return $this->hasMany(Translation::class);
     }
+
+    public function updateAttributes($attributes)
+    {
+        $this->fill($attributes)->save();
+    }
+
+    public function updateTranslations($translations)
+    {
+        $spanish_word = $translations['spanish_word'] ?? null;
+        $german_word = $translations['german_word'] ?? null;
+
+        if ($spanish_word !== null) {
+            $this->translations()->update(['spanish_word' => $spanish_word]);
+        }
+
+        if ($german_word !== null) {
+            $this->translations()->update(['german_word' => $german_word]);
+        }
+    }
 }
