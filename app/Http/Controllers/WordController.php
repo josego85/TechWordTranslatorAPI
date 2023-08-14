@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Models\Word;
-use App\Http\Requests\WordTranslationRequest;
 use App\Services\WordService;
 
 class WordController extends Controller
@@ -49,15 +46,15 @@ class WordController extends Controller
      */
     public function show(string $id, WordService $wordService)
     {
-        $wordWithTranslations = $wordService->showWordWithTranslations($id);
+        $wordsWithTranslations = $wordService->showWordWithTranslations($id);
 
-        if (!$wordWithTranslations) {
+        if (!$wordsWithTranslations) {
             return response()->json([
                 'message' => 'Word not found'
             ], 404);
         }
 
-        return response()->json($wordWithTranslations);
+        return response()->json($wordsWithTranslations);
     }
 
     /**
@@ -68,19 +65,19 @@ class WordController extends Controller
         $englishWord = $request->input('english_word');
         $translations = $request->input('translations', []);
 
-        $word = $wordService->updateWordWithTranslations(
+        $wordsWithTranslations = $wordService->updateWordWithTranslations(
             $id,
             $englishWord,
             $translations
         );
 
-        if (!$word) {
+        if (!$wordsWithTranslations) {
             return response()->json([
                 'message' => 'Word not found'
             ], 404);
         }
 
-        return response()->json($word);
+        return response()->json($wordsWithTranslations);
     }
 
     /**
@@ -88,14 +85,14 @@ class WordController extends Controller
      */
     public function destroy(string $id, WordService $wordService)
     {
-        $wordWithTranslations = $wordService->destroyWordWithTranslations(
+        $wordsWithTranslations = $wordService->destroyWordWithTranslations(
             $id
         );
-        if ($wordWithTranslations == null) {
+        if ($wordsWithTranslations == null) {
             return response()->json([
                 'message' => 'Word not found'
             ], 404);
-        } elseif ($wordWithTranslations) {
+        } elseif ($wordsWithTranslations) {
             return response()->json([
                 'message' => 'Word and translations deleted successfully'
             ]);

@@ -5,6 +5,7 @@
 -   [feat] Add GET words endpoint
 -   [refactor] Add wordServices
 -   [feat] Add PUT words endpoint
+-   [refactor] Refactoring code in WordController
 
 ## v1.1.0
 
