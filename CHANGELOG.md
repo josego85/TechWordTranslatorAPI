@@ -8,6 +8,7 @@
 -   [refactor] Refactoring code in WordController
 -   [docs] Update README file
 -   [build] Update compose package file
+-   [fix] createWordWithTranslations service
 
 ## v1.1.0
 

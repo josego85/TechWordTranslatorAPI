@@ -19,8 +19,13 @@ class WordService
         DB::beginTransaction();
 
         try {
-            $word = Word::create($data['english_word']);
-            $word->translations()->create($data['translations']);
+            $word = Word::create([
+                'english_word' => $data['english_word']
+            ]);
+            $word->translations()->create([
+                'spanish_word' => $data['translations']['spanish_word'],
+                'german_word' => $data['translations']['german_word']
+            ]);
 
             DB::commit();
 

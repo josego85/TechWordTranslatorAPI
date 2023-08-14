@@ -23,7 +23,7 @@ class WordController extends Controller
     public function store(Request $request, WordService $wordService)
     {
         $requestData = [
-            'english_word' => $request->only('english_word'),
+            'english_word' => $request->input('english_word'),
             'translations' => $request->input('translations')
         ];
 
