@@ -3,6 +3,7 @@
 ## v1.2.0
 
 -   [feat] Add GET words endpoint
+-   [refactor] Add wordServices
 
 ## v1.1.0
 

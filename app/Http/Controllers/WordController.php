@@ -6,17 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Word;
 use App\Http\Requests\WordTranslationRequest;
+use App\Services\WordService;
 
 class WordController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(WordService $wordService)
     {
-        $wordsWithTranslations = Word::with(['translations' => function ($query) {
-            $query->select(['word_id', 'spanish_word', 'german_word']);
-        }])->select(['id', 'english_word'])->get();
+        $wordsWithTranslations = $wordService->getAllWordsWithTranslations();
 
         return response()->json($wordsWithTranslations);
     }
@@ -24,25 +23,21 @@ class WordController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(WordTranslationRequest $request)
+    public function store(Request $request, WordService $wordService)
     {
-        DB::beginTransaction();
+        $requestData = [
+            'english_word' => $request->only('english_word'),
+            'translations' => $request->input('translations')
+        ];
 
-        try {
-            $word = Word::create($request->only('english_word'));
-            $word->translations()->create($request->only(
-                'spanish_word',
-                'german_word'
-            ));
-
-            DB::commit();
-
+        $wordsWithTranslations = $wordService->createWordWithTranslations(
+            $requestData
+        );
+        if ($wordsWithTranslations) {
             return response()->json([
                 'message' => 'Word and translations created successfully'
             ], 201);
-        } catch (\Exception $e) {
-            DB::rollBack();
-
+        } else {
             return response()->json([
                 'message' => 'Error creating word and translations'
             ], 500);
@@ -52,11 +47,9 @@ class WordController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, WordService $wordService)
     {
-        $wordWithTranslations = Word::with(['translations' => function ($query) {
-            $query->select(['word_id', 'spanish_word', 'german_word']);
-        }])->select(['id', 'english_word'])->find($id);
+        $wordWithTranslations = $wordService->showWordWithTranslations($id);
 
         if (!$wordWithTranslations) {
             return response()->json([
@@ -68,40 +61,22 @@ class WordController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, WordService $wordService)
     {
-        DB::beginTransaction();
-
-        try {
-            $word = Word::find($id);
-
-            if (!$word) {
-                return response()->json([
-                    'message' => 'Word not found'
-                ], 404);
-            }
-
-            $word->translations()->delete();
-            $word->delete();
-
-            DB::commit();
-
+        $wordWithTranslations = $wordService->destroyWordWithTranslations(
+            $id
+        );
+        if ($wordWithTranslations == null) {
+            return response()->json([
+                'message' => 'Word not found'
+            ], 404);
+        } elseif ($wordWithTranslations) {
             return response()->json([
                 'message' => 'Word and translations deleted successfully'
             ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-
+        } else {
             return response()->json([
                 'message' => 'Error deleting word and translations'
             ], 500);
