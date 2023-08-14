@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "proyectosbeta/TechWordTranslatorAPI",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "A REST API that has words that are used in the IT world and are translated into Spanish and German.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {

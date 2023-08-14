@@ -7,6 +7,7 @@
 -   [feat] Add PUT words endpoint
 -   [refactor] Refactoring code in WordController
 -   [docs] Update README file
+-   [build] Update compose package file
 
 ## v1.1.0
 
