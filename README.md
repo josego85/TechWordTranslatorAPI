@@ -64,6 +64,12 @@ php artisan migrate
 php artisan test
 ```
 
+##### Specific test
+
+```bash
+php artisan test tests/Unit/WordServiceTest.php
+```
+
 ## Docker
 
 ```bash

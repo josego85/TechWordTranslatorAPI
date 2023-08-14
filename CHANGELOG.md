@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.3.0
+
+- [feat] Add WordService test with PHPUnit
+
 ## v1.2.0
 
 -   [feat] Add GET words endpoint
