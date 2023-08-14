@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.2.0
+
+-   [feat] Add GET words endpoint
+
 ## v1.1.0
 
 -   [feat] Add delete endpoint words

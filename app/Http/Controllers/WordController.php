@@ -54,7 +54,17 @@ class WordController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $wordWithTranslations = Word::with(['translations' => function ($query) {
+            $query->select(['word_id', 'spanish_word', 'german_word']);
+        }])->select(['id', 'english_word'])->find($id);
+
+        if (!$wordWithTranslations) {
+            return response()->json([
+                'message' => 'Word not found'
+            ], 404);
+        }
+
+        return response()->json($wordWithTranslations);
     }
 
     /**
