@@ -6,12 +6,13 @@
 -   [refactor] Add wordServices
 -   [feat] Add PUT words endpoint
 -   [refactor] Refactoring code in WordController
+-   [docs] Update README file
 
 ## v1.1.0
 
 -   [feat] Add delete endpoint words
 -   [fix] Translations constraints on the database
--   [fix] POST endpoint words 
+-   [fix] POST endpoint words
 
 ## v1.0.0
 

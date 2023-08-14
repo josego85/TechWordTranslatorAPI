@@ -1,11 +1,13 @@
 # Description
 
+A REST API that has words that are used in the IT world and are translated into Spanish and German.
+
 ## Technologies
 
--   PHP 8.1.21
--   Composer 2.5.4
--   Laravel v10.17.1
--   MySQL 5.7.xx
+-   PHP 8.2.8
+-   Composer 2.5.8
+-   Laravel v10.18.0
+-   MySQL 8
 -   PHPUnit 10.3.1
 
 ## Dev
@@ -59,5 +61,12 @@ php artisan migrate
 ##### All the test
 
 ```bash
+php artisan test
+```
 
+## Docker
+
+```bash
+# docker-compose up
+# docker run -p 8888:80 myapp
 ```
