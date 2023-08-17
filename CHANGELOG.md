@@ -3,6 +3,7 @@
 ## v1.4.0
 
 -   [build] Update compose package file
+-   [feat] Add JWT
 
 ## v1.3.1
 
