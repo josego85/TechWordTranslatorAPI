@@ -4,6 +4,7 @@
 
 -   [build] Update compose package file
 -   [feat] Add JWT
+-   [fix] PHPUnit file
 
 ## v1.3.1
 
