@@ -1,12 +1,16 @@
 # Release Notes
 
+## v1.4.0
+
+-   [build] Update compose package file
+
 ## v1.3.1
 
-- [fix] Name project in package.json file
+-   [fix] Name project in package.json file
 
 ## v1.3.0
 
-- [feat] Add WordService test with PHPUnit
+-   [feat] Add WordService test with PHPUnit
 
 ## v1.2.0
 
