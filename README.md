@@ -9,6 +9,8 @@ A REST API that has words that are used in the IT world and are translated into 
 -   Laravel v10.18.0
 -   MySQL 8
 -   PHPUnit 10.3.1
+-   NPM 9.6.6
+-   NodeJS v14.21.3
 
 ## Dev
 
@@ -54,6 +56,13 @@ FLUSH PRIVILEGES;
 php artisan migrate
 ```
 
+### Compile CSS
+
+```bash
+npm run dev
+npm run build
+```
+
 ### Testing
 
 #### PHPUnit
@@ -73,6 +82,13 @@ php artisan test tests/Unit/WordServiceTest.php
 ## Docker
 
 ```bash
-# docker-compose up
+#docker-compose build
+#docker-compose up
 # docker run -p 8888:80 myapp
+```
+
+### Web access
+
+```
+http://localhost
 ```

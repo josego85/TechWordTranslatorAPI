@@ -4,6 +4,7 @@
 
 -   [feat] Add Content-Security-Policy
 -   [feat] Custom Content-Security-Policy
+-   [docs] Update README.md file
 
 ## v1.4.0
 
