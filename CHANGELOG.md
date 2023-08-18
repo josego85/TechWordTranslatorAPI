@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.5.0
+
+-   [feat] Add Content-Security-Policy
+
 ## v1.4.0
 
 -   [build] Update compose package file
