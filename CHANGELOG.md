@@ -3,6 +3,7 @@
 ## v1.5.0
 
 -   [feat] Add Content-Security-Policy
+-   [feat] Custom Content-Security-Policy
 
 ## v1.4.0
 
