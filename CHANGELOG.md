@@ -5,6 +5,7 @@
 -   [feat] Add Content-Security-Policy
 -   [feat] Custom Content-Security-Policy
 -   [docs] Update README.md file
+-   [feat] Add welcome page
 
 ## v1.4.0
 
