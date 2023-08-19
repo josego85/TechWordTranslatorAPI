@@ -100,7 +100,7 @@ cd /home/$USER/repositoriosGit
 git clone git@github.com:proyectosbeta/TechWordTranslatorAPI.git
 sudo chown -R $USER:www-data TechWordTranslatorAPI
 mv TechWordTranslatorAPI TechWordTranslatorAPI.proyectosbeta.net
-cd echWordTranslatorAPI.proyectosbeta.net
+cd TechWordTranslatorAPI.proyectosbeta.net
 composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
 ```
 
