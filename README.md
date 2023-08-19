@@ -92,3 +92,46 @@ php artisan test tests/Unit/WordServiceTest.php
 ```
 http://localhost
 ```
+
+## Production
+
+```bash
+cd /home/$USER/repositoriosGit
+git clone git@github.com:proyectosbeta/TechWordTranslatorAPI.git
+sudo chown -R $USER:www-data TechWordTranslatorAPI
+mv TechWordTranslatorAPI TechWordTranslatorAPI.proyectosbeta.net
+cd echWordTranslatorAPI.proyectosbeta.net
+composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
+```
+
+Copiamos el .env.example:
+
+```bash
+cp .env.example .env
+```
+
+
+Estas variables deberían de tener:
+
+```
+APP_ENV=production
+APP_DEBUG=false
+```
+
+
+Laravel provee un modo de generar un APP_KEY desde la consola, hay que acceder a la carpeta del proyecto y ejecutar:
+
+```bash
+php artisan key:generate
+```
+
+Cambiamos las constantes de .env
+Volvemos a la terminal:
+
+```bash
+sudo chgrp -R www-data storage bootstrap/cache
+sudo chmod -R ug+rwx storage bootstrap/cache
+chmod 644 .env*
+```
+
+
