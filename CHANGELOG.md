@@ -5,6 +5,7 @@
 -   [feat] Add docker and docker compose
 -   [build] Update to Laravel v11.41.3
 -   [build] Update to PHP 8.4 and PHP FPM 8.4
+-   [fix] package.json security updates
 
 ## v1.5.0
 
