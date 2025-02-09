@@ -3,6 +3,7 @@
 ## v1.6.0
 
 -   [feat] Add docker and docker compose
+-   [build] Update to Laravel v11.41.3
 
 ## v1.5.0
 

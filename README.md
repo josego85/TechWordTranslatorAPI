@@ -5,8 +5,8 @@ A REST API that has words that are used in the IT world and are translated into 
 ## Technologies
 
 -   PHP 8.3.16
--   Composer 2.7.1
--   Laravel v10.18.0
+-   Composer 2.8.5
+-   Laravel v11.41.3
 -   MySQL 8
 -   PHPUnit 10.3.1
 -   NPM 10.8.2
