@@ -4,13 +4,13 @@ A REST API that has words that are used in the IT world and are translated into 
 
 ## Technologies
 
--   PHP 8.2.8
--   Composer 2.5.8
+-   PHP 8.3.16
+-   Composer 2.7.1
 -   Laravel v10.18.0
 -   MySQL 8
 -   PHPUnit 10.3.1
--   NPM 9.6.6
--   NodeJS v14.21.3
+-   NPM 10.8.2
+-   NodeJS v20.18.2
 
 ## Dev
 
@@ -82,15 +82,26 @@ php artisan test tests/Unit/WordServiceTest.php
 ## Docker
 
 ```bash
-#docker-compose build
-#docker-compose up
-# docker run -p 8888:80 myapp
+docker-compose up -d --build
+```
+
+### Compile CSS
+
+```bash
+npm run dev
+npm run build
+```
+
+### Migration
+
+```bash
+php artisan migrate
 ```
 
 ### Web access
 
 ```
-http://localhost
+http://localhost:8000
 ```
 
 ## Production

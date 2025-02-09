@@ -1,0 +1,38 @@
+services:
+  app:
+    build: .
+    container_name: laravel_app
+    image: laravel_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/var/www
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql8
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+
+
+networks:
+  app-network:
+    driver: bridge

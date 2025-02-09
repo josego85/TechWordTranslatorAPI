@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.6.0
+
+-   [feat] Add docker and docker compose
+
 ## v1.5.0
 
 -   [feat] Add Content-Security-Policy
