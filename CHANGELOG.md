@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.7.0
+
+-   [docs] Update README.md file
+
 ## v1.6.0
 
 -   [feat] Add docker and docker compose

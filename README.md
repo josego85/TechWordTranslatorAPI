@@ -12,6 +12,7 @@ A REST API that has words that are used in the IT world and are translated into 
 -   PHPUnit 10.3.1
 -   NPM 10.8.2
 -   NodeJS v20.18.2
+-   Docker 27.5.0
 
 ## Dev
 
@@ -25,7 +26,7 @@ php artisan key:generate
 ### Docker
 
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 ### Migration
