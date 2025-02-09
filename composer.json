@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "guzzlehttp/guzzle": "7.9.2",
         "laravel/framework": "v11.41.3",
         "laravel/sanctum": "v4.0.8",
@@ -20,7 +20,7 @@
         "fakerphp/faker": "v1.23.0",
         "laravel/pint": "v1.11.0",
         "laravel/sail": "v1.41.0",
-        "mockery/mockery": "1.6.6",
+        "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "v8.5.0",
         "phpunit/phpunit": "10.5.45",
         "spatie/laravel-ignition": "2.9.0"

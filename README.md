@@ -4,7 +4,8 @@ A REST API that has words that are used in the IT world and are translated into 
 
 ## Technologies
 
--   PHP 8.3.16
+-   PHP 8.4
+-   PHP FPM 8.4
 -   Composer 2.8.5
 -   Laravel v11.41.3
 -   MySQL 8
@@ -19,41 +20,24 @@ A REST API that has words that are used in the IT world and are translated into 
 ```bash
 cp .env.example .env
 php artisan key:generate
-composer install
 ```
 
-#### Run server
+### Docker
 
 ```bash
-php artisan serve
+docker-compose up -d --build
 ```
 
-##### Web access
-
-```
-http://127.0.0.1:8000
-```
-
-### Create database
-
-```bash
-mysql -u root -p
-CREATE DATABASE techword
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-```
-
-#### Create user
-
-```bash
-GRANT ALL PRIVILEGES ON techword.* TO 'techword-user'@'localhost' IDENTIFIED BY 'xxxxxx';
-FLUSH PRIVILEGES;
-```
-
-#### Migration
+### Migration
 
 ```bash
 php artisan migrate
+```
+
+### Web access
+
+```
+http://localhost:8000
 ```
 
 ### Compile CSS
@@ -77,31 +61,6 @@ php artisan test
 
 ```bash
 php artisan test tests/Unit/WordServiceTest.php
-```
-
-## Docker
-
-```bash
-docker-compose up -d --build
-```
-
-### Compile CSS
-
-```bash
-npm run dev
-npm run build
-```
-
-### Migration
-
-```bash
-php artisan migrate
-```
-
-### Web access
-
-```
-http://localhost:8000
 ```
 
 ## Production

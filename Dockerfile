@@ -9,7 +9,7 @@ COPY . .
 RUN npm run build
 
 
-FROM php:8.3-fpm
+FROM php:8.4-fpm
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpng-dev \
