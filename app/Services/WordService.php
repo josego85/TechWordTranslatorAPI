@@ -3,12 +3,16 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Word;
 use App\Exceptions\TranslationException;
 use App\Exceptions\WordNotFoundException;
+use App\Interfaces\WordRepositoryInterface;
+use App\Models\Word;
 
 class WordService
 {
+    public function __construct(private WordRepositoryInterface $wordRepository)
+    {}
+
      /**
      * Get all words with their translations.
      *
@@ -16,9 +20,7 @@ class WordService
      */
     public function getAllWordsWithTranslations(): \Illuminate\Database\Eloquent\Collection
     {
-        return Word::with(['translations' => function ($query) {
-            $query->select(['word_id', 'spanish_word', 'german_word']);
-        }])->select(['id', 'english_word'])->get();
+        return $this->wordRepository->getAllWordsWithTranslations();
     }
 
     /**
@@ -33,14 +35,7 @@ class WordService
         DB::beginTransaction();
 
         try {
-            $word = Word::create([
-                'english_word' => $data['english_word']
-            ]);
-            $word->translations()->create([
-                'spanish_word' => $data['translations']['spanish_word'],
-                'german_word' => $data['translations']['german_word']
-            ]);
-
+            $this->wordRepository->create($data);
             DB::commit();
 
             return true;
@@ -60,9 +55,7 @@ class WordService
      */
     public function showWordWithTranslations(int $id): ?Word
     {
-        $word = Word::with(['translations' => function ($query) {
-            $query->select(['word_id', 'spanish_word', 'german_word']);
-        }])->select(['id', 'english_word'])->find($id);
+        $word = $this->wordRepository->findWithTranslations($id);
 
         if (!$word) {
             throw new WordNotFoundException("Word with id $id not found");
@@ -84,18 +77,13 @@ class WordService
         try {
             DB::beginTransaction();
 
-            $word = Word::with(['translations'])->find($id);
+            $word = $this->wordRepository->findWithTranslations($id);
 
             if (!$word) {
                 return null;
             }
 
-            $word->updateAttributes(['english_word' => $englishWord]);
-            $word->updateTranslations($translations);
-
-            $word->load('translations');
-            $word->makeHidden(['created_at', 'updated_at']);
-            $word->translations->makeHidden(['id', 'created_at', 'updated_at']);
+            $this->wordRepository->update($word, $englishWord, $translations);
 
             DB::commit();
 
@@ -119,15 +107,13 @@ class WordService
         DB::beginTransaction();
 
         try {
-            $word = Word::find($id);
+            $word = $this->wordRepository->findWithTranslations($id);
 
             if (!$word) {
                 throw new WordNotFoundException("Word with id $id not found");
             }
 
-            $word->translations()->delete();
-            $word->delete();
-
+            $this->wordRepository->delete($word);
             DB::commit();
 
             return true;

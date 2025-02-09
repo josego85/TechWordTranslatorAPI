@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\WordRepositoryInterface;
+use App\Repositories\WordRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,6 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        $this->app->bind(WordRepositoryInterface::class, WordRepository::class);
     }
 
     /**

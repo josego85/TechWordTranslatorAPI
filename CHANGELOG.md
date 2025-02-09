@@ -3,7 +3,8 @@
 ## v1.7.0
 
 -   [docs] Update README.md file
--   [refactor] WordService 
+-   [refactor] WordService
+-   [refactor] the repository design pattern is implemented in WordService
 
 ## v1.6.0
 
