@@ -3,6 +3,7 @@
 ## v1.7.0
 
 -   [docs] Update README.md file
+-   [refactor] WordService 
 
 ## v1.6.0
 
