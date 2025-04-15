@@ -9,21 +9,22 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
-        "guzzlehttp/guzzle": "7.9.2",
-        "laravel/framework": "v11.41.3",
+        "guzzlehttp/guzzle": "7.9.3",
+        "laravel/framework": "v11.44.2",
         "laravel/sanctum": "v4.0.8",
         "laravel/tinker": "v2.10.1",
         "php-open-source-saver/jwt-auth": "2.7.3",
-        "spatie/laravel-csp": "2.10.2"
+        "spatie/laravel-csp": "2.10.3"
     },
     "require-dev": {
-        "fakerphp/faker": "v1.23.0",
+        "fakerphp/faker": "v1.23.1",
         "laravel/pint": "v1.11.0",
         "laravel/sail": "v1.41.0",
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "v8.5.0",
+        "php-cs-fixer/shim": "^v3.75.0",
         "phpunit/phpunit": "10.5.45",
-        "spatie/laravel-ignition": "2.9.0"
+        "spatie/laravel-ignition": "2.9.1"
     },
     "autoload": {
         "psr-4": {
