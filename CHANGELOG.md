@@ -1,60 +1,123 @@
-# Release Notes
+# Changelog
 
-## v1.7.0
+All notable changes to this project will be documented in this file.  
+This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and adheres to the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) guidelines.
 
--   [docs] Update README.md file
--   [refactor] WordService
--   [refactor] the repository design pattern is implemented in WordService
+---
 
-## v1.6.0
+## [v1.8.0] - 2025-04-15
 
--   [feat] Add docker and docker compose
--   [build] Update to Laravel v11.41.3
--   [build] Update to PHP 8.4 and PHP FPM 8.4
--   [fix] package.json security updates
+### Added
+- Introduced a new **To-Do List** feature.
 
-## v1.5.0
+## [v1.7.0]
 
--   [feat] Add Content-Security-Policy
--   [feat] Custom Content-Security-Policy
--   [docs] Update README.md file
--   [feat] Add welcome page
+### Added
+- N/A
 
-## v1.4.0
+### Changed
+- Refactored `WordService` to implement the Repository Design Pattern.
 
--   [build] Update compose package file
--   [feat] Add JWT
--   [fix] PHPUnit file
+### Documentation
+- Updated `README.md`.
 
-## v1.3.1
+---
 
--   [fix] Name project in package.json file
+## [v1.6.0]
 
-## v1.3.0
+### Added
+- Docker support with Docker Compose.
 
--   [feat] Add WordService test with PHPUnit
+### Changed
+- Upgraded to Laravel v11.41.3.
+- Upgraded to PHP 8.4 and PHP-FPM 8.4.
 
-## v1.2.0
+### Fixed
+- Addressed security vulnerabilities in `package.json`.
 
--   [feat] Add GET words endpoint
--   [refactor] Add wordServices
--   [feat] Add PUT words endpoint
--   [refactor] Refactoring code in WordController
--   [docs] Update README file
--   [build] Update compose package file
--   [fix] createWordWithTranslations service
+---
 
-## v1.1.0
+## [v1.5.0]
 
--   [feat] Add delete endpoint words
--   [fix] Translations constraints on the database
--   [fix] POST endpoint words
+### Added
+- Custom Content-Security-Policy headers.
+- Welcome page.
 
-## v1.0.0
+### Documentation
+- Updated `README.md`.
 
--   [feat] Add laravel 10 project
--   [feat] Add word migration
--   [docs] Update changelog file
--   [feat] Add POST and GET ALL endpoint words
--   [refactor] Endpoint without timestamps when GET ALL
--   [feat] Only GET ALL and POST are enabled
+---
+
+## [v1.4.0]
+
+### Added
+- JWT authentication support.
+
+### Changed
+- Updated Docker Compose configuration.
+
+### Fixed
+- Fixed PHPUnit configuration.
+
+---
+
+## [v1.3.1]
+
+### Fixed
+- Corrected project name in `package.json`.
+
+---
+
+## [v1.3.0]
+
+### Added
+- Unit tests for `WordService` using PHPUnit.
+
+---
+
+## [v1.2.0]
+
+### Added
+- `GET /words` endpoint.
+- `PUT /words` endpoint.
+
+### Changed
+- Introduced `wordServices` abstraction.
+- Refactored `WordController` for improved structure.
+- Updated Docker Compose configuration.
+
+### Documentation
+- Updated `README.md`.
+
+### Fixed
+- Resolved issue in `createWordWithTranslations` service.
+
+---
+
+## [v1.1.0]
+
+### Added
+- `DELETE /words` endpoint.
+
+### Fixed
+- Translation constraints in the database.
+- `POST /words` endpoint logic.
+
+---
+
+## [v1.0.0]
+
+### Added
+- Initial Laravel 10 project setup.
+- Word migration.
+- `POST /words` and `GET /words` endpoints.
+- Support for basic CRUD operations on words (POST and GET only initially).
+
+### Changed
+- Removed timestamps from `GET /words` response.
+
+### Documentation
+- Created initial `CHANGELOG.md`.
+
+---
+
