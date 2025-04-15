@@ -9,6 +9,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Added
 - Introduced a new **To-Do List** feature.
+- Added `WordServiceTest` using PHPUnit.
 
 ### Security
 - Updated security-related packages in `composer.json`.
