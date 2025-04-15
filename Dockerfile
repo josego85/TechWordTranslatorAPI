@@ -1,4 +1,4 @@
-FROM node:18 AS node_builder
+FROM node:20 AS node_builder
 
 WORKDIR /var/www
 

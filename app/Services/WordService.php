@@ -90,7 +90,6 @@ class WordService
             return $word;
         } catch (\Exception $e) {
             DB::rollback();
-
             throw new TranslationException('Error updating word and translations', 0, $e);
         }
     }
@@ -100,26 +99,24 @@ class WordService
      *
      * @param int $id
      * @return bool
-     * @throws WordNotFoundException
+     * @throws WordNotFoundException|TranslationException
      */
     public function destroyWordWithTranslations(int $id): bool
     {
+        $word = $this->wordRepository->findWithTranslations($id);
+
+        if (!$word) {
+            throw new WordNotFoundException("Word with id $id not found");
+        }
+
         DB::beginTransaction();
-
         try {
-            $word = $this->wordRepository->findWithTranslations($id);
-
-            if (!$word) {
-                throw new WordNotFoundException("Word with id $id not found");
-            }
-
             $this->wordRepository->delete($word);
             DB::commit();
 
             return true;
         } catch (\Exception $e) {
             DB::rollBack();
-
             throw new TranslationException('Error deleting word and translations', 0, $e);
         }
     }

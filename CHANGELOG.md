@@ -11,6 +11,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Introduced a new **To-Do List** feature.
 - Added `WordServiceTest` using PHPUnit.
 
+### Fixed
+- In `WordService`, moved `DB::beginTransaction()` to the appropriate location in `destroyWordWithTranslations`.
+
 ### Security
 - Updated security-related packages in `composer.json`.
 
