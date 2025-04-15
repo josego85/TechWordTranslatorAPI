@@ -13,6 +13,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 ### Security
 - Updated security-related packages in `composer.json`.
 
+### Documentation
+- Enhanced the **README** file with updated badges, a comprehensive table of contents, and improved formatting for clarity.
+
 ## [v1.7.0]
 
 ### Added

@@ -1,70 +1,111 @@
-# Description
+# TechWordTranslatorAPI
 
-A REST API that has words that are used in the IT world and are translated into Spanish and German.
+[![Version](https://img.shields.io/badge/Version-1.8.0-blue.svg)](https://github.com/proyectosbeta/TechWordTranslatorAPI)
+[![PHP Version](https://img.shields.io/badge/PHP-8.4-blue.svg)](https://www.php.net/)
+[![Laravel Version](https://img.shields.io/badge/Laravel-11.41.3-green.svg)](https://laravel.com/)
+![License](https://img.shields.io/github/license/proyectosbeta/TechWordTranslatorAPI?color=blue)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ed?logo=docker&logoColor=white)
+![Last Commit](https://img.shields.io/github/last-commit/proyectosbeta/TechWordTranslatorAPI?logo=git&logoColor=white)
 
-## Technologies
+> A RESTful API that provides translations of IT-related terms into Spanish and German.
 
--   PHP 8.4
--   PHP FPM 8.4
--   Composer 2.8.5
--   Laravel v11.41.3
--   MySQL 8
--   PHPUnit 10.3.1
--   NPM 10.8.2
--   NodeJS v20.18.2
--   Docker 27.5.0
+---
 
-## Dev
+## 📚 Table of Contents
 
-### Install
+- [TechWordTranslatorAPI](#techwordtranslatorapi)
+  - [📚 Table of Contents](#-table-of-contents)
+  - [🚀 Features](#-features)
+  - [🛠️ Technologies](#️-technologies)
+  - [🧑‍💻 Getting Started](#-getting-started)
+    - [Installation](#installation)
+    - [Docker Setup](#docker-setup)
+    - [Database Migration](#database-migration)
+    - [Web Access](#web-access)
+    - [CSS Compilation](#css-compilation)
+    - [Testing](#testing)
+      - [Run All Tests](#run-all-tests)
+      - [Run Specific Test](#run-specific-test)
+  - [🚀 Production Deployment](#-production-deployment)
+  - [📄 License](#-license)
+
+---
+
+## 🚀 Features
+
+- RESTful API for IT terminology translations
+- Supports English, Spanish, and German
+- JWT-based authentication
+- Dockerized environment for easy setup
+- Comprehensive testing with PHPUnit
+- Custom Content-Security-Policy headers
+
+---
+
+## 🛠️ Technologies
+
+- **PHP**: 8.4.6
+- **Laravel**: v11.41.3
+- **MySQL**: 8
+- **PHPUnit**: 10.3.1
+- **Composer**: 2.8.8
+- **Node.js**: v20.18.2
+- **NPM**: 10.8.2
+- **Docker**: 27.5.1
+
+---
+
+## 🧑‍💻 Getting Started
+
+### Installation
 
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-### Docker
+### Docker Setup
 
 ```bash
-docker compose up -d --build
+docker compose build --no-cache
+docker compose up -d
 ```
 
-### Migration
+### Database Migration
 
 ```bash
 php artisan migrate
 ```
 
-### Web access
+### Web Access
 
-```
-http://localhost:8000
-```
+Access the application at: [http://localhost:8000](http://localhost:8000)
 
-### Compile CSS
+### CSS Compilation
 
 ```bash
+npm install
 npm run dev
 npm run build
 ```
 
 ### Testing
 
-#### PHPUnit
-
-##### All the test
+#### Run All Tests
 
 ```bash
 php artisan test
 ```
 
-##### Specific test
+#### Run Specific Test
 
 ```bash
 php artisan test tests/Unit/WordServiceTest.php
 ```
 
-## Production
+---
+
+## 🚀 Production Deployment
 
 ```bash
 cd /home/$USER/repositoriosGit
@@ -75,29 +116,26 @@ cd TechWordTranslatorAPI.proyectosbeta.net
 composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
 ```
 
-Copiamos el .env.example:
+Copy the example environment file:
 
 ```bash
 cp .env.example .env
 ```
 
-
-Estas variables deberían de tener:
+Set the following environment variables in `.env`:
 
 ```
 APP_ENV=production
 APP_DEBUG=false
 ```
 
-
-Laravel provee un modo de generar un APP_KEY desde la consola, hay que acceder a la carpeta del proyecto y ejecutar:
+Generate the application key:
 
 ```bash
 php artisan key:generate
 ```
 
-Cambiamos las constantes de .env
-Volvemos a la terminal:
+Set appropriate permissions:
 
 ```bash
 sudo chgrp -R www-data storage bootstrap/cache
@@ -105,4 +143,12 @@ sudo chmod -R ug+rwx storage bootstrap/cache
 chmod 644 .env*
 ```
 
+---
 
+## 📄 License
+
+This project is licensed under the [GPL-3.0 License](LICENSE).
+
+---
+
+For more information, visit the [official repository](https://github.com/proyectosbeta/TechWordTranslatorAPI/tree/refactor/code).
