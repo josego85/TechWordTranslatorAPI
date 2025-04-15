@@ -10,6 +10,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 ### Added
 - Introduced a new **To-Do List** feature.
 
+### Security
+- Updated security-related packages in `composer.json`.
+
 ## [v1.7.0]
 
 ### Added
