@@ -9,14 +9,16 @@ COPY . .
 RUN npm run build
 
 
-FROM php:8.4-fpm
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    zip unzip git curl \
-    && docker-php-ext-install pdo pdo_mysql
+FROM php:8.4.6-fpm
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libzip-dev \
+    libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
+    git curl unzip zip && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install pdo pdo_mysql zip gd && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www
 
