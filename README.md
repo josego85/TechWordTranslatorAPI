@@ -1,10 +1,17 @@
 # TechWordTranslatorAPI
 
-[![Version](https://img.shields.io/badge/Version-1.8.0-blue.svg)](https://github.com/proyectosbeta/TechWordTranslatorAPI)
-[![PHP Version](https://img.shields.io/badge/PHP-8.4-blue.svg)](https://www.php.net/)
-[![Laravel Version](https://img.shields.io/badge/Laravel-11.41.3-green.svg)](https://laravel.com/)
-![License](https://img.shields.io/github/license/proyectosbeta/TechWordTranslatorAPI?color=blue)
-![Docker](https://img.shields.io/badge/Docker-Ready-2496ed?logo=docker&logoColor=white)
+[![Version](https://img.shields.io/badge/Version-1.9.0-blue.svg)](https://github.com/proyectosbeta/TechWordTranslatorAPI)
+[![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](LICENSE)
+[![PHP Version](https://img.shields.io/badge/PHP-8.4.6-blue.svg)](https://www.php.net/)
+[![Laravel Version](https://img.shields.io/badge/Laravel-11.44.2-green.svg)](https://laravel.com/)
+[![MySQL Version](https://img.shields.io/badge/MySQL-8.0.42-orange.svg?logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Node.js Version](https://img.shields.io/badge/Node.js-v20.18.2-green.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![NPM Version](https://img.shields.io/badge/NPM-10.8.2-red.svg?logo=npm&logoColor=white)](https://www.npmjs.com/)
+[![PHPUnit](https://img.shields.io/badge/PHPUnit-10.5.45-blue?logo=php&logoColor=white)](https://phpunit.de/)
+[![Composer](https://img.shields.io/badge/Composer-2.8.8-885630?logo=composer&logoColor=white)](https://getcomposer.org/)
+[![Docker](https://img.shields.io/badge/docker-ready-blue?logo=docker)](https://www.docker.com/)
+[![SonarQube](https://img.shields.io/badge/SonarQube-Latest-orange?logo=sonarqube)](http://localhost:9000)
+[![JWT](https://img.shields.io/badge/JWT-Authentication-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 ![Last Commit](https://img.shields.io/github/last-commit/proyectosbeta/TechWordTranslatorAPI?logo=git&logoColor=white)
 
 > A RESTful API that provides translations of IT-related terms into Spanish and German.
@@ -26,6 +33,7 @@
     - [Testing](#testing)
       - [Run All Tests](#run-all-tests)
       - [Run Specific Test](#run-specific-test)
+    - [SonarQube Analysis](#sonarqube-analysis)
   - [🚀 Production Deployment](#-production-deployment)
   - [📄 License](#-license)
 
@@ -45,13 +53,14 @@
 ## 🛠️ Technologies
 
 - **PHP**: 8.4.6
-- **Laravel**: v11.41.3
-- **MySQL**: 8
-- **PHPUnit**: 10.3.1
+- **Laravel**: v11.44.2
+- **MySQL**: 8.0.42
+- **PHPUnit**: 10.5.45
 - **Composer**: 2.8.8
 - **Node.js**: v20.18.2
 - **NPM**: 10.8.2
 - **Docker**: 27.5.1
+- **SonarQube Server:** Integrated for code quality analysis.
 
 ---
 
@@ -102,6 +111,16 @@ php artisan test
 ```bash
 php artisan test tests/Unit/WordServiceTest.php
 ```
+
+### SonarQube Analysis
+
+Access SonarQube dashboard at: [http://localhost:9000](http://localhost:9000)
+
+Default credentials:
+- **Username:** `admin`
+- **Password:** `admin`
+
+For detailed SonarQube setup and usage, see our [SonarQube Documentation](docs/development/sonarqube.md).
 
 ---
 
