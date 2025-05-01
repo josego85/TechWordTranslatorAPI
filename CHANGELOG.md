@@ -5,6 +5,30 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.9.0] - 2025-05-01
+
+### Added
+- Integrated **SonarQube** for code quality and static analysis.
+- Added PHPUnit coverage report generation (`coverage.xml`) for SonarQube integration.
+- Added a new item to the **To-Do List** feature.
+- Added specific Docker images for **PHP 8.4** and **MySQL 8** in `docker-compose.yml` and `Dockerfile`.
+
+### Changed
+- Updated PHP dependencies via `composer update`.
+
+### Documentation
+- Enhanced **README.md** with:
+  - Added new badges for technologies (MySQL, Node, NPM, PHPUnit, Composer, SonarQube, JWT)
+  - Updated existing badges with logos and current versions
+  - Improved badge organization and readability
+  - Added SonarQube setup and configuration section
+  - Updated table of contents to include new sections
+- Added comprehensive SonarQube documentation in `docs/development/sonarqube.md`:
+  - Detailed setup instructions
+  - Configuration guidelines
+  - Best practices for token management
+  - Project improvements based on analysis
+
 ## [v1.8.0] - 2025-04-15
 
 ### Added
