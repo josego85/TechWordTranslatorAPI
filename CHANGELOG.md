@@ -9,7 +9,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Added
 - Integrated **SonarQube** for code quality and static analysis.
-- Added PHPUnit coverage report generation (`clover.xml`) for SonarQube integration.
+- Added PHPUnit coverage report generation (`coverage.xml`) for SonarQube integration.
 - Added a new item to the **To-Do List** feature.
 - Added specific Docker images for **PHP 8.4** and **MySQL 8** in `docker-compose.yml` and `Dockerfile`.
 
