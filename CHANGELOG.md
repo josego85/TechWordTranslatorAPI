@@ -13,6 +13,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Added a new item to the **To-Do List** feature.
 - Added specific Docker images for **PHP 8.4** and **MySQL 8** in `docker-compose.yml` and `Dockerfile`.
 
+### Changed
+- Updated PHP dependencies via `composer update`.
+
 ### Documentation
 - Enhanced **README.md** with:
   - Added new badges for technologies (MySQL, Node, NPM, PHPUnit, Composer, SonarQube, JWT)
