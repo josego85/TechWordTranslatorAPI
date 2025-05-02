@@ -53,7 +53,24 @@ SONAR_TOKEN=your_generated_token
 
 - Ensure `.env` is listed in `.gitignore` to avoid exposing secrets.
 
-### 5. Run the scanner with:
+### 5. Generate Code Coverage Report
+
+Before running the SonarQube analysis, generate a code coverage report:
+
+```bash
+XDEBUG_MODE=coverage \
+./vendor/bin/phpunit \
+  --do-not-cache-result \
+  --coverage-clover coverage.xml
+```
+
+This command:
+- Enables Xdebug coverage mode
+- Runs PHPUnit without caching results
+- Generates a coverage report in Clover XML format
+- Saves the report as `coverage.xml` for SonarQube to analyze
+
+### 6. Run the scanner with:
 
 ```bash
 docker compose run --rm scanner

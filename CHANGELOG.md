@@ -5,6 +5,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.9.1] - 2025-05-02
+
+### Documentation
+- Added missing PHPUnit coverage command documentation:
+  - Added detailed instructions for generating coverage reports
+  - Documented coverage configuration for SonarQube integration
+  - Updated setup steps in SonarQube documentation
+
 ## [v1.9.0] - 2025-05-01
 
 ### Added
