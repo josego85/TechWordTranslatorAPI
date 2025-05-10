@@ -8,22 +8,15 @@ use App\Models\Word;
 
 class WordRepository implements WordRepositoryInterface
 {
-    protected $model;
-
-    public function __construct(Word $word)
-    {
-        $this->model = $word;
-    }
+    public function __construct(protected Word $model){}
 
     public function getAllWordsWithTranslations(int $perPage = 15, ?string $cursor): CursorPaginator
     {
         return $this->model
-          ->with(['translations' => function ($query) {
-            $query->select(['word_id', 'spanish_word', 'german_word']);
-          }])
+          ->with('translations:id,word_id,spanish_word,german_word')
           ->select(['id', 'english_word'])
           ->orderBy('id')
-          ->cursorPaginate($perPage, ['*'], 'cursor', $cursor);
+          ->cursorPaginate(perPage: $perPage, cursorName: 'cursor', cursor: $cursor);
     }
 
     public function findWithTranslations(int $id): ?Word

@@ -8,20 +8,24 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 ## [v1.10.0] – 2025-05-10
 
 ### Added
-- Implement cursor-based pagination on the `/api/words` endpoint, with `per_page` and `cursor` query parameters for efficient infinite scrolling.
-- Introduce `WordIndexRequest` to validate `per_page` and `cursor` parameters on the `words` endpoint.
-- Create `WordResource` and `WordCollection` for standardized API responses.
-- Add `CursorPaginationLinks` trait to DRY up pagination link generation.
+- Cursor-based pagination on `GET /api/v1/words` with `per_page` and `cursor` parameters for efficient infinite scrolling.  
+- `WordIndexRequest` to validate `per_page` and `cursor` inputs on the `words` endpoint.  
+- `WordResource` and `WordCollection` for consistent, self-documented JSON output.  
+- `CursorPaginationLinks` trait to centralize next/previous link generation.  
+- API versioning: all routes now prefixed with `/api/v1`.  
 
 ### Changed
-- Upgrade PHP-FPM from 8.4.6 to 8.4.7.
-- Update all PHP packages via `composer update`.
-- Refine and slim down `README.md`, moving detailed REST and setup instructions into dedicated `docs/` files.
-- Update `docs/guides/rest.md` with a top-level “Pagination” section and example flows.
-- Add SonarQube integration notes to `docs/development/README.md`.
-- Update `TODO.md` with the latest implementation tasks and status.
-- Apply `WordResource` to the `/api/words/{id}` endpoint and remove the `data` envelope, returning the resource directly.  
-  **Example response:**  
+- Upgraded PHP-FPM from 8.4.6 to 8.4.7.  
+- Updated PHP dependencies via `composer update`.  
+- Slimmed down `README.md`, offloading detailed REST, setup, GraphQL and pagination docs into `docs/`.  
+- Enhanced `docs/guides/rest.md` with a top-level **Pagination** section and flow examples.  
+- Added SonarQube integration notes to `docs/development/README.md`.  
+- Refactored `WordService`: renamed constructor property from `$wordRepository` to `$repo` for uniformity.  
+- Refactored `WordRepository`: simplified constructor signature and `getAllWordsWithTranslations()` implementation.  
+- Updated `TODO.md` with current tasks and status.  
+- Changed `GET /api/v1/words/{id}` to return `WordResource` directly (no `data` wrapper).  
+
+  **Example response**  
   ```json
   {
     "id": 1,
