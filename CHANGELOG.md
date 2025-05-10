@@ -9,13 +9,16 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Added
 - Implement cursor-based pagination on the `/api/words` endpoint, with `per_page` and `cursor` query parameters for efficient infinite scrolling.
+- Introduce `WordIndexRequest` to validate `per_page` and `cursor` parameters on the `words` endpoint.
+- Create `WordResource` and `WordCollection` for standardized API responses.
+- Add `CursorPaginationLinks` trait to DRY up pagination link generation.
 
 ### Changed
 - Upgrade PHP-FPM from 8.4.6 to 8.4.7.
 - Update all PHP packages via `composer update`.
 - Refine and slim down `README.md`, moving detailed REST and setup instructions into dedicated `docs/` files.
 - Update `docs/guides/rest.md` with a top-level “Pagination” section and example flows.
-- Add SonarQube integration notes to `docs/development/README.md`.  
+- Add SonarQube integration notes to `docs/development/README.md`.
 
 ## [v1.9.1] - 2025-05-02
 

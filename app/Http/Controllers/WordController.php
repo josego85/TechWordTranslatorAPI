@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WordIndexRequest;
+use App\Http\Resources\WordCollection;
 use Illuminate\Http\Request;
 use App\Services\WordService;
 
@@ -10,18 +12,14 @@ class WordController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, WordService $wordService)
+    public function index(WordIndexRequest $request, WordService $wordService)
     {
-        $perPage = (int) $request->query('per_page', 15);
-        $cursor = $request->query('cursor');
+        $paginator = $wordService->getAllWordsWithTranslations(
+            perPage: $request->getPerPage(),
+            cursor:  $request->getCursor(),
+        );
 
-        $paginator = $wordService->getAllWordsWithTranslations($perPage, $cursor);
-
-        return response()->json([
-            'data' => $paginator->items(),
-            'next_cursor' => optional($paginator->nextCursor())->encode(),
-            'prev_cursor' => optional($paginator->previousCursor())->encode(),
-        ]);
+        return new WordCollection($paginator);
     }
 
     /**
