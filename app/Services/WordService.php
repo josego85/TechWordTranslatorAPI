@@ -11,7 +11,7 @@ use App\Models\Word;
 
 class WordService
 {
-    public function __construct(private WordRepositoryInterface $wordRepository)
+    public function __construct(private WordRepositoryInterface $repo)
     {}
 
      /**
@@ -21,7 +21,7 @@ class WordService
      */
     public function getAllWordsWithTranslations(int $perPage, ?string $cursor): CursorPaginator
     {
-        return $this->wordRepository->getAllWordsWithTranslations($perPage, $cursor);
+        return $this->repo->getAllWordsWithTranslations($perPage, $cursor);
     }
 
     /**
@@ -36,7 +36,7 @@ class WordService
         DB::beginTransaction();
 
         try {
-            $this->wordRepository->create($data);
+            $this->repo->create($data);
             DB::commit();
 
             return true;
@@ -56,7 +56,7 @@ class WordService
      */
     public function showWordWithTranslations(int $id): ?Word
     {
-        $word = $this->wordRepository->findWithTranslations($id);
+        $word = $this->repo->findWithTranslations($id);
 
         if (!$word) {
             throw new WordNotFoundException("Word with id $id not found");
@@ -78,13 +78,13 @@ class WordService
         try {
             DB::beginTransaction();
 
-            $word = $this->wordRepository->findWithTranslations($id);
+            $word = $this->repo->findWithTranslations($id);
 
             if (!$word) {
                 return null;
             }
 
-            $this->wordRepository->update($word, $englishWord, $translations);
+            $this->repo->update($word, $englishWord, $translations);
 
             DB::commit();
 
@@ -104,7 +104,7 @@ class WordService
      */
     public function destroyWordWithTranslations(int $id): bool
     {
-        $word = $this->wordRepository->findWithTranslations($id);
+        $word = $this->repo->findWithTranslations($id);
 
         if (!$word) {
             throw new WordNotFoundException("Word with id $id not found");
@@ -112,7 +112,7 @@ class WordService
 
         DB::beginTransaction();
         try {
-            $this->wordRepository->delete($word);
+            $this->repo->delete($word);
             DB::commit();
 
             return true;
