@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/badge/Version-1.9.1-blue.svg)](https://github.com/proyectosbeta/TechWordTranslatorAPI)
 [![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](LICENSE)
-[![PHP Version](https://img.shields.io/badge/PHP-8.4.6-blue.svg)](https://www.php.net/)
+[![PHP Version](https://img.shields.io/badge/PHP-8.4.7-blue.svg)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/Laravel-11.44.2-green.svg)](https://laravel.com/)
 [![MySQL Version](https://img.shields.io/badge/MySQL-8.0.42-orange.svg?logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Node.js Version](https://img.shields.io/badge/Node.js-v20.18.2-green.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -52,7 +52,7 @@
 
 ## 🛠️ Technologies
 
-- **PHP**: 8.4.6
+- **PHP**: 8.4.7
 - **Laravel**: v11.44.2
 - **MySQL**: 8.0.42
 - **PHPUnit**: 10.5.45
