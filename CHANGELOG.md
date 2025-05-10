@@ -19,6 +19,18 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Refine and slim down `README.md`, moving detailed REST and setup instructions into dedicated `docs/` files.
 - Update `docs/guides/rest.md` with a top-level “Pagination” section and example flows.
 - Add SonarQube integration notes to `docs/development/README.md`.
+- Update `TODO.md` with the latest implementation tasks and status.
+- Apply `WordResource` to the `/api/words/{id}` endpoint and remove the `data` envelope, returning the resource directly.  
+  **Example response:**  
+  ```json
+  {
+    "id": 1,
+    "word": "Computer",
+    "locale": {
+      "es": "Computadora / Ordenador",
+      "de": "Computer / Rechner"
+    }
+  }
 
 ## [v1.9.1] - 2025-05-02
 
