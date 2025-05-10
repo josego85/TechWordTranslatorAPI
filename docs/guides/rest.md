@@ -14,15 +14,39 @@ All list endpoints use **cursor-based pagination**:
     "data": [
       {
         "id": 1,
-        "english_word": "apple",
-        "translations": {
-          "es": "manzana",
-          "de": "Apfel"
+        "word": "Computer",
+        "locale": {
+          "es": "Computadora / Ordenador",
+          "de": "Computer / Rechner"
         }
-      }
+      },
+      {
+        "id": 2,
+        "word": "Software",
+        "locale": {
+          "es": "Software",
+          "de": "Software"
+        }
+      },
     ],
-    "next_cursor": "eyJpZCI6MTV9",
-    "prev_cursor": null
+    "links": {
+        "first": null,
+        "last": null,
+        "prev": [
+          null,
+          null
+        ],
+        "next": [
+          null,
+          null
+        ]
+      },
+      "meta": {
+        "path": "http://localhost:8000/api/words",
+        "per_page": 15,
+        "next_cursor": null,
+        "prev_cursor": null
+      }
   }
   ```
 
@@ -54,10 +78,10 @@ GET /api/v1/words/{id}
 ```json
 {
   "id": 1,
-  "english_word": "apple",
-  "translations": {
-    "es": "manzana",
-    "de": "Apfel"
+  "word": "Computer",
+  "locale": {
+    "es": "Computadora / Ordenador",
+    "de": "Computer / Rechner"
   }
 }
 ```

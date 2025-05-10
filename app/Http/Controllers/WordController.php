@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WordIndexRequest;
 use App\Http\Resources\WordCollection;
+use App\Http\Resources\WordResource;
 use Illuminate\Http\Request;
 use App\Services\WordService;
 
@@ -51,15 +52,15 @@ class WordController extends Controller
      */
     public function show(string $id, WordService $wordService)
     {
-        $wordsWithTranslations = $wordService->showWordWithTranslations($id);
+        $word = $wordService->showWordWithTranslations($id);
 
-        if (!$wordsWithTranslations) {
+        if (!$word) {
             return response()->json([
                 'message' => 'Word not found'
             ], 404);
         }
 
-        return response()->json($wordsWithTranslations);
+        return response()->json(new WordResource($word));
     }
 
     /**
