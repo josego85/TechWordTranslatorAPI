@@ -1,7 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\WordIndexRequest;
+use App\Http\Resources\WordCollection;
+use App\Http\Resources\WordResource;
 use Illuminate\Http\Request;
 use App\Services\WordService;
 
@@ -10,11 +14,14 @@ class WordController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(WordService $wordService)
+    public function index(WordIndexRequest $request, WordService $wordService)
     {
-        $wordsWithTranslations = $wordService->getAllWordsWithTranslations();
+        $paginator = $wordService->getAllWordsWithTranslations(
+            perPage: $request->getPerPage(),
+            cursor:  $request->getCursor(),
+        );
 
-        return response()->json($wordsWithTranslations);
+        return new WordCollection($paginator);
     }
 
     /**
@@ -46,15 +53,15 @@ class WordController extends Controller
      */
     public function show(string $id, WordService $wordService)
     {
-        $wordsWithTranslations = $wordService->showWordWithTranslations($id);
+        $word = $wordService->showWordWithTranslations($id);
 
-        if (!$wordsWithTranslations) {
+        if (!$word) {
             return response()->json([
                 'message' => 'Word not found'
             ], 404);
         }
 
-        return response()->json($wordsWithTranslations);
+        return response()->json(new WordResource($word));
     }
 
     /**

@@ -5,6 +5,37 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.10.0] – 2025-05-10
+
+### Added
+- Cursor-based pagination on `GET /api/v1/words` with `per_page` and `cursor` parameters for efficient infinite scrolling.  
+- `WordIndexRequest` to validate `per_page` and `cursor` inputs on the `words` endpoint.  
+- `WordResource` and `WordCollection` for consistent, self-documented JSON output.  
+- `CursorPaginationLinks` trait to centralize next/previous link generation.  
+- API versioning: all routes now prefixed with `/api/v1`.  
+
+### Changed
+- Upgraded PHP-FPM from 8.4.6 to 8.4.7.  
+- Updated PHP dependencies via `composer update`.  
+- Slimmed down `README.md`, offloading detailed REST, setup, GraphQL and pagination docs into `docs/`.  
+- Enhanced `docs/guides/rest.md` with a top-level **Pagination** section and flow examples.  
+- Added SonarQube integration notes to `docs/development/README.md`.  
+- Refactored `WordService`: renamed constructor property from `$wordRepository` to `$repo` for uniformity.  
+- Refactored `WordRepository`: simplified constructor signature and `getAllWordsWithTranslations()` implementation.  
+- Updated `TODO.md` with current tasks and status.  
+- Changed `GET /api/v1/words/{id}` to return `WordResource` directly (no `data` wrapper).  
+
+  **Example response**  
+  ```json
+  {
+    "id": 1,
+    "word": "Computer",
+    "locale": {
+      "es": "Computadora / Ordenador",
+      "de": "Computer / Rechner"
+    }
+  }
+
 ## [v1.9.1] - 2025-05-02
 
 ### Documentation

@@ -3,23 +3,20 @@
 namespace App\Repositories;
 
 use App\Interfaces\WordRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\CursorPaginator;
 use App\Models\Word;
 
 class WordRepository implements WordRepositoryInterface
 {
-    protected $model;
+    public function __construct(protected Word $model){}
 
-    public function __construct(Word $word)
+    public function getAllWordsWithTranslations(int $perPage = 15, ?string $cursor): CursorPaginator
     {
-        $this->model = $word;
-    }
-
-    public function getAllWordsWithTranslations(): Collection
-    {
-        return $this->model->with(['translations' => function ($query) {
-            $query->select(['word_id', 'spanish_word', 'german_word']);
-        }])->select(['id', 'english_word'])->get();
+        return $this->model
+          ->with('translations:id,word_id,spanish_word,german_word')
+          ->select(['id', 'english_word'])
+          ->orderBy('id')
+          ->cursorPaginate(perPage: $perPage, cursorName: 'cursor', cursor: $cursor);
     }
 
     public function findWithTranslations(int $id): ?Word
