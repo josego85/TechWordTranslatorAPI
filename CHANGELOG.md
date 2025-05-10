@@ -5,6 +5,11 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.10.0] - 2025-05-10
+
+### Changed
+- Updated PHP dependencies via `composer update`.
+
 ## [v1.9.1] - 2025-05-02
 
 ### Documentation
