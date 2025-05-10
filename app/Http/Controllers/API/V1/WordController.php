@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\WordIndexRequest;
 use App\Http\Resources\WordCollection;
 use App\Http\Resources\WordResource;
