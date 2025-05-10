@@ -13,6 +13,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 ### Changed
 - Upgrade PHP-FPM from 8.4.6 to 8.4.7.
 - Update all PHP packages via `composer update`.
+- Refine and slim down `README.md`, moving detailed REST and setup instructions into dedicated `docs/` files.
+- Update `docs/guides/rest.md` with a top-level “Pagination” section and example flows.
+- Add SonarQube integration notes to `docs/development/README.md`.  
 
 ## [v1.9.1] - 2025-05-02
 
