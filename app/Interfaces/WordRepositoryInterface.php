@@ -2,12 +2,12 @@
 
 namespace App\Interfaces;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\CursorPaginator;
 use App\Models\Word;
 
 interface WordRepositoryInterface
 {
-    public function getAllWordsWithTranslations(): Collection;
+    public function getAllWordsWithTranslations(int $perPage, ?string $cursor): CursorPaginator;
     public function findWithTranslations(int $id): ?Word;
     public function create(array $data): Word;
     public function update(Word $word, string $englishWord, array $translations): ?Word;

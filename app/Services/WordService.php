@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\CursorPaginator;
 use App\Exceptions\TranslationException;
 use App\Exceptions\WordNotFoundException;
 use App\Interfaces\WordRepositoryInterface;
@@ -14,13 +15,13 @@ class WordService
     {}
 
      /**
-     * Get all words with their translations.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param  int  $perPage
+     * @param  string|null  $cursor
+     * @return CursorPaginator
      */
-    public function getAllWordsWithTranslations(): \Illuminate\Database\Eloquent\Collection
+    public function getAllWordsWithTranslations(int $perPage, ?string $cursor): CursorPaginator
     {
-        return $this->wordRepository->getAllWordsWithTranslations();
+        return $this->wordRepository->getAllWordsWithTranslations($perPage, $cursor);
     }
 
     /**

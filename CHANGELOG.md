@@ -5,11 +5,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
-## [v1.10.0] - 2025-05-10
+## [v1.10.0] – 2025-05-10
+
+### Added
+- Implement cursor-based pagination on the `/api/words` endpoint, with `per_page` and `cursor` query parameters for efficient infinite scrolling.
 
 ### Changed
-- Upgraded PHP-FPM 8.4.6 to 8.4.7
-- Updated PHP dependencies via `composer update`
+- Upgrade PHP-FPM from 8.4.6 to 8.4.7.
+- Update all PHP packages via `composer update`.
 
 ## [v1.9.1] - 2025-05-02
 
