@@ -1,0 +1,31 @@
+[mysqld]
+# Group Replication
+group_replication_consistency      = EVENTUAL
+
+# InnoDB core behavior
+innodb_adaptive_hash_index         = ON
+innodb_buffer_pool_in_core_file    = ON
+innodb_buffer_pool_instances       = 8
+innodb_change_buffering            = all
+
+# Doublewrite
+innodb_doublewrite_files           = 16
+# innodb_doublewrite_pages         = 8
+
+# IO defaults
+innodb_flush_method                = fsync
+innodb_io_capacity                 = 200
+innodb_io_capacity_max             = 200
+
+# Log buffers
+innodb_log_buffer_size             = 16777216
+innodb_log_writer_threads          = 1
+
+# NUMA & parallelism
+innodb_page_cleaners               = 4
+innodb_parallel_read_threads       = 4
+innodb_purge_threads               = 4
+innodb_read_io_threads             = 4
+
+# Redo log capacity
+innodb_redo_log_capacity           = 104857600

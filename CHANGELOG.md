@@ -5,6 +5,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.11.0] – 2025-05-11
+
+### Changed
+- Updated MySQL image in Docker Compose from `mysql:8.0.42` to `mysql:8.4.5`.
+
+### Added
+- Added `docker/mysql/conf.d/my-overrides.cnf` file for variable overrides adapted to MySQL 8.4.5.
+
 ## [v1.10.0] – 2025-05-10
 
 ### Added
