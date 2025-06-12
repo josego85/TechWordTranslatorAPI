@@ -31,6 +31,16 @@ services:
     networks:
       - app-network
 
+  redis:
+    image: redis:7.4.4-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - cache:/data
+    networks:
+      - app-network
+
   sonarqube:
     image: sonarqube:latest
     container_name: sonarqube
@@ -58,6 +68,8 @@ services:
 
 volumes:
   mysql_data:
+  cache:
+    driver: local
   sonarqube_data:
   sonarqube_extensions:
   sonarqube_logs:
