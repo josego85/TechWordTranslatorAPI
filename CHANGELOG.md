@@ -5,6 +5,29 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.12.0] - 2025-06-11
+
+### Added
+- Redis caching implementation:
+  - Added Redis service to Docker Compose
+  - Created `CacheService` for centralized cache management
+  - Implemented cache layer for `/api/v1/words` endpoints
+  - Added `CacheableWordRepository` using decorator pattern
+  - Configured Redis as the default cache driver
+- Added detailed Redis cache documentation in `docs/cache/redis.md`
+
+### Changed
+- Upgraded PHP-FPM from 8.4.7 to 8.4.8
+- Upgraded Composer from 2.8.8 to 2.8.9
+- Upgraded Laravel Framework from 11.42.2 to 11.42.7
+- Upgraded JWT-Auth from 2.7.3 to 2.8.2
+- Upgraded Sail from 1.41.0 to 1.41.1
+- Upgraded PHPUnit from 10.5.45 to 10.5.46
+
+### Infrastructure
+- Added Redis container configuration in `docker-compose.yml`
+- Set up Redis connection parameters in `.env.example`
+
 ## [v1.11.0] - 2025-05-11
 
 ### Changed

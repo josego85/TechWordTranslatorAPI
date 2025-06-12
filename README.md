@@ -2,13 +2,13 @@
 
 [![Version](https://img.shields.io/badge/Version-1.11.0-blue.svg)](https://github.com/proyectosbeta/TechWordTranslatorAPI)  
 [![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](LICENSE)  
-[![PHP Version](https://img.shields.io/badge/PHP-8.4.7-blue.svg)](https://www.php.net/)  
+[![PHP Version](https://img.shields.io/badge/PHP-8.4.8-blue.svg)](https://www.php.net/)  
 [![Laravel Version](https://img.shields.io/badge/Laravel-11.44.2-green.svg)](https://laravel.com/)  
 [![MySQL Version](https://img.shields.io/badge/MySQL-8.4.5-orange.svg?logo=mysql&logoColor=white)](https://www.mysql.com/)  
 [![Node.js Version](https://img.shields.io/badge/Node.js-v20.18.2-green.svg?logo=node.js&logoColor=white)](https://nodejs.org/)  
 [![NPM Version](https://img.shields.io/badge/NPM-10.8.2-red.svg?logo=npm&logoColor=white)](https://www.npmjs.com/)  
 [![PHPUnit](https://img.shields.io/badge/PHPUnit-10.5.45-blue?logo=php&logoColor=white)](https://phpunit.de/)  
-[![Composer](https://img.shields.io/badge/Composer-2.8.8-885630?logo=composer&logoColor=white)](https://getcomposer.org/)  
+[![Composer](https://img.shields.io/badge/Composer-2.8.9-885630?logo=composer&logoColor=white)](https://getcomposer.org/)  
 [![Docker](https://img.shields.io/badge/docker-ready-blue?logo=docker)](https://www.docker.com/)  
 [![SonarQube](https://img.shields.io/badge/SonarQube-Latest-orange?logo=sonarqube)](http://localhost:9000)  
 [![JWT](https://img.shields.io/badge/JWT-Authentication-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)  
@@ -53,6 +53,7 @@
 - Clean, versioned RESTful endpoints  
 - GraphQL endpoint for flexible querying  
 - Custom Content-Security-Policy headers  
+- Redis-based caching system ([documentation](docs/cache/redis.md))
 
 ---
 
