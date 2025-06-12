@@ -53,6 +53,7 @@
 - Clean, versioned RESTful endpoints  
 - GraphQL endpoint for flexible querying  
 - Custom Content-Security-Policy headers  
+- Redis-based caching system ([documentation](docs/cache/redis.md))
 
 ---
 

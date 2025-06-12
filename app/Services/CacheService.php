@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Cache;
 
 class CacheService
 {
-    private const CACHE_TTL = 60; // minutes
+    private const CACHE_TTL = 1440; // 24 hours in minutes
 
     public function remember(string $key, callable $callback)
     {

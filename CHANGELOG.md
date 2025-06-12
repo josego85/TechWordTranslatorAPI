@@ -14,6 +14,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Implemented cache layer for `/api/v1/words` endpoints
   - Added `CacheableWordRepository` using decorator pattern
   - Configured Redis as the default cache driver
+- Added detailed Redis cache documentation in `docs/cache/redis.md`
 
 ### Changed
 - Upgraded PHP-FPM from 8.4.7 to 8.4.8
