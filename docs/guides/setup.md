@@ -4,7 +4,7 @@ This guide will help you setup the TechWordTranslatorAPI locally.
 
 ## Prerequisites
 
-- PHP 8.4.8
+- PHP 8.4.10
 - Composer 2.8.9
 - Node.js v20.18.2 & NPM 10.8.2
 - Docker & Docker Compose

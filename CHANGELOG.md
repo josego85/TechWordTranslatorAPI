@@ -5,6 +5,11 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.12.1] - 2025-07-11
+
+### Changed
+- Upgraded PHP-FPM from 8.4.8 to 8.4.10
+
 ## [v1.12.0] - 2025-06-12
 
 ### Added
