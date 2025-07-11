@@ -9,6 +9,13 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Changed
 - Upgraded PHP-FPM from 8.4.8 to 8.4.10
+- Updated Node.js version in Dockerfile from 20 to 22.17.0
+
+### Security
+- Upgraded the following dependencies to address known vulnerabilities and ensure compatibility with the latest tooling:
+  - `axios`
+  - `laravel-vite-plugin`
+  - `vite`
 
 ## [v1.12.0] - 2025-06-12
 
