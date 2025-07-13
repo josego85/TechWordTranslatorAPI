@@ -11,6 +11,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Changed
 - Executed PHPStan and made several improvements to comply with static analysis standards and Laravel best practices.
+- **Updated** `docs/guides/setup.md`:
+  - Added `php artisan jwt:secret` setup step.
+  - Noted the required `.env` variable `JWT_SECRET=`.
 
 ### Fixed
 - Refactored the method signature of `getAllWordsWithTranslations()` in the `WordRepository`:
@@ -24,6 +27,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Fixed return type in `WordCollection::toArray()`:
   - Converted the collection to a plain array using `$this->collection->all()` to satisfy PHPStan's type expectations.
 - Updated PHPDoc types of `$fillable` and `$hidden` in `User` model to use `list<string>` to comply with Laravel base model definition and fix PHPStan covariance warnings.
+- **Fixed** `docs/api/README.md`:
+  - Clarified authentication endpoints
 
 ## [v1.12.2] - 2025-07-13
 
