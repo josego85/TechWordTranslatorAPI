@@ -4,10 +4,14 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin \App\Models\Word
+ */
 class WordResource extends JsonResource
 {
     public function toArray($request): array
     {
+        /** @var \App\Models\Translation|null $translation */
         $translation = $this->translations->first();
 
         return [

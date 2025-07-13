@@ -18,6 +18,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Improved the `translations` relationship in the `Word` model:
   - Added missing import for the `Translation` model.
   - Added PHPDoc annotations to improve Larastan compatibility and IDE autocompletion.
+- Resolved property access warnings in `WordResource`:
+  - Added `@mixin \App\Models\Word` annotation to inform static analyzers of the underlying model.
+  - Explicitly typed the `$translation` variable to help PHPStan infer the correct model and avoid false positives.
 
 ## [v1.12.2] - 2025-07-13
 
