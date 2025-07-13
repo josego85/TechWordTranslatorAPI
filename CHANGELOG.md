@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and adheres to the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) guidelines.
 
 ---
+## [v1.13.0] - 2025-07-13
+
+### Added
+- Integrated **PHPStan** for static code analysis.
+
+### Changed
+- Ran PHPStan and made several adjustments to align with static analysis best practices.
+
+### Fixed
+- Updated method signature of `getAllWordsWithTranslations()` to resolve deprecated parameter order warning in PHP 8+.
+- Improved the `translations` relationship in the `Word` model:
+  - Added missing import for the `Translation` model.
+  - Added PHPDoc annotations to enhance Larastan support and IDE autocompletion.
 
 ## [v1.12.2] - 2025-07-13
 
