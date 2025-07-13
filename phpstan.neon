@@ -6,6 +6,8 @@ parameters:
   paths:
     - app
     - database
+    - routes
+    - tests
   checkUnionTypes: true
   checkExplicitMixed: true
   inferPrivatePropertyTypeFromConstructor: true

@@ -10,13 +10,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Integrated **PHPStan** for static code analysis.
 
 ### Changed
-- Ran PHPStan and made several adjustments to align with static analysis best practices.
+- Executed PHPStan and made several improvements to comply with static analysis standards and Laravel best practices.
 
 ### Fixed
-- Updated method signature of `getAllWordsWithTranslations()` to resolve deprecated parameter order warning in PHP 8+.
+- Refactored the method signature of `getAllWordsWithTranslations()` in the `WordRepository`:
+  - Removed the default value from the `$perPage` parameter to avoid deprecated parameter order issues in PHP 8+.
 - Improved the `translations` relationship in the `Word` model:
   - Added missing import for the `Translation` model.
-  - Added PHPDoc annotations to enhance Larastan support and IDE autocompletion.
+  - Added PHPDoc annotations to improve Larastan compatibility and IDE autocompletion.
 
 ## [v1.12.2] - 2025-07-13
 
