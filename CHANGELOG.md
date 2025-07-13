@@ -21,6 +21,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Resolved property access warnings in `WordResource`:
   - Added `@mixin \App\Models\Word` annotation to inform static analyzers of the underlying model.
   - Explicitly typed the `$translation` variable to help PHPStan infer the correct model and avoid false positives.
+- Fixed return type in `WordCollection::toArray()`:
+  - Converted the collection to a plain array using `$this->collection->all()` to satisfy PHPStan's type expectations.
 
 ## [v1.12.2] - 2025-07-13
 
