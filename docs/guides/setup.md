@@ -24,7 +24,10 @@ This guide will help you setup the TechWordTranslatorAPI locally.
    ```bash
    cp .env.example .env
    php artisan key:generate
+   php artisan jwt:secret
    ```
+   
+   > This will generate and set the JWT_SECRET in your .env file, required for authentication.
 
 3. **Install PHP dependencies**  
    ```bash
