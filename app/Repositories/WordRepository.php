@@ -10,7 +10,7 @@ class WordRepository implements WordRepositoryInterface
 {
     public function __construct(protected Word $model){}
 
-    public function getAllWordsWithTranslations(int $perPage = 15, ?string $cursor): CursorPaginator
+    public function getAllWordsWithTranslations(int $perPage, ?string $cursor): CursorPaginator
     {
         return $this->model
           ->with('translations:id,word_id,spanish_word,german_word')

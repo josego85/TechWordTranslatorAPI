@@ -10,7 +10,8 @@ https://your-domain.com/api
 
 ## Authentication
 
-- **Login**: `POST /auth/login`  
+- **Register**: `POST /user/register`  
+- **Login**: `POST /user/login`
 - **Refresh token**: `POST /auth/refresh`  
 - Returns JWT in JSON payload. Send as `Authorization: Bearer <token>`.
 

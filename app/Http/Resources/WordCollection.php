@@ -25,7 +25,7 @@ class WordCollection extends ResourceCollection
     public function toArray($request): array
     {
         return [
-            'data' => $this->collection,
+            'data' => $this->collection->all(),
         ];
     }
 

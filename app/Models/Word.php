@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Translation;
 
 class Word extends Model
 {
@@ -20,7 +21,12 @@ class Word extends Model
         'english_word',
     ];
 
-    public function translations()
+    /**
+     * Get the translations for the word.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function translations(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Translation::class);
     }

@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and adheres to the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) guidelines.
 
 ---
+## [v1.12.3] - 2025-07-14
+
+### Added
+- Integrated **PHPStan** for static code analysis.
+
+### Changed
+- Executed PHPStan and made several improvements to comply with static analysis standards and Laravel best practices.
+- **Updated** `docs/guides/setup.md`:
+  - Added `php artisan jwt:secret` setup step.
+  - Noted the required `.env` variable `JWT_SECRET=`.
+
+### Fixed
+- Refactored the method signature of `getAllWordsWithTranslations()` in the `WordRepository`:
+  - Removed the default value from the `$perPage` parameter to avoid deprecated parameter order issues in PHP 8+.
+- Improved the `translations` relationship in the `Word` model:
+  - Added missing import for the `Translation` model.
+  - Added PHPDoc annotations to improve Larastan compatibility and IDE autocompletion.
+- Resolved property access warnings in `WordResource`:
+  - Added `@mixin \App\Models\Word` annotation to inform static analyzers of the underlying model.
+  - Explicitly typed the `$translation` variable to help PHPStan infer the correct model and avoid false positives.
+- Fixed return type in `WordCollection::toArray()`:
+  - Converted the collection to a plain array using `$this->collection->all()` to satisfy PHPStan's type expectations.
+- Updated PHPDoc types of `$fillable` and `$hidden` in `User` model to use `list<string>` to comply with Laravel base model definition and fix PHPStan covariance warnings.
+- **Fixed** `docs/api/README.md`:
+  - Clarified authentication endpoints
 
 ## [v1.12.2] - 2025-07-13
 

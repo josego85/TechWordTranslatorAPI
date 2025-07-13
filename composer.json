@@ -23,6 +23,7 @@
         "laravel/sail": "1.41.1",
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "v8.8.2",
+        "nunomaduro/larastan": "3.5",
         "php-cs-fixer/shim": "v3.75.0",
         "phpunit/phpunit": "^11.5.27",
         "rogervila/php-sonarqube-scanner": "1.1",
@@ -53,7 +54,8 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "phpstan": "vendor/bin/phpstan analyse --memory-limit=512M"
     },
     "extra": {
         "laravel": {

@@ -9,3 +9,4 @@
 - Add Opcache
 - Monitor (Grafana)
 - Add swagger (dev documentation)
+- Add php cs fix (config)
