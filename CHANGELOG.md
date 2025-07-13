@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and adheres to the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) guidelines.
 
 ---
-## [v1.13.0] - 2025-07-13
+## [v1.12.3] - 2025-07-14
 
 ### Added
 - Integrated **PHPStan** for static code analysis.
