@@ -5,6 +5,11 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.13.0] - 2025-07-13
+
+### Changed
+- Updated Laravel from 11.44.7 to 12.20.0
+
 ## [v1.12.1] - 2025-07-11
 
 ### Changed
