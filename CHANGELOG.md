@@ -23,6 +23,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Explicitly typed the `$translation` variable to help PHPStan infer the correct model and avoid false positives.
 - Fixed return type in `WordCollection::toArray()`:
   - Converted the collection to a plain array using `$this->collection->all()` to satisfy PHPStan's type expectations.
+- Updated PHPDoc types of `$fillable` and `$hidden` in `User` model to use `list<string>` to comply with Laravel base model definition and fix PHPStan covariance warnings.
 
 ## [v1.12.2] - 2025-07-13
 
