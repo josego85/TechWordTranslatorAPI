@@ -5,6 +5,13 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.12.2] - 2025-07-13
+
+### Changed
+- Upgraded Laravel framework from **v11.44.7** to **v12.20.0**.
+- Updated `README.md`:
+  - Refreshed version badges.
+
 ## [v1.12.1] - 2025-07-11
 
 ### Changed
