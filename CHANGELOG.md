@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and adheres to the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) guidelines.
 
 ---
+
+## [v1.13.0] - 2025-07-16
+
+### Added
+- Integrated **GraphQL** support for querying `Word` and `Translation` entities.
+- Added GraphQL types for `Word` and `Translation` models.
+- Implemented GraphQL queries:
+  - `words` and `word(id: ID!)` to fetch English words.
+  - `translations` and `translation(id: ID!)` to fetch Spanish and German translations.
+  - Query to fetch translations by word ID.
+- Added GraphQL schema definitions including types and query declarations (no custom resolvers).
+
 ## [v1.12.3] - 2025-07-14
 
 ### Added
