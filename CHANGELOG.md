@@ -26,6 +26,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - `"pint-test": "./vendor/bin/pint --config=pint.json --test"`
   - `"pint": "./vendor/bin/pint --config=pint.json"`
 
+### Changed
+- Updated `README.md`:
+  - Refreshed version badges.
+
 ### Fixed
 - Fixed logic in `index`, `show`, `update`, `store` and `destroy` methods in `WordController`.
 - Refactored word and translation request validation using custom `FormRequest` classes.
@@ -35,8 +39,16 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Used **PHPStan** to refactor and improve code quality in `TranslationService`.
 - Refactored codebase using Laravel Pint with its configuration.
 
+### Updated
+- Updated package `laravel/pint` from version `v1.11.0` to `v1.24.0`.
+
 ### Removed
-- Removed package `php-cs-fixer/shim` version `v3.75.0`.
+- Removed package `laravel/sail`.
+
+### Replaced
+- Replaced abandoned package `nunomaduro/larastan` with `larastan/larastan`.
+
+---
 
 ## [v1.12.3] - 2025-07-14
 
@@ -64,12 +76,16 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - **Fixed** `docs/api/README.md`:
   - Clarified authentication endpoints
 
+---
+
 ## [v1.12.2] - 2025-07-13
 
 ### Changed
 - Upgraded Laravel framework from **v11.44.7** to **v12.20.0**.
 - Updated `README.md`:
   - Refreshed version badges.
+
+---
 
 ## [v1.12.1] - 2025-07-11
 
@@ -84,6 +100,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - `axios`
   - `laravel-vite-plugin`
   - `vite`
+
+---
 
 ## [v1.12.0] - 2025-06-12
 
@@ -108,6 +126,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Added Redis container configuration in `docker-compose.yml`
 - Set up Redis connection parameters in `.env.example`
 
+---
+
 ## [v1.11.0] - 2025-05-11
 
 ### Changed
@@ -115,6 +135,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Added
 - Added `docker/mysql/conf.d/my-overrides.cnf` file for variable overrides adapted to MySQL 8.4.5.
+
+---
 
 ## [v1.10.0] - 2025-05-10
 
@@ -147,6 +169,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
     }
   }
 
+---
+
 ## [v1.9.1] - 2025-05-02
 
 ### Documentation
@@ -154,6 +178,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Added detailed instructions for generating coverage reports
   - Documented coverage configuration for SonarQube integration
   - Updated setup steps in SonarQube documentation
+
+---
 
 ## [v1.9.0] - 2025-05-01
 
@@ -179,6 +205,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Best practices for token management
   - Project improvements based on analysis
 
+---
+
 ## [v1.8.0] - 2025-04-15
 
 ### Added
@@ -193,6 +221,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Documentation
 - Enhanced the **README** file with updated badges, a comprehensive table of contents, and improved formatting for clarity.
+
+---
 
 ## [v1.7.0]
 
