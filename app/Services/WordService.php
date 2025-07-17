@@ -11,9 +11,7 @@ use Illuminate\Pagination\CursorPaginator;
 
 class WordService
 {
-    public function __construct(private WordRepositoryInterface $repository)
-    {
-    }
+    public function __construct(private WordRepositoryInterface $repository) {}
 
     public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {

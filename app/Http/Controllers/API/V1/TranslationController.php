@@ -16,9 +16,7 @@ use App\Services\TranslationService;
 
 class TranslationController extends Controller
 {
-    public function __construct(private TranslationService $translationService)
-    {
-    }
+    public function __construct(private TranslationService $translationService) {}
 
     public function index(IndexRequest $request)
     {

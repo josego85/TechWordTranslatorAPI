@@ -11,9 +11,7 @@ use Illuminate\Pagination\CursorPaginator;
 
 class TranslationService
 {
-    public function __construct(private TranslationRepositoryInterface $repository)
-    {
-    }
+    public function __construct(private TranslationRepositoryInterface $repository) {}
 
     public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {

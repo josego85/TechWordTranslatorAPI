@@ -16,9 +16,7 @@ use App\Services\WordService;
 
 class WordController extends Controller
 {
-    public function __construct(private WordService $wordService)
-    {
-    }
+    public function __construct(private WordService $wordService) {}
 
     /**
      * Display a listing of the resource.

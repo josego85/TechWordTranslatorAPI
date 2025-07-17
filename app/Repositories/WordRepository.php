@@ -10,9 +10,7 @@ use Illuminate\Pagination\CursorPaginator;
 
 class WordRepository implements WordRepositoryInterface
 {
-    public function __construct(protected Word $model)
-    {
-    }
+    public function __construct(protected Word $model) {}
 
     public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {

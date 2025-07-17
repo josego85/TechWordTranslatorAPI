@@ -14,8 +14,7 @@ class CacheableWordRepository implements WordRepositoryInterface
     public function __construct(
         private WordRepositoryInterface $repository,
         private CacheService $cache
-    ) {
-    }
+    ) {}
 
     public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {
