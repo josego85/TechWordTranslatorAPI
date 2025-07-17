@@ -38,6 +38,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Converted route parameter `word` from `string` to `int` in controller before passing to service.
   - Converted route parameter `translation` from `string` to `int` in controller before passing to service.
   - Updated `IndexRequest::getCursor()` to return a `?string` instead of a `Stringable`.
+- Removed duplicate Xdebug extension line in `xdebug.ini` that caused the extension to load twice.
 
 ### Refactored
 - Used **PHPStan** to refactor and improve code quality in `TranslationService`.
