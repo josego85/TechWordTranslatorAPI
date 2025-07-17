@@ -17,7 +17,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Added GraphQL schema definitions including types and query declarations (no custom resolvers).
 - Added **Xdebug** support for PHP debugging.
 - Added **Nginx** container as a web server for the PHP-FPM service.
-- Added `index`, `show`, `update`, `store` and `destroy` and  methods to `TranslationController`.
+- Added `index`, `show`, `update`, `store` and `destroy` methods to `TranslationController`.
 - Added custom `FormRequest` classes for validation in translation and word endpoints.
 - Added **service** and **repository** layers for managing `Translation` logic.
 - Added `entrypoint.sh` script to set proper permissions for Laravel storage and bootstrap folders.
@@ -26,6 +26,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Fixed logic in `index`, `show`, `update`, `store` and `destroy` methods in `WordController`.
 - Refactored word and translation request validation using custom `FormRequest` classes.
 - Fixed implementation in **Word** service and repository layers.
+
+### Refactored
+- Used **PHPStan** to refactor and improve code quality in `TranslationService`.
 
 ## [v1.12.3] - 2025-07-14
 

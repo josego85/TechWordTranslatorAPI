@@ -50,9 +50,9 @@ class TranslationService
      *
      * @param int $id
      * @param array $data
-     * @return Translation|null
+     * @return Translation
      * 
-     * @throws WordNotFoundException
+     * @throws TranslationException
      */
     public function update(int $id, array $data): Translation
     {
@@ -79,7 +79,7 @@ class TranslationService
      *
      * @param int $id
      * @return void
-     * @throws WordNotFoundException
+     * @throws TranslationException
      */
     public function delete(int $id): void
     {
