@@ -1,20 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\WordNotFoundException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\IndexRequest;
 use App\Http\Requests\StoreWordRequest;
 use App\Http\Requests\UpdateWordRequest;
 use App\Http\Requests\WordIdRequest;
-use App\Http\Requests\IndexRequest;
 use App\Http\Resources\WordCollection;
 use App\Http\Resources\WordResource;
 use App\Services\WordService;
 
 class WordController extends Controller
 {
-    public function __construct(private WordService $wordService){}
+    public function __construct(private WordService $wordService)
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -23,7 +27,7 @@ class WordController extends Controller
     {
         $paginator = $this->wordService->getAll(
             perPage: $request->getPerPage(),
-            cursor:  $request->getCursor(),
+            cursor: $request->getCursor(),
         );
 
         return new WordCollection($paginator);
@@ -36,12 +40,13 @@ class WordController extends Controller
     {
         $id = $request->route('word');
 
-        try {  
+        try {
             $word = $this->wordService->get($id);
+
             return response()->json(new WordResource($word));
-        } catch(WordNotFoundException $e) {
+        } catch (WordNotFoundException $e) {
             return response()->json([
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 404);
         }
     }
@@ -55,10 +60,11 @@ class WordController extends Controller
 
         try {
             $word = $this->wordService->create($data);
+
             return response()->json(new WordResource($word));
-        } catch(WordNotFoundException $e) {
+        } catch (WordNotFoundException $e) {
             return response()->json([
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 404);
         }
     }
@@ -68,15 +74,16 @@ class WordController extends Controller
      */
     public function update(UpdateWordRequest $request)
     {
-        $id = $request->route('word');
+        $id          = $request->route('word');
         $englishWord = $request->input('english_word');
 
         try {
             $word = $this->wordService->update($id, $englishWord);
+
             return response()->json(new WordResource($word));
-        } catch(WordNotFoundException $e) {
+        } catch (WordNotFoundException $e) {
             return response()->json([
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 404);
         }
     }
@@ -88,12 +95,13 @@ class WordController extends Controller
     {
         try {
             $this->wordService->delete($id);
+
             return response()->json([
-                'message' => 'Word deleted successfully'
+                'message' => 'Word deleted successfully',
             ]);
-        } catch(WordNotFoundException $e) {
+        } catch (WordNotFoundException $e) {
             return response()->json([
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 500);
         }
     }

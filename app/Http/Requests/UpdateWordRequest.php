@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateWordRequest extends FormRequest
@@ -23,7 +25,7 @@ class UpdateWordRequest extends FormRequest
 
     public function validationData()
     {
-         return array_merge($this->all(), [
+        return array_merge($this->all(), [
             'word' => $this->route('word'),
         ]);
     }

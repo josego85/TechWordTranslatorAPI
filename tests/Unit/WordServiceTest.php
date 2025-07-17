@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Services;
 
 use App\Exceptions\TranslationException;
@@ -42,7 +44,7 @@ class WordServiceTest extends TestCase
     {
         $expectedCollection = new Collection([
             Mockery::mock(Word::class)->shouldIgnoreMissing(),
-            Mockery::mock(Word::class)->shouldIgnoreMissing()
+            Mockery::mock(Word::class)->shouldIgnoreMissing(),
         ]);
 
         $this->wordRepositoryMock
@@ -59,7 +61,7 @@ class WordServiceTest extends TestCase
 
     public function test_create_word_with_translations_success(): void
     {
-        $wordData = ['english_word' => 'test', 'translations' => ['es' => 'prueba']];
+        $wordData          = ['english_word' => 'test', 'translations' => ['es' => 'prueba']];
         $mockedCreatedWord = Mockery::mock(Word::class)->shouldIgnoreMissing();
 
         $this->wordRepositoryMock
@@ -79,7 +81,7 @@ class WordServiceTest extends TestCase
 
     public function test_create_word_with_translations_repository_exception_rolls_back_and_throws_translation_exception(): void
     {
-        $wordData = ['english_word' => 'test', 'translations' => ['es' => 'prueba']];
+        $wordData            = ['english_word' => 'test', 'translations' => ['es' => 'prueba']];
         $repositoryException = new \Exception('Database error');
 
         $this->wordRepositoryMock
@@ -105,8 +107,8 @@ class WordServiceTest extends TestCase
 
     public function test_show_word_with_translations_success(): void
     {
-        $wordId = 1;
-        $mockedWord = Mockery::mock(Word::class)->shouldIgnoreMissing();
+        $wordId         = 1;
+        $mockedWord     = Mockery::mock(Word::class)->shouldIgnoreMissing();
         $mockedWord->id = $wordId;
 
         $this->wordRepositoryMock
@@ -139,15 +141,15 @@ class WordServiceTest extends TestCase
 
     public function test_update_word_with_translations_success(): void
     {
-        $wordId = 1;
-        $newEnglishWord = 'updated';
+        $wordId          = 1;
+        $newEnglishWord  = 'updated';
         $newTranslations = ['es' => 'actualizado'];
 
-        $existingWordMock = Mockery::mock(Word::class)->shouldIgnoreMissing();
+        $existingWordMock     = Mockery::mock(Word::class)->shouldIgnoreMissing();
         $existingWordMock->id = $wordId;
 
-        $updatedWordMock = Mockery::mock(Word::class)->shouldIgnoreMissing();
-        $updatedWordMock->id = $wordId;
+        $updatedWordMock               = Mockery::mock(Word::class)->shouldIgnoreMissing();
+        $updatedWordMock->id           = $wordId;
         $updatedWordMock->english_word = $newEnglishWord;
 
         $this->wordRepositoryMock
@@ -173,8 +175,8 @@ class WordServiceTest extends TestCase
 
     public function test_update_word_with_translations_not_found_returns_null(): void
     {
-        $wordId = 999;
-        $newEnglishWord = 'updated';
+        $wordId          = 999;
+        $newEnglishWord  = 'updated';
         $newTranslations = ['es' => 'actualizado'];
 
         $this->wordRepositoryMock
@@ -195,12 +197,12 @@ class WordServiceTest extends TestCase
 
     public function test_update_word_with_translations_repository_exception_rolls_back_and_throws_translation_exception(): void
     {
-        $wordId = 1;
-        $newEnglishWord = 'updated';
-        $newTranslations = ['es' => 'actualizado'];
+        $wordId              = 1;
+        $newEnglishWord      = 'updated';
+        $newTranslations     = ['es' => 'actualizado'];
         $repositoryException = new \Exception('Update failed');
 
-        $existingWordMock = Mockery::mock(Word::class)->shouldIgnoreMissing();
+        $existingWordMock     = Mockery::mock(Word::class)->shouldIgnoreMissing();
         $existingWordMock->id = $wordId;
 
         $this->wordRepositoryMock
@@ -232,8 +234,8 @@ class WordServiceTest extends TestCase
 
     public function test_destroy_word_with_translations_success(): void
     {
-        $wordId = 1;
-        $existingWordMock = Mockery::mock(Word::class)->shouldIgnoreMissing();
+        $wordId               = 1;
+        $existingWordMock     = Mockery::mock(Word::class)->shouldIgnoreMissing();
         $existingWordMock->id = $wordId;
 
         $this->wordRepositoryMock
@@ -280,10 +282,10 @@ class WordServiceTest extends TestCase
 
     public function test_destroy_word_with_translations_repository_exception_rolls_back_and_throws_translation_exception(): void
     {
-        $wordId = 1;
+        $wordId              = 1;
         $repositoryException = new \Exception('Delete failed');
 
-        $existingWordMock = Mockery::mock(Word::class)->shouldIgnoreMissing();
+        $existingWordMock     = Mockery::mock(Word::class)->shouldIgnoreMissing();
         $existingWordMock->id = $wordId;
 
         $this->wordRepositoryMock

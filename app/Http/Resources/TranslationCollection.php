@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
 use App\Http\Resources\Traits\CursorPaginationLinks;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use App\Http\Resources\TranslationResource;
 
 /**
  * ResourceCollection for Translation models, includes cursor pagination links.
@@ -19,7 +20,7 @@ class TranslationCollection extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array{data: mixed[]}
      */
     public function toArray($request): array
@@ -32,7 +33,7 @@ class TranslationCollection extends ResourceCollection
     /**
      * Add pagination links to the response.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request                                  $request
      * @return array{links: array{next: string|null, prev: string|null}}
      */
     public function with($request): array

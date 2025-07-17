@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Interfaces\WordRepositoryInterface;
@@ -12,21 +14,26 @@ class CacheableWordRepository implements WordRepositoryInterface
     public function __construct(
         private WordRepositoryInterface $repository,
         private CacheService $cache
-    ) {}
+    ) {
+    }
 
     public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {
         $key = $this->cache->generateWordsKey($perPage, $cursor);
-        return $this->cache->remember($key, fn () => 
-            $this->repository->getAll($perPage, $cursor)
+
+        return $this->cache->remember(
+            $key,
+            fn () => $this->repository->getAll($perPage, $cursor)
         );
     }
 
     public function get(int $id): ?Word
     {
         $key = $this->cache->generateWordKey($id);
-        return $this->cache->remember($key, fn () =>
-            $this->repository->get($id)
+
+        return $this->cache->remember(
+            $key,
+            fn () => $this->repository->get($id)
         );
     }
 
@@ -34,6 +41,7 @@ class CacheableWordRepository implements WordRepositoryInterface
     {
         $word = $this->repository->create($data);
         $this->cache->forget('words:*');
+
         return $word;
     }
 
@@ -43,21 +51,23 @@ class CacheableWordRepository implements WordRepositoryInterface
         if ($updated) {
             $this->cache->forget([
                 $this->cache->generateWordKey($word->id),
-                'words:*'
+                'words:*',
             ]);
         }
+
         return $updated;
     }
 
     public function delete(Word $word): bool
     {
         $deleted = $this->repository->delete($word);
-        if($deleted) {
+        if ($deleted) {
             $this->cache->forget([
                 $this->cache->generateWordKey($word->id),
-                'words:*'
+                'words:*',
             ]);
         }
+
         return $deleted;
     }
 }

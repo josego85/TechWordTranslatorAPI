@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreTranslationRequest extends FormRequest
@@ -24,9 +26,9 @@ class StoreTranslationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'word_id'      => 'required|integer|exists:words,id',
+            'word_id' => 'required|integer|exists:words,id',
             'spanish_word' => 'nullable|string|max:255',
-            'german_word'  => 'nullable|string|max:255',
+            'german_word' => 'nullable|string|max:255',
         ];
     }
 

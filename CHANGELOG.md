@@ -21,6 +21,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Added custom `FormRequest` classes for validation in translation and word endpoints.
 - Added **service** and **repository** layers for managing `Translation` logic.
 - Added `entrypoint.sh` script to set proper permissions for Laravel storage and bootstrap folders.
+- Added Laravel Pint configuration.
+- Added Composer commands:
+  - `"pint-test": "./vendor/bin/pint --config=pint.json --test"`
+  - `"pint": "./vendor/bin/pint --config=pint.json"`
 
 ### Fixed
 - Fixed logic in `index`, `show`, `update`, `store` and `destroy` methods in `WordController`.
@@ -29,6 +33,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Refactored
 - Used **PHPStan** to refactor and improve code quality in `TranslationService`.
+- Refactored codebase using Laravel Pint with its configuration.
+
+### Removed
+- Removed package `php-cs-fixer/shim` version `v3.75.0`.
 
 ## [v1.12.3] - 2025-07-14
 
