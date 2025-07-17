@@ -17,7 +17,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Added GraphQL schema definitions including types and query declarations (no custom resolvers).
 - Added **Xdebug** support for PHP debugging.
 - Added **Nginx** container as a web server for the PHP-FPM service.
-- Added `index`, `show`, `update`, `store` and `destroy` methods to `TranslationController`.
+- Added `index`, `show`, `update`, `store`, and `destroy` methods to `TranslationController`.
 - Added custom `FormRequest` classes for validation in translation and word endpoints.
 - Added **service** and **repository** layers for managing `Translation` logic.
 - Added `entrypoint.sh` script to set proper permissions for Laravel storage and bootstrap folders.
@@ -29,9 +29,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 ### Changed
 - Updated `README.md`:
   - Refreshed version badges.
+- Updated `TODO.md` with completed and pending tasks.
 
 ### Fixed
-- Fixed logic in `index`, `show`, `update`, `store` and `destroy` methods in `WordController`.
+- Fixed logic in `index`, `show`, `update`, `store`, and `destroy` methods in `WordController`.
 - Refactored word and translation request validation using custom `FormRequest` classes.
 - Fixed implementation in **Word** service and repository layers.
 - Fixed type casting issues:
@@ -39,6 +40,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Converted route parameter `translation` from `string` to `int` in controller before passing to service.
   - Updated `IndexRequest::getCursor()` to return a `?string` instead of a `Stringable`.
 - Removed duplicate Xdebug extension line in `xdebug.ini` that caused the extension to load twice.
+- Fixed incorrect PHPStan configuration:
+  - Updated `phpstan.neon` to reference `vendor/larastan/larastan/extension.neon`.
 
 ### Refactored
 - Used **PHPStan** to refactor and improve code quality in `TranslationService`.
