@@ -5,19 +5,16 @@ WORKDIR /var/www
 COPY package*.json ./
 RUN npm install
 COPY . .
-
 RUN npm run build
 
 
 FROM php:8.4.10-fpm
-
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    libzip-dev \
-    libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
+    libzip-dev libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
     git curl unzip zip && \
-    pecl install redis && \
-    docker-php-ext-enable redis && \
+    pecl install redis xdebug && \
+    docker-php-ext-enable redis xdebug && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install pdo pdo_mysql zip gd && \
     rm -rf /var/lib/apt/lists/*
@@ -25,8 +22,9 @@ RUN apt-get update && \
 WORKDIR /var/www
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-COPY . /var/www
 COPY --from=node_builder /var/www/public/build /var/www/public/build
+COPY . .
 
-EXPOSE 8000
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+EXPOSE 9000
+
+CMD ["php-fpm"]

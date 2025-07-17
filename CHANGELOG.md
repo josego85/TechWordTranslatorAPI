@@ -15,6 +15,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - `translations` and `translation(id: ID!)` to fetch Spanish and German translations.
   - Query to fetch translations by word ID.
 - Added GraphQL schema definitions including types and query declarations (no custom resolvers).
+- Added **Xdebug** support for PHP debugging.
+- Added **Nginx** container as a web server for the PHP-FPM service.
 
 ## [v1.12.3] - 2025-07-14
 
