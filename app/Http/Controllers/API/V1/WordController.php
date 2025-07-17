@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWordRequest;
 use App\Http\Requests\UpdateWordRequest;
 use App\Http\Requests\WordIdRequest;
-use App\Http\Requests\WordIndexRequest;
+use App\Http\Requests\IndexRequest;
 use App\Http\Resources\WordCollection;
 use App\Http\Resources\WordResource;
 use App\Services\WordService;
@@ -19,9 +19,9 @@ class WordController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(WordIndexRequest $request, WordService $wordService)
+    public function index(IndexRequest $request)
     {
-        $paginator = $wordService->getAll(
+        $paginator = $this->wordService->getAll(
             perPage: $request->getPerPage(),
             cursor:  $request->getCursor(),
         );

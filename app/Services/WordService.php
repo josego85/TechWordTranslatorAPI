@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\CursorPaginator;
-use App\Exceptions\TranslationException;
 use App\Exceptions\WordNotFoundException;
 use App\Interfaces\WordRepositoryInterface;
 use App\Models\Word;

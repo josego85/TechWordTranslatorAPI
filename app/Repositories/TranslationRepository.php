@@ -3,14 +3,19 @@
 namespace App\Repositories;
 
 use App\Interfaces\TranslationRepositoryInterface;
+use Illuminate\Pagination\CursorPaginator;
 use App\Models\Translation;
 
 class TranslationRepository implements TranslationRepositoryInterface
 {
     public function __construct(private Translation $model) {}
 
-    public function getAll() {
-        return $this->model->get();
+    public function getAll(int $perPage, ?string $cursor): CursorPaginator
+    {
+        return $this->model
+          ->select(['id', 'word_id', 'spanish_word', 'german_word'])
+          ->orderBy('id')
+          ->cursorPaginate(perPage: $perPage, cursorName: 'cursor', cursor: $cursor);
     }
 
     public function get(int $id): ?Translation

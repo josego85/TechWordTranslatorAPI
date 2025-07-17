@@ -13,7 +13,6 @@ class WordRepository implements WordRepositoryInterface
     public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {
         return $this->model
-          ->with('translations:id,word_id,spanish_word,german_word')
           ->select(['id', 'english_word'])
           ->orderBy('id')
           ->cursorPaginate(perPage: $perPage, cursorName: 'cursor', cursor: $cursor);

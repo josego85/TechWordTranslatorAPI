@@ -7,17 +7,23 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ShowTranslationRequest;
 use App\Http\Requests\StoreTranslationRequest;
 use App\Http\Requests\UpdateTranslationRequest;
+use App\Http\Requests\IndexRequest;
+use App\Http\Resources\TranslationCollection;
 use App\Http\Resources\TranslationResource;
 use App\Services\TranslationService;
-use Illuminate\Http\Request;
 
 class TranslationController extends Controller
 {
     public function __construct(private TranslationService $translationService) {}
 
-    public function index(Request $request)
+    public function index(IndexRequest $request)
     {
-        return $this->translationService->getAll();
+        $paginator = $this->translationService->getAll(
+            perPage: $request->getPerPage(),
+            cursor:  $request->getCursor(),
+        );
+
+        return new TranslationCollection($paginator);
     }
 
     public function show(ShowTranslationRequest $request)

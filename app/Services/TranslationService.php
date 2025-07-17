@@ -2,19 +2,23 @@
 
 namespace App\Services;
 
+use Illuminate\Pagination\CursorPaginator;
 use App\Exceptions\TranslationException;
 use App\Interfaces\TranslationRepositoryInterface;
 use App\Models\Translation;
-use App\Repositories\TranslationRepository;
-use Symfony\Component\Translation\Reader\TranslationReader;
 
 class TranslationService
 {
     public function __construct(private TranslationRepositoryInterface $repository){}
 
-    public function getAll()
+    /**
+     * @param  int  $perPage
+     * @param  string|null  $cursor
+     * @return CursorPaginator
+     */
+    public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {
-        return $this->repository->getAll();
+        return $this->repository->getAll($perPage, $cursor);
     }
 
     public function get(int $id): ?Translation
