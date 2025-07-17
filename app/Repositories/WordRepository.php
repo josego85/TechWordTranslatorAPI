@@ -19,30 +19,22 @@ class WordRepository implements WordRepositoryInterface
           ->cursorPaginate(perPage: $perPage, cursorName: 'cursor', cursor: $cursor);
     }
 
-    public function findWithTranslations(int $id): ?Word
+    public function get(int $id): ?Word
     {
-        return $this->model->with(['translations' => function ($query) {
-            $query->select(['word_id', 'spanish_word', 'german_word']);
-        }])->select(['id', 'english_word'])->find($id);
+        return $this->model
+          ->select(['id', 'english_word'])
+          ->where('id', $id)
+          ->first();
     }
 
     public function create(array $data): Word
     {
-        $word = $this->model->create([
-            'english_word' => $data['english_word']
-        ]);
-        $word->translations()->create([
-            'spanish_word' => $data['translations']['spanish_word'],
-            'german_word' => $data['translations']['german_word']
-        ]);
-
-        return $word;
+       return $this->model->create($data);
     }
 
-    public function update(Word $word, string $englishWord, array $translations): ?Word
+    public function update(Word $word, string $englishWord): ?Word
     {
         $word->updateAttributes(['english_word' => $englishWord]);
-        $word->updateTranslations($translations);
 
         return $word;
     }

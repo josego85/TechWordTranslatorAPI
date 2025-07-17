@@ -11,16 +11,9 @@ class WordResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var \App\Models\Translation|null $translation */
-        $translation = $this->translations->first();
-
         return [
-            'id'        => $this->id,
-            'word'      => $this->english_word,
-            'locale'    => [
-                'es' => $translation?->spanish_word,
-                'de' => $translation?->german_word,
-            ],
+            'id'            => $this->id,
+            'english_word'  => $this->english_word,
         ];
     }
 }

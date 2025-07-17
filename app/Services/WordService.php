@@ -11,7 +11,7 @@ use App\Models\Word;
 
 class WordService
 {
-    public function __construct(private WordRepositoryInterface $repo)
+    public function __construct(private WordRepositoryInterface $repository)
     {}
 
      /**
@@ -21,42 +21,38 @@ class WordService
      */
     public function getAllWordsWithTranslations(int $perPage, ?string $cursor): CursorPaginator
     {
-        return $this->repo->getAllWordsWithTranslations($perPage, $cursor);
+        return $this->repository->getAllWordsWithTranslations($perPage, $cursor);
     }
 
     /**
-     * Create a new word with translations.
+     * Create a new english word.
      *
      * @param array $data
-     * @return bool
-     * @throws TranslationException
+     * @return Word
+     * @throws WordNotFoundException
      */
-    public function createWordWithTranslations(array $data): bool
+    public function create(array $data): Word
     {
-        DB::beginTransaction();
-
         try {
-            $this->repo->create($data);
-            DB::commit();
-
-            return true;
+            $payload = [
+                'english_word' => $data['english_word'],
+            ];
+            return $this->repository->create($payload);
         } catch (\Exception $e) {
-            DB::rollBack();
-
-            throw new TranslationException('Error creating word and translations', 0, $e);
+            throw new WordNotFoundException('Error creating word and translations', 0, $e);
         }
     }
 
     /**
-     * Show a word with its translations.
+     * Show a word.
      *
      * @param int $id
      * @return Word|null
      * @throws WordNotFoundException
      */
-    public function showWordWithTranslations(int $id): ?Word
+    public function get(int $id): ?Word
     {
-        $word = $this->repo->findWithTranslations($id);
+        $word = $this->repository->get($id);
 
         if (!$word) {
             throw new WordNotFoundException("Word with id $id not found");
@@ -65,33 +61,26 @@ class WordService
     }
 
     /**
-     * Update a word with its translations.
+     * Update a english word.
      *
      * @param int $id
      * @param string $englishWord
-     * @param array $translations
      * @return Word|null
-     * @throws TranslationException
+     * 
+     * @throws WordNotFoundException
      */
-    public function updateWordWithTranslations(int $id, string $englishWord, array $translations): ?Word
+    public function update(int $id, string $englishWord): ?Word
     {
+        $word = $this->repository->get($id);
+
+        if (!$word) {
+            throw new WordNotFoundException("Word with id $id not found");
+        }
+
         try {
-            DB::beginTransaction();
-
-            $word = $this->repo->findWithTranslations($id);
-
-            if (!$word) {
-                return null;
-            }
-
-            $this->repo->update($word, $englishWord, $translations);
-
-            DB::commit();
-
-            return $word;
-        } catch (\Exception $e) {
-            DB::rollback();
-            throw new TranslationException('Error updating word and translations', 0, $e);
+            return $this->repository->update($word, $englishWord);
+        } catch (\Throwable $e) {
+            throw new WordNotFoundException("Failed to update word", 0, $e);
         }
     }
 
@@ -104,7 +93,7 @@ class WordService
      */
     public function destroyWordWithTranslations(int $id): bool
     {
-        $word = $this->repo->findWithTranslations($id);
+        $word = $this->repository->get($id);
 
         if (!$word) {
             throw new WordNotFoundException("Word with id $id not found");
@@ -112,7 +101,7 @@ class WordService
 
         DB::beginTransaction();
         try {
-            $this->repo->delete($word);
+            $this->repository->delete($word);
             DB::commit();
 
             return true;
