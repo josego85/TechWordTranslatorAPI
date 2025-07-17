@@ -13,11 +13,11 @@ use Illuminate\Http\Request;
 
 class TranslationController extends Controller
 {
-    public function __construct(private TranslationService $service) {}
+    public function __construct(private TranslationService $translationService) {}
 
     public function index(Request $request)
     {
-        return $this->service->getAll();
+        return $this->translationService->getAll();
     }
 
     public function show(ShowTranslationRequest $request)
@@ -25,7 +25,7 @@ class TranslationController extends Controller
         $id = $request->route('translation');
 
         try {
-            $translation = $this->service->get($id);
+            $translation = $this->translationService->get($id);
             return response()->json(new TranslationResource($translation));
         } catch (TranslationException $e) {
             return response()->json([
@@ -39,7 +39,7 @@ class TranslationController extends Controller
         $data = $request->validated();
 
         try {
-            $translation = $this->service->create($data);
+            $translation = $this->translationService->create($data);
             return response()->json(new TranslationResource($translation));
         } catch (TranslationException $e) {
             return response()->json([
@@ -54,7 +54,7 @@ class TranslationController extends Controller
         $data = $request->validated();
 
         try {
-            $translation = $this->service->update($id, $data);
+            $translation = $this->translationService->update($id, $data);
             return response()->json(new TranslationResource($translation));
         } catch (TranslationException $e) {
             return response()->json([
@@ -63,8 +63,17 @@ class TranslationController extends Controller
         }
     }
 
-    public function destroy(Request $request, int $id)
+    public function destroy(string $id)
     {
-        return $this->service->delete($id);
+        try {
+            $this->translationService->delete($id);
+            return response()->json([
+                'message' => 'Translations deleted successfully'
+            ]);
+        } catch(TranslationException $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }

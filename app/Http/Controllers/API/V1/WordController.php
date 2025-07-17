@@ -10,7 +10,6 @@ use App\Http\Requests\WordIdRequest;
 use App\Http\Requests\WordIndexRequest;
 use App\Http\Resources\WordCollection;
 use App\Http\Resources\WordResource;
-use Illuminate\Http\Request;
 use App\Services\WordService;
 
 class WordController extends Controller
@@ -22,7 +21,7 @@ class WordController extends Controller
      */
     public function index(WordIndexRequest $request, WordService $wordService)
     {
-        $paginator = $wordService->getAllWordsWithTranslations(
+        $paginator = $wordService->getAll(
             perPage: $request->getPerPage(),
             cursor:  $request->getCursor(),
         );
@@ -79,28 +78,22 @@ class WordController extends Controller
             return response()->json([
                 'message' => $e->getMessage()
             ], 404);
-        }  
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id, WordService $wordService)
+    public function destroy(string $id)
     {
-        $wordsWithTranslations = $wordService->destroyWordWithTranslations(
-            $id
-        );
-        if ($wordsWithTranslations == null) {
+        try {
+            $this->wordService->delete($id);
             return response()->json([
-                'message' => 'Word not found'
-            ], 404);
-        } elseif ($wordsWithTranslations) {
-            return response()->json([
-                'message' => 'Word and translations deleted successfully'
+                'message' => 'Word deleted successfully'
             ]);
-        } else {
+        } catch(WordNotFoundException $e) {
             return response()->json([
-                'message' => 'Error deleting word and translations'
+                'message' => $e->getMessage()
             ], 500);
         }
     }

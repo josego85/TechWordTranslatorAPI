@@ -10,5 +10,5 @@ interface TranslationRepositoryInterface
     public function get(int $id): ?Translation;
     public function create(array $data): Translation;
     public function update(Translation $translation, array $data): ?Translation;
-    public function delete($id): bool;
+    public function delete(Translation $translation): bool;
 }

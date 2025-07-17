@@ -23,7 +23,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Added `entrypoint.sh` script to set proper permissions for Laravel storage and bootstrap folders.
 
 ### Fixed
-- Fixed logic in `show`, `update`, and `store` methods in `WordController`.
+- Fixed logic in `show`, `update`, `store`, and `destroy` methods in `WordController`.
+- Fixed logic in `destroy` method in `TranslationController`.
 - Refactored word and translation request validation using custom `FormRequest` classes.
 - Fixed implementation in **Word** service and repository layers.
 

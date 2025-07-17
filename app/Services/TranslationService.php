@@ -70,8 +70,25 @@ class TranslationService
         }
     }
 
-    public function delete(int $id): bool
+    /**
+     * Delete a english word
+     *
+     * @param int $id
+     * @return void
+     * @throws WordNotFoundException
+     */
+    public function delete(int $id): void
     {
-        return $this->repository->delete($id);
+        $translation = $this->repository->get($id);
+
+        if (!$translation) {
+            throw new TranslationException("Translation with id $id not found");
+        }
+
+        try {
+            $this->repository->delete($translation);
+        } catch (\Exception $e) {
+            throw new TranslationException('Error deleting translation', 0, $e);
+        }
     }
 }

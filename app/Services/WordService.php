@@ -19,9 +19,9 @@ class WordService
      * @param  string|null  $cursor
      * @return CursorPaginator
      */
-    public function getAllWordsWithTranslations(int $perPage, ?string $cursor): CursorPaginator
+    public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {
-        return $this->repository->getAllWordsWithTranslations($perPage, $cursor);
+        return $this->repository->getAll($perPage, $cursor);
     }
 
     /**
@@ -85,13 +85,13 @@ class WordService
     }
 
     /**
-     * Delete a word with its translations.
+     * Delete a english word
      *
      * @param int $id
-     * @return bool
-     * @throws WordNotFoundException|TranslationException
+     * @return void
+     * @throws WordNotFoundException
      */
-    public function destroyWordWithTranslations(int $id): bool
+    public function delete(int $id): void
     {
         $word = $this->repository->get($id);
 
@@ -99,15 +99,10 @@ class WordService
             throw new WordNotFoundException("Word with id $id not found");
         }
 
-        DB::beginTransaction();
         try {
             $this->repository->delete($word);
-            DB::commit();
-
-            return true;
         } catch (\Exception $e) {
-            DB::rollBack();
-            throw new TranslationException('Error deleting word and translations', 0, $e);
+            throw new WordNotFoundException('Error deleting word', 0, $e);
         }
     }
 }

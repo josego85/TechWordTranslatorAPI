@@ -14,19 +14,19 @@ class CacheableWordRepository implements WordRepositoryInterface
         private CacheService $cache
     ) {}
 
-    public function getAllWordsWithTranslations(int $perPage, ?string $cursor): CursorPaginator
+    public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {
         $key = $this->cache->generateWordsKey($perPage, $cursor);
         return $this->cache->remember($key, fn () => 
-            $this->repository->getAllWordsWithTranslations($perPage, $cursor)
+            $this->repository->getAll($perPage, $cursor)
         );
     }
 
-    public function findWithTranslations(int $id): ?Word
+    public function get(int $id): ?Word
     {
         $key = $this->cache->generateWordKey($id);
         return $this->cache->remember($key, fn () =>
-            $this->repository->findWithTranslations($id)
+            $this->repository->get($id)
         );
     }
 
@@ -37,9 +37,9 @@ class CacheableWordRepository implements WordRepositoryInterface
         return $word;
     }
 
-    public function update(Word $word, string $englishWord, array $translations): ?Word
+    public function update(Word $word, string $englishWord): ?Word
     {
-        $updated = $this->repository->update($word, $englishWord, $translations);
+        $updated = $this->repository->update($word, $englishWord);
         if ($updated) {
             $this->cache->forget([
                 $this->cache->generateWordKey($word->id),

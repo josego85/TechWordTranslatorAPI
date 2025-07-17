@@ -33,9 +33,8 @@ class TranslationRepository implements TranslationRepositoryInterface
         return $translation;
     }
 
-    public function delete($id): bool {
-        $translation = $this->get($id);
-
+    public function delete(Translation $translation): bool
+    {
         return $translation->delete();
     }
 }

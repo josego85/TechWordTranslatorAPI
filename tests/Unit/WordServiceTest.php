@@ -46,11 +46,11 @@ class WordServiceTest extends TestCase
         ]);
 
         $this->wordRepositoryMock
-            ->shouldReceive('getAllWordsWithTranslations')
+            ->shouldReceive('getAll')
             ->once()
             ->andReturn($expectedCollection);
 
-        $result = $this->wordService->getAllWordsWithTranslations();
+        $result = $this->wordService->getAll();
 
         $this->assertInstanceOf(Collection::class, $result);
         $this->assertSame($expectedCollection, $result);
