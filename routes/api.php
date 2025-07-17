@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\WordController;
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\TranslationController;
 
 Route::prefix('v1')
   ->name('api.v1.')
@@ -19,8 +20,14 @@ Route::prefix('v1')
         Route::middleware('jwt.verify')->group(function () {
             Route::apiResource('words', WordController::class)
                 ->only('store', 'update', 'destroy');
+
+            Route::apiResource('translations', TranslationController::class)
+                ->only('store', 'update', 'destroy');
         });
    
+        Route::apiResource('translations', TranslationController::class)
+            ->only('index', 'show');
+        
         Route::apiResource('words', WordController::class)
             ->only('index', 'show');
 });
