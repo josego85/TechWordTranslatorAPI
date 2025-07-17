@@ -5,8 +5,10 @@
 - Add PHPUnit
 - Add logs (with partition table for date range)
 - Add filter and order by name in endpoints
-- Add ngnix
 - Add Opcache
 - Monitor (Grafana)
 - Add swagger (dev documentation)
-- Add php cs fix (config)
+- Add docs for xdebug and Nginx
+- Add laravel/pint docs
+- Docker compose dev and prod
+- Add cache for Translation
