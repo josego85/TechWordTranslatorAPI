@@ -34,6 +34,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Fixed logic in `index`, `show`, `update`, `store` and `destroy` methods in `WordController`.
 - Refactored word and translation request validation using custom `FormRequest` classes.
 - Fixed implementation in **Word** service and repository layers.
+- Fixed type casting issues:
+  - Converted route parameter `word` from `string` to `int` in controller before passing to service.
+  - Converted route parameter `translation` from `string` to `int` in controller before passing to service.
+  - Updated `IndexRequest::getCursor()` to return a `?string` instead of a `Stringable`.
 
 ### Refactored
 - Used **PHPStan** to refactor and improve code quality in `TranslationService`.

@@ -36,4 +36,9 @@ class UpdateTranslationRequest extends FormRequest
             'errors' => $validator->errors(),
         ], 422));
     }
+
+    public function getTranslationId(): int
+    {
+        return (int) $this->route('translation');
+    }
 }

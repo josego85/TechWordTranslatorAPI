@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class WordIdRequest extends FormRequest
+class ShowWordRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -32,5 +32,10 @@ class WordIdRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'errors' => $validator->errors(),
         ], 422));
+    }
+
+    public function getWordId(): int
+    {
+        return (int) $this->route('word');
     }
 }

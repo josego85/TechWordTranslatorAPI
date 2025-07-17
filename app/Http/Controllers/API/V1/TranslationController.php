@@ -30,7 +30,7 @@ class TranslationController extends Controller
 
     public function show(ShowTranslationRequest $request)
     {
-        $id = $request->route('translation');
+        $id = $request->getTranslationId();
 
         try {
             $translation = $this->translationService->get($id);
@@ -60,7 +60,7 @@ class TranslationController extends Controller
 
     public function update(UpdateTranslationRequest $request)
     {
-        $id   = $request->route('translation');
+        $id   = $request->getTranslationId();
         $data = $request->validated();
 
         try {
@@ -74,7 +74,7 @@ class TranslationController extends Controller
         }
     }
 
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         try {
             $this->translationService->delete($id);

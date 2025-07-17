@@ -36,4 +36,9 @@ class UpdateWordRequest extends FormRequest
             'errors' => $validator->errors(),
         ], 422));
     }
+
+    public function getWordId(): int
+    {
+        return (int) $this->route('word');
+    }
 }

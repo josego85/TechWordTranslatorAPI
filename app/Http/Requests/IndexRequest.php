@@ -23,6 +23,6 @@ class IndexRequest extends FormRequest
 
     public function getCursor(): ?string
     {
-        return $this->string('cursor');
+        return $this->input('cursor');
     }
 }

@@ -7,9 +7,9 @@ namespace App\Http\Controllers\API\V1;
 use App\Exceptions\WordNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IndexRequest;
+use App\Http\Requests\ShowWordRequest;
 use App\Http\Requests\StoreWordRequest;
 use App\Http\Requests\UpdateWordRequest;
-use App\Http\Requests\WordIdRequest;
 use App\Http\Resources\WordCollection;
 use App\Http\Resources\WordResource;
 use App\Services\WordService;
@@ -34,9 +34,9 @@ class WordController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(WordIdRequest $request)
+    public function show(ShowWordRequest $request)
     {
-        $id = $request->route('word');
+        $id = $request->getWordId();
 
         try {
             $word = $this->wordService->get($id);
@@ -72,7 +72,7 @@ class WordController extends Controller
      */
     public function update(UpdateWordRequest $request)
     {
-        $id          = $request->route('word');
+        $id          = $request->getWordId();
         $englishWord = $request->input('english_word');
 
         try {
@@ -89,7 +89,7 @@ class WordController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         try {
             $this->wordService->delete($id);
