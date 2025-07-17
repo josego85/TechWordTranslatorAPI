@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WordIndexRequest extends FormRequest
+class IndexRequest extends FormRequest
 {
     public function rules(): array
-    { 
+    {
         return [
-            'per_page'  => 'sometimes|integer|min:1|max:100',
-            'cursor'    => 'sometimes|string',
+            'per_page' => 'sometimes|integer|min:1|max:100',
+            'cursor' => 'sometimes|string',
         ];
     }
 
@@ -21,6 +23,6 @@ class WordIndexRequest extends FormRequest
 
     public function getCursor(): ?string
     {
-        return $this->string('cursor');
+        return $this->input('cursor');
     }
 }

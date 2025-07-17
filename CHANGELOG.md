@@ -4,6 +4,60 @@ All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and adheres to the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) guidelines.
 
 ---
+
+## [v1.13.0] - 2025-07-17
+
+### Added
+- Integrated **GraphQL** support for querying `Word` and `Translation` entities.
+- Added GraphQL types for `Word` and `Translation` models.
+- Implemented GraphQL queries:
+  - `words` and `word(id: ID!)` to fetch English words.
+  - `translations` and `translation(id: ID!)` to fetch Spanish and German translations.
+  - Query to fetch translations by word ID.
+- Added GraphQL schema definitions including types and query declarations (no custom resolvers).
+- Added **Xdebug** support for PHP debugging.
+- Added **Nginx** container as a web server for the PHP-FPM service.
+- Added `index`, `show`, `update`, `store`, and `destroy` methods to `TranslationController`.
+- Added custom `FormRequest` classes for validation in translation and word endpoints.
+- Added **service** and **repository** layers for managing `Translation` logic.
+- Added `entrypoint.sh` script to set proper permissions for Laravel storage and bootstrap folders.
+- Added Laravel Pint configuration.
+- Added Composer commands:
+  - `"pint-test": "./vendor/bin/pint --config=pint.json --test"`
+  - `"pint": "./vendor/bin/pint --config=pint.json"`
+
+### Changed
+- Updated `README.md`:
+  - Refreshed version badges.
+- Updated `TODO.md` with completed and pending tasks.
+
+### Fixed
+- Fixed logic in `index`, `show`, `update`, `store`, and `destroy` methods in `WordController`.
+- Refactored word and translation request validation using custom `FormRequest` classes.
+- Fixed implementation in **Word** service and repository layers.
+- Fixed type casting issues:
+  - Converted route parameter `word` from `string` to `int` in controller before passing to service.
+  - Converted route parameter `translation` from `string` to `int` in controller before passing to service.
+  - Updated `IndexRequest::getCursor()` to return a `?string` instead of a `Stringable`.
+- Removed duplicate Xdebug extension line in `xdebug.ini` that caused the extension to load twice.
+- Fixed incorrect PHPStan configuration:
+  - Updated `phpstan.neon` to reference `vendor/larastan/larastan/extension.neon`.
+
+### Refactored
+- Used **PHPStan** to refactor and improve code quality in `TranslationService`.
+- Refactored codebase using Laravel Pint with its configuration.
+
+### Updated
+- Updated package `laravel/pint` from version `v1.11.0` to `v1.24.0`.
+
+### Removed
+- Removed package `laravel/sail`.
+
+### Replaced
+- Replaced abandoned package `nunomaduro/larastan` with `larastan/larastan`.
+
+---
+
 ## [v1.12.3] - 2025-07-14
 
 ### Added
@@ -30,12 +84,16 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - **Fixed** `docs/api/README.md`:
   - Clarified authentication endpoints
 
+---
+
 ## [v1.12.2] - 2025-07-13
 
 ### Changed
 - Upgraded Laravel framework from **v11.44.7** to **v12.20.0**.
 - Updated `README.md`:
   - Refreshed version badges.
+
+---
 
 ## [v1.12.1] - 2025-07-11
 
@@ -50,6 +108,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - `axios`
   - `laravel-vite-plugin`
   - `vite`
+
+---
 
 ## [v1.12.0] - 2025-06-12
 
@@ -74,6 +134,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Added Redis container configuration in `docker-compose.yml`
 - Set up Redis connection parameters in `.env.example`
 
+---
+
 ## [v1.11.0] - 2025-05-11
 
 ### Changed
@@ -81,6 +143,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Added
 - Added `docker/mysql/conf.d/my-overrides.cnf` file for variable overrides adapted to MySQL 8.4.5.
+
+---
 
 ## [v1.10.0] - 2025-05-10
 
@@ -113,6 +177,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
     }
   }
 
+---
+
 ## [v1.9.1] - 2025-05-02
 
 ### Documentation
@@ -120,6 +186,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Added detailed instructions for generating coverage reports
   - Documented coverage configuration for SonarQube integration
   - Updated setup steps in SonarQube documentation
+
+---
 
 ## [v1.9.0] - 2025-05-01
 
@@ -145,6 +213,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Best practices for token management
   - Project improvements based on analysis
 
+---
+
 ## [v1.8.0] - 2025-04-15
 
 ### Added
@@ -159,6 +229,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Documentation
 - Enhanced the **README** file with updated badges, a comprehensive table of contents, and improved formatting for clarity.
+
+---
 
 ## [v1.7.0]
 

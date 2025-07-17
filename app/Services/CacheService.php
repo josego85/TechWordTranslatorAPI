@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\Cache;
@@ -16,9 +18,10 @@ class CacheService
     public function forget(string|array $keys): void
     {
         if (is_array($keys)) {
-            foreach($keys as $key) {
+            foreach ($keys as $key) {
                 Cache::forget($key);
             }
+
             return;
         }
         Cache::forget($keys);

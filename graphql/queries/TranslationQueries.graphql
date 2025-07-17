@@ -1,0 +1,4 @@
+extend type Query {
+  translations: [Translation!]! @all(model: "App\\Models\\Translation")
+  translation(id: ID! @whereKey): Translation @find(model: "App\\Models\\Translation")
+}

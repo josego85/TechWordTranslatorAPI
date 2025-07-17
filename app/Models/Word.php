@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Translation;
 
 class Word extends Model
 {
@@ -12,10 +13,10 @@ class Word extends Model
 
     /**
      * The primary key associated with the table
-     * 
+     *
      * @var string
      */
-    protected $primaryKey = "id";
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'english_word',
@@ -23,8 +24,6 @@ class Word extends Model
 
     /**
      * Get the translations for the word.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function translations(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
@@ -39,7 +38,7 @@ class Word extends Model
     public function updateTranslations($translations)
     {
         $spanish_word = $translations['spanish_word'] ?? null;
-        $german_word = $translations['german_word'] ?? null;
+        $german_word  = $translations['german_word'] ?? null;
 
         if ($spanish_word !== null) {
             $this->translations()->update(['spanish_word' => $spanish_word]);

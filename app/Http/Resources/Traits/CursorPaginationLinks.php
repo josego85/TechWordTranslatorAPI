@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\Traits;
 
 use Illuminate\Http\Request;
@@ -11,14 +13,12 @@ use Illuminate\Pagination\CursorPaginator;
 trait CursorPaginationLinks
 {
     /**
-     * @param  Request         $request
-     * @param  CursorPaginator $paginator
      * @return array{next: string|null, prev: string|null}
      */
     protected function buildCursorLinks(Request $request, CursorPaginator $paginator): array
     {
         $links = [];
-        $map = [
+        $map   = [
             'next' => 'nextCursor',
             'prev' => 'previousCursor',
         ];

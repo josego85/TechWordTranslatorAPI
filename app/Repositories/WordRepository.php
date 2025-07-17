@@ -1,55 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Interfaces\WordRepositoryInterface;
-use Illuminate\Pagination\CursorPaginator;
 use App\Models\Word;
+use Illuminate\Pagination\CursorPaginator;
 
 class WordRepository implements WordRepositoryInterface
 {
-    public function __construct(protected Word $model){}
+    public function __construct(protected Word $model) {}
 
-    public function getAllWordsWithTranslations(int $perPage, ?string $cursor): CursorPaginator
+    public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {
         return $this->model
-          ->with('translations:id,word_id,spanish_word,german_word')
-          ->select(['id', 'english_word'])
-          ->orderBy('id')
-          ->cursorPaginate(perPage: $perPage, cursorName: 'cursor', cursor: $cursor);
+            ->select(['id', 'english_word'])
+            ->orderBy('id')
+            ->cursorPaginate(perPage: $perPage, cursorName: 'cursor', cursor: $cursor);
     }
 
-    public function findWithTranslations(int $id): ?Word
+    public function get(int $id): ?Word
     {
-        return $this->model->with(['translations' => function ($query) {
-            $query->select(['word_id', 'spanish_word', 'german_word']);
-        }])->select(['id', 'english_word'])->find($id);
+        return $this->model
+            ->select(['id', 'english_word'])
+            ->where('id', $id)
+            ->first();
     }
 
     public function create(array $data): Word
     {
-        $word = $this->model->create([
-            'english_word' => $data['english_word']
-        ]);
-        $word->translations()->create([
-            'spanish_word' => $data['translations']['spanish_word'],
-            'german_word' => $data['translations']['german_word']
-        ]);
-
-        return $word;
+        return $this->model->create($data);
     }
 
-    public function update(Word $word, string $englishWord, array $translations): ?Word
+    public function update(Word $word, string $englishWord): ?Word
     {
         $word->updateAttributes(['english_word' => $englishWord]);
-        $word->updateTranslations($translations);
 
         return $word;
     }
 
     public function delete(Word $word): bool
     {
-        $word->translations()->delete();
         return $word->delete();
     }
 }

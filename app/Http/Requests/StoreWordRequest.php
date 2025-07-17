@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-class WordTranslationRequest extends FormRequest
+class StoreWordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +26,14 @@ class WordTranslationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'english_word' => 'required|max:100',
-            'spanish_word' => 'required|max:100',
-            'german_word' => 'required|max:100',
+            'english_word' => 'string|max:255',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors(),
+        ], 422));
     }
 }

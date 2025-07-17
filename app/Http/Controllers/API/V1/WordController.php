@@ -1,111 +1,105 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API\V1;
 
+use App\Exceptions\WordNotFoundException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\WordIndexRequest;
+use App\Http\Requests\IndexRequest;
+use App\Http\Requests\ShowWordRequest;
+use App\Http\Requests\StoreWordRequest;
+use App\Http\Requests\UpdateWordRequest;
 use App\Http\Resources\WordCollection;
 use App\Http\Resources\WordResource;
-use Illuminate\Http\Request;
 use App\Services\WordService;
 
 class WordController extends Controller
 {
+    public function __construct(private WordService $wordService) {}
+
     /**
      * Display a listing of the resource.
      */
-    public function index(WordIndexRequest $request, WordService $wordService)
+    public function index(IndexRequest $request)
     {
-        $paginator = $wordService->getAllWordsWithTranslations(
+        $paginator = $this->wordService->getAll(
             perPage: $request->getPerPage(),
-            cursor:  $request->getCursor(),
+            cursor: $request->getCursor(),
         );
 
         return new WordCollection($paginator);
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request, WordService $wordService)
-    {
-        $requestData = [
-            'english_word' => $request->input('english_word'),
-            'translations' => $request->input('translations')
-        ];
-
-        $wordsWithTranslations = $wordService->createWordWithTranslations(
-            $requestData
-        );
-        if ($wordsWithTranslations) {
-            return response()->json([
-                'message' => 'Word and translations created successfully'
-            ], 201);
-        } else {
-            return response()->json([
-                'message' => 'Error creating word and translations'
-            ], 500);
-        }
-    }
-
-    /**
      * Display the specified resource.
      */
-    public function show(string $id, WordService $wordService)
+    public function show(ShowWordRequest $request)
     {
-        $word = $wordService->showWordWithTranslations($id);
+        $id = $request->getWordId();
 
-        if (!$word) {
+        try {
+            $word = $this->wordService->get($id);
+
+            return response()->json(new WordResource($word));
+        } catch (WordNotFoundException $e) {
             return response()->json([
-                'message' => 'Word not found'
+                'message' => $e->getMessage(),
             ], 404);
         }
-
-        return response()->json(new WordResource($word));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Store a new english word
      */
-    public function update(Request $request, string $id, WordService $wordService)
+    public function store(StoreWordRequest $request)
     {
-        $englishWord = $request->input('english_word');
-        $translations = $request->input('translations', []);
+        $data = $request->validated();
 
-        $wordsWithTranslations = $wordService->updateWordWithTranslations(
-            $id,
-            $englishWord,
-            $translations
-        );
+        try {
+            $word = $this->wordService->create($data);
 
-        if (!$wordsWithTranslations) {
+            return response()->json(new WordResource($word));
+        } catch (WordNotFoundException $e) {
             return response()->json([
-                'message' => 'Word not found'
+                'message' => $e->getMessage(),
             ], 404);
         }
+    }
 
-        return response()->json($wordsWithTranslations);
+    /**
+     * Update the english word.
+     */
+    public function update(UpdateWordRequest $request)
+    {
+        $id          = $request->getWordId();
+        $englishWord = $request->input('english_word');
+
+        try {
+            $word = $this->wordService->update($id, $englishWord);
+
+            return response()->json(new WordResource($word));
+        } catch (WordNotFoundException $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 404);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id, WordService $wordService)
+    public function destroy(int $id)
     {
-        $wordsWithTranslations = $wordService->destroyWordWithTranslations(
-            $id
-        );
-        if ($wordsWithTranslations == null) {
+        try {
+            $this->wordService->delete($id);
+
             return response()->json([
-                'message' => 'Word not found'
-            ], 404);
-        } elseif ($wordsWithTranslations) {
-            return response()->json([
-                'message' => 'Word and translations deleted successfully'
+                'message' => 'Word deleted successfully',
             ]);
-        } else {
+        } catch (WordNotFoundException $e) {
             return response()->json([
-                'message' => 'Error deleting word and translations'
+                'message' => $e->getMessage(),
             ], 500);
         }
     }

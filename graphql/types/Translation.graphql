@@ -1,0 +1,7 @@
+type Translation {
+  id: ID!
+  wordId: ID!
+  spanish_word: String!
+  german_word: String!
+  word: Word! @belongsTo
+}

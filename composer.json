@@ -13,18 +13,17 @@
         "laravel/framework": "12.20.0",
         "laravel/sanctum": "v4.0.8",
         "laravel/tinker": "v2.10.1",
+        "nuwave/lighthouse": "6.62",
         "php-open-source-saver/jwt-auth": "2.8.2",
         "predis/predis": "3.0.1",
         "spatie/laravel-csp": "2.10.3"
     },
     "require-dev": {
         "fakerphp/faker": "v1.23.1",
-        "laravel/pint": "v1.11.0",
-        "laravel/sail": "1.41.1",
+        "laravel/pint": "1.24.0",
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "v8.8.2",
-        "nunomaduro/larastan": "3.5",
-        "php-cs-fixer/shim": "v3.75.0",
+        "larastan/larastan": "3.5",
         "phpunit/phpunit": "^11.5.27",
         "rogervila/php-sonarqube-scanner": "1.1",
         "spatie/laravel-ignition": "2.9.1"
@@ -55,7 +54,9 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "phpstan": "vendor/bin/phpstan analyse --memory-limit=512M"
+        "phpstan": "vendor/bin/phpstan analyse --memory-limit=512M",
+        "pint-test": "./vendor/bin/pint --config=pint.json --test",
+        "pint": "./vendor/bin/pint --config=pint.json"
     },
     "extra": {
         "laravel": {

@@ -1,0 +1,4 @@
+extend type Query {
+    words: [Word!]! @all(model: "App\\Models\\Word")
+    word(id: ID! @whereKey): Word @find(model: "App\\Models\\Word")
+}

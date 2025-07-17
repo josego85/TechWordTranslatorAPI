@@ -1,0 +1,4 @@
+#import types/Word.graphql
+#import types/Translation.graphql
+#import queries/WordQueries.graphql
+#import queries/TranslationQueries.graphql
