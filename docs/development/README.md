@@ -65,8 +65,10 @@ vendor/bin/pint --test
 
 ---
 
+
 ## Tool Integration
 
-### Code Quality
+### Code Quality & Refactoring
 
-[See SonarQube documentation](sonarqube.md)
+- **SonarQube**: For static analysis and quality metrics. See SonarQube documentation.
+- **Rector**: For automated code refactoring. See Rector documentation.

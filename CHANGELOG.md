@@ -8,6 +8,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Added
 - Added **Rector** development dependency to the project for automated code refactoring.
+- Added documentation about Rector usage and configuration (`rector.md`).
 
 ### Changed
 - Ran Rector to improve code quality:
