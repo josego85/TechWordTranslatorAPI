@@ -12,8 +12,8 @@ use Illuminate\Pagination\CursorPaginator;
 class CacheableWordRepository implements WordRepositoryInterface
 {
     public function __construct(
-        private WordRepositoryInterface $repository,
-        private CacheService $cache
+        private readonly WordRepositoryInterface $repository,
+        private readonly CacheService $cache
     ) {}
 
     public function getAll(int $perPage, ?string $cursor): CursorPaginator
@@ -47,7 +47,7 @@ class CacheableWordRepository implements WordRepositoryInterface
     public function update(Word $word, string $englishWord): ?Word
     {
         $updated = $this->repository->update($word, $englishWord);
-        if ($updated) {
+        if ($updated instanceof \App\Models\Word) {
             $this->cache->forget([
                 $this->cache->generateWordKey($word->id),
                 'words:*',

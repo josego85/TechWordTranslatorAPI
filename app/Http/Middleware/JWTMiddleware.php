@@ -27,11 +27,11 @@ class JWTMiddleware
             if (! $user) {
                 return response()->json(['message' => 'User not found'], 401);
             }
-        } catch (TokenExpiredException $e) {
+        } catch (TokenExpiredException) {
             return response()->json(['message' => 'Token has expired'], 401);
-        } catch (TokenInvalidException $e) {
+        } catch (TokenInvalidException) {
             return response()->json(['message' => 'Invalid token'], 401);
-        } catch (JWTException $e) {
+        } catch (JWTException) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 

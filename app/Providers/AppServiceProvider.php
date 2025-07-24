@@ -19,12 +19,11 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[\Override]
     public function register(): void
     {
         // Bind CacheService as a singleton
-        $this->app->singleton(CacheService::class, function($app) {
-            return new CacheService;
-        });
+        $this->app->singleton(CacheService::class, fn($app) => new CacheService);
 
         // Bind WordRepositoryInterface with caching decorator
         $this->app->bind(WordRepositoryInterface::class, function($app) {

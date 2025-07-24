@@ -22,11 +22,13 @@ class ShowTranslationRequest extends FormRequest
         ];
     }
 
+    #[\Override]
     public function validationData()
     {
         return $this->route()->parameters();
     }
 
+    #[\Override]
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([

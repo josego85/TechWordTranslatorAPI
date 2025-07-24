@@ -11,7 +11,7 @@ use Illuminate\Pagination\CursorPaginator;
 
 class TranslationService
 {
-    public function __construct(private TranslationRepositoryInterface $repository) {}
+    public function __construct(private readonly TranslationRepositoryInterface $repository) {}
 
     public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {
@@ -22,7 +22,7 @@ class TranslationService
     {
         $translation = $this->repository->get($id);
 
-        if (! $translation) {
+        if (!$translation instanceof \App\Models\Translation) {
             throw new TranslationException("Translation with id $id not found");
         }
 
@@ -54,7 +54,7 @@ class TranslationService
     {
         $translation = $this->repository->get($id);
 
-        if (! $translation) {
+        if (!$translation instanceof \App\Models\Translation) {
             throw new TranslationException("Translation with id $id not found");
         }
 
@@ -80,7 +80,7 @@ class TranslationService
     {
         $translation = $this->repository->get($id);
 
-        if (! $translation) {
+        if (!$translation instanceof \App\Models\Translation) {
             throw new TranslationException("Translation with id $id not found");
         }
 

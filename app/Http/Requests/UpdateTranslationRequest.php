@@ -25,11 +25,13 @@ class UpdateTranslationRequest extends FormRequest
         ];
     }
 
+    #[\Override]
     public function validationData()
     {
         return array_merge($this->all(), $this->route()->parameters());
     }
 
+    #[\Override]
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([

@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and adheres to the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) guidelines.
 
 ---
+## [v1.13.1] - 2025-07-24
+
+### Added
+- Added **Rector** development dependency to the project for automated code refactoring.
+- Added documentation about Rector usage and configuration (`rector.md`).
+
+### Changed
+- Ran Rector to improve code quality:
+  - Added `#[\Override]` attribute to applicable overridden methods automatically.
+  - Added `readonly` keyword to constructor-promoted properties that are only assigned once and never mutated.
+  - Added explicit type declarations (e.g., `int`) to class constants for improved type safety and clarity.
+  - Refactored service container bindings to use arrow functions (`fn`) for more concise syntax (e.g., `CacheService` singleton binding).
+  - Updated `catch` blocks to omit unused exception variables using PHP 8 syntax for cleaner exception handling.
+  - Added explicit string casting when calling `explode()` on environment variables to ensure type safety and prevent runtime errors.
+  - Updated conditional checks to verify that variables are instances of expected classes (e.g., `$updated instanceof \App\Models\Word`) for improved type safety.
+  - Changed empty check on arrays to strict comparison (`$guards === []`) for more precise logic handling.
 
 ## [v1.13.0] - 2025-07-17
 

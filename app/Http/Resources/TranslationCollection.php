@@ -23,6 +23,7 @@ class TranslationCollection extends ResourceCollection
      * @param  \Illuminate\Http\Request $request
      * @return array{data: mixed[]}
      */
+    #[\Override]
     public function toArray($request): array
     {
         return [
@@ -36,6 +37,7 @@ class TranslationCollection extends ResourceCollection
      * @param  \Illuminate\Http\Request                                  $request
      * @return array{links: array{next: string|null, prev: string|null}}
      */
+    #[\Override]
     public function with($request): array
     {
         return [

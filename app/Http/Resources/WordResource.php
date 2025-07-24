@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class WordResource extends JsonResource
 {
+    #[\Override]
     public function toArray($request): array
     {
         return [
