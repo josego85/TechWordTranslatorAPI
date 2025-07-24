@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and adheres to the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) guidelines.
 
 ---
+## [v1.13.1] - 2025-07-24
+
+### Added
+- Added **Rector** development dependency to the project for automated code refactoring.
+
+### Changed
+- Ran Rector to improve code quality:
+  - Added `#[\Override]` attribute to applicable overridden methods automatically.
+  - Added `readonly` keyword to constructor-promoted properties that are only assigned once and never mutated.
+  - Added explicit type declarations (e.g., `int`) to class constants for improved type safety and clarity.
 
 ## [v1.13.0] - 2025-07-17
 
