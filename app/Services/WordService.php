@@ -45,7 +45,7 @@ class WordService
     {
         $word = $this->repository->get($id);
 
-        if (! $word) {
+        if (!$word instanceof \App\Models\Word) {
             throw new WordNotFoundException("Word with id $id not found");
         }
 
@@ -62,7 +62,7 @@ class WordService
     {
         $word = $this->repository->get($id);
 
-        if (! $word) {
+        if (!$word instanceof \App\Models\Word) {
             throw new WordNotFoundException("Word with id $id not found");
         }
 
@@ -82,7 +82,7 @@ class WordService
     {
         $word = $this->repository->get($id);
 
-        if (! $word) {
+        if (!$word instanceof \App\Models\Word) {
             throw new WordNotFoundException("Word with id $id not found");
         }
 
