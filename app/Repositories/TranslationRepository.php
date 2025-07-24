@@ -10,7 +10,7 @@ use Illuminate\Pagination\CursorPaginator;
 
 class TranslationRepository implements TranslationRepositoryInterface
 {
-    public function __construct(private Translation $model) {}
+    public function __construct(private readonly Translation $model) {}
 
     public function getAll(int $perPage, ?string $cursor): CursorPaginator
     {

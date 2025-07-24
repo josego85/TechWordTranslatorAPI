@@ -12,8 +12,8 @@ use Illuminate\Pagination\CursorPaginator;
 class CacheableWordRepository implements WordRepositoryInterface
 {
     public function __construct(
-        private WordRepositoryInterface $repository,
-        private CacheService $cache
+        private readonly WordRepositoryInterface $repository,
+        private readonly CacheService $cache
     ) {}
 
     public function getAll(int $perPage, ?string $cursor): CursorPaginator
