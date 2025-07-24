@@ -17,6 +17,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Refactored service container bindings to use arrow functions (`fn`) for more concise syntax (e.g., `CacheService` singleton binding).
   - Updated `catch` blocks to omit unused exception variables using PHP 8 syntax for cleaner exception handling.
   - Added explicit string casting when calling `explode()` on environment variables to ensure type safety and prevent runtime errors.
+  - Updated conditional checks to verify that variables are instances of expected classes (e.g., `$updated instanceof \App\Models\Word`) for improved type safety.
+  - Changed empty check on arrays to strict comparison (`$guards === []`) for more precise logic handling.
 
 ## [v1.13.0] - 2025-07-17
 

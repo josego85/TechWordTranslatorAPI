@@ -18,14 +18,14 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
     ])
     ->withPhpVersion(80400) // ✅ PHP 8.4
-    ->withPhpSets();
-    // ->withSets([
+    ->withPhpSets()
+    ->withSets([
     //     LaravelLevelSetList::UP_TO_LARAVEL_110,
     //     LaravelLevelSetList::UP_TO_LARAVEL_120,
 
-    //     LaravelSetList::LARAVEL_CODE_QUALITY,
-    //     LaravelSetList::LARAVEL_COLLECTION,
+        LaravelSetList::LARAVEL_CODE_QUALITY,
+        LaravelSetList::LARAVEL_COLLECTION,
 
-    //     SetList::CODE_QUALITY,
+        SetList::CODE_QUALITY,
     //     SetList::DEAD_CODE,
-    // ]);
+    ]);
