@@ -23,6 +23,7 @@ class UpdateWordRequest extends FormRequest
         ];
     }
 
+    #[\Override]
     public function validationData()
     {
         return array_merge($this->all(), [
@@ -30,6 +31,7 @@ class UpdateWordRequest extends FormRequest
         ]);
     }
 
+    #[\Override]
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([

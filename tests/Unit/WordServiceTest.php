@@ -21,6 +21,7 @@ class WordServiceTest extends TestCase
 
     protected WordService $wordService;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -34,6 +35,7 @@ class WordServiceTest extends TestCase
         DB::shouldReceive('rollBack')->byDefault();
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         Mockery::close();
