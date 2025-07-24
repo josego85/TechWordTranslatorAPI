@@ -14,6 +14,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Added `#[\Override]` attribute to applicable overridden methods automatically.
   - Added `readonly` keyword to constructor-promoted properties that are only assigned once and never mutated.
   - Added explicit type declarations (e.g., `int`) to class constants for improved type safety and clarity.
+  - Refactored service container bindings to use arrow functions (`fn`) for more concise syntax (e.g., `CacheService` singleton binding).
 
 ## [v1.13.0] - 2025-07-17
 
