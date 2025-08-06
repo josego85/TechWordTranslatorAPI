@@ -5,7 +5,7 @@
 [![PHP Version](https://img.shields.io/badge/PHP-8.4.11-blue.svg)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/Laravel-12.21.0-green.svg)](https://laravel.com/)
 [![MySQL Version](https://img.shields.io/badge/MySQL-8.4.6-orange.svg?logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Redis Version](https://img.shields.io/badge/Redis-7.4.5-red.svg?logo=redis&logoColor=white)](https://redis.io/)
+[![Redis Version](https://img.shields.io/badge/Redis-8.0.3-red.svg?logo=redis&logoColor=white)](https://redis.io/)
 [![Node.js Version](https://img.shields.io/badge/Node.js-v22.18.0-green.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![NPM Version](https://img.shields.io/badge/NPM-10.9.2-red.svg?logo=npm&logoColor=white)](https://www.npmjs.com/)
 [![PHPUnit](https://img.shields.io/badge/PHPUnit-10.5.45-blue?logo=php&logoColor=white)](https://phpunit.de/)

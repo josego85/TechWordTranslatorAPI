@@ -9,10 +9,11 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 ### Updated
 - Updated package `laravel/framework` from version `12.20.0` to `12.21.0`.
 - Updated package `larastan/larastan` from version `3.5` to `3.6.0`.
-- Upgraded PHP-FPM version in Dockerfile from 8.4.10 to 8.4.11
-- Updated Node.js version in Dockerfile from 22.17.0 to 22.18.0
-- Updated Nginx version in Docker Compose from 1.25 to 1.29.0
+- Updated PHP-FPM image in Dockerfile from 8.4.10 to 8.4.11
+- Updated Node.js image in Dockerfile from 22.17.0 to 22.18.0
+- Updated Nginx image in Docker Compose from 1.25 to 1.29.0
 - Updated MySQL image in Docker Compose from 8.4.5 to 8.4.6
+- Upgrated Redis image in Docker Compose from 7.4.5 to 8.0.3
 
 ## [v1.13.1] - 2025-07-24
 
