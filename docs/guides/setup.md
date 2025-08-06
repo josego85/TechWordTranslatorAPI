@@ -9,7 +9,7 @@ This guide will help you setup the TechWordTranslatorAPI locally.
 - Composer 2.8.9
 - Node.js v22.18.0 & NPM 10.9.2
 - Docker & Docker Compose
-- MySQL 8.4.5
+- MySQL 8.4.6
 - Redis 7.4.5
 
 ## Installation
