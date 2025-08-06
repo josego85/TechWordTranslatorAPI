@@ -18,7 +18,7 @@ services:
       - "host.docker.internal:host-gateway"
 
   nginx:
-    image: nginx:1.25
+    image: nginx:1.29.0
     container_name: nginx
     restart: unless-stopped
     ports:
