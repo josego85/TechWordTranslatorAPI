@@ -10,6 +10,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Updated package `laravel/framework` from version `12.20.0` to `12.21.0`.
 - Updated package `larastan/larastan` from version `3.5` to `3.6.0`.
 - Upgraded PHP-FPM from 8.4.10 to 8.4.11
+- Updated Node.js version in Dockerfile from 22.17.0 to 22.18.0
 
 ## [v1.13.1] - 2025-07-24
 
