@@ -8,7 +8,7 @@ COPY . .
 RUN npm run build
 
 
-FROM php:8.4.10-fpm
+FROM php:8.4.11-fpm
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
