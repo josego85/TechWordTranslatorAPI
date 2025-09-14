@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and adheres to the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) guidelines.
 
 ---
+
+## [v1.13.2] - 2025-09-14
+
+### Fixed
+- Upgraded `axios` to version >=1.12.0 to address high-severity DoS vulnerability (GHSA-4hjh-wcwx-xvwj).
+- Upgraded `vite` to version >7.0.6 to resolve vulnerabilities related to middleware serving files with the same name as the public directory (GHSA-g4jq-h2w9-997c) and `server.fs` settings not being applied to HTML files (GHSA-jqfw-vq24-v9c3).
+- Ran `npm audit fix` to address all reported vulnerabilities, resulting in 0 vulnerabilities.
+
+---
+
 ## [v1.13.1] - 2025-07-24
 
 ### Added
