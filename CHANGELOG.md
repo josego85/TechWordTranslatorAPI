@@ -5,6 +5,22 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.13.3] - 2025-10-31
+
+### Changed
+- Upgraded PHP-FPM from 8.4.10 to 8.4.14
+- Updated Node.js version in Dockerfile from 22.17.0 to 22.21.1
+- Updated MySQL Docker image from 8.4.5 to 8.4.7
+- Updated Nginx Docker image from 1.25.0 to 1.29.3
+
+### Improved
+
+- **Docker Compose Profiles**: Implemented profile-based architecture for optional development tools in `docker-compose.override.yml`
+  - Added `quality` profile for SonarQube (code quality analysis) and Sonar Scanner cli
+  - Added `tools` profile for enabling all optional tools at once
+  - Optimized default development startup by making resource-intensive tools opt-in
+  - Enhanced developer experience with faster startup times for daily development
+
 ## [v1.13.2] - 2025-09-14
 
 ### Fixed

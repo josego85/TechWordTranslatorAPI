@@ -18,7 +18,7 @@ services:
       - "host.docker.internal:host-gateway"
 
   nginx:
-    image: nginx:1.25
+    image: nginx:1.29.3
     container_name: nginx
     restart: unless-stopped
     ports:
@@ -32,7 +32,7 @@ services:
       - app-network
 
   mysql:
-    image: mysql:8.4.5
+    image: mysql:8.4.7
     container_name: mysql8
     restart: unless-stopped
     ports:
@@ -61,6 +61,9 @@ services:
   sonarqube:
     image: sonarqube:latest
     container_name: sonarqube
+    profiles:
+      - tools
+      - quality
     ports:
       - '9000:9000'
     environment:
@@ -74,6 +77,9 @@ services:
 
   scanner:
     image: sonarsource/sonar-scanner-cli:5.0
+    profiles:
+      - tools
+      - quality
     volumes:
       - ./:/usr/src
     working_dir: /usr/src
