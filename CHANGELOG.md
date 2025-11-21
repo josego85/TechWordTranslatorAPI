@@ -5,21 +5,49 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
-## [v1.13.3] - 2025-10-31
+## [v1.14.0] - 2025-11-21
 
 ### Changed
+- **BREAKING**: Replaced cursor-based pagination with offset pagination in `GET /api/v1/words`
+  - Removed `cursor` parameter, added `page` parameter
+  - Changed from `CursorPaginator` to `LengthAwarePaginator`
+  - Removed cursor pagination links from response
+- **BREAKING**: Normalized `translations` table structure
+  - Changed from multiple language columns (`spanish_word`, `german_word`) to single row per translation with `language` and `translation` columns
+  - Added migration to safely migrate existing data
+  - Supports unlimited languages via ISO 639-1 codes (en, es, de, fr, etc)
+- **BREAKING**: Updated API response format in `WordResource`
+  - Changed `english_word` field to `word`
+  - Added `translations` array with simplified structure (removed `id`, `word_id`, `created_at`, `updated_at` from translations)
+  - Translations now only include `language` and `translation` fields
 - Upgraded PHP-FPM from 8.4.10 to 8.4.15
 - Updated Node.js version in Dockerfile from 22.17.0 to 22.21.1
 - Updated MySQL Docker image from 8.4.5 to 8.4.7
 - Updated Nginx Docker image from 1.25.0 to 1.29.3
 
-### Improved
+### Added
+- Added search functionality to `GET /api/v1/words` endpoint
+  - New `search` query parameter for filtering words
+  - Searches across English words and all translations
+- Added `WordFactory` and `TranslationFactory` for testing and seeding
+- Added comprehensive `WordSeeder` with 25 technical terms and translations
+- Added helper methods to `Word` model:
+  - `getTranslation(string $language): ?Translation` - Get translation for specific language
+  - `setTranslation(string $language, string $translation): Translation` - Update or create translation
+- Added `scopeLanguage` query scope to `Translation` model
 
+### Improved
 - **Docker Compose Profiles**: Implemented profile-based architecture for optional development tools in `docker-compose.override.yml`
   - Added `quality` profile for SonarQube (code quality analysis) and Sonar Scanner cli
   - Added `tools` profile for enabling all optional tools at once
   - Optimized default development startup by making resource-intensive tools opt-in
   - Enhanced developer experience with faster startup times for daily development
+
+### Removed
+- Removed `CursorPaginationLinks` trait and cursor pagination support
+- Removed `spanish_word` and `german_word` columns from translations table
+
+---
 
 ## [v1.13.2] - 2025-09-14
 

@@ -12,7 +12,8 @@ class IndexRequest extends FormRequest
     {
         return [
             'per_page' => 'sometimes|integer|min:1|max:100',
-            'cursor' => 'sometimes|string',
+            'page' => 'sometimes|integer|min:1',
+            'search' => 'sometimes|string|min:1|max:255',
         ];
     }
 
@@ -21,8 +22,13 @@ class IndexRequest extends FormRequest
         return $this->integer('per_page', 15);
     }
 
-    public function getCursor(): ?string
+    public function getPage(): int
     {
-        return $this->input('cursor');
+        return $this->integer('page', 1);
+    }
+
+    public function getSearch(): ?string
+    {
+        return $this->input('search');
     }
 }

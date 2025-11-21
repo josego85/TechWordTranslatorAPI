@@ -25,7 +25,8 @@ class WordController extends Controller
     {
         $paginator = $this->wordService->getAll(
             perPage: $request->getPerPage(),
-            cursor: $request->getCursor(),
+            page: $request->getPage(),
+            search: $request->getSearch(),
         );
 
         return new WordCollection($paginator);

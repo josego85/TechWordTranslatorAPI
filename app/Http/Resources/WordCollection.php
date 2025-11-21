@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\Traits\CursorPaginationLinks;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 /**
- * ResourceCollection for Word models, includes cursor pagination links.
+ * ResourceCollection for Word models.
  */
 class WordCollection extends ResourceCollection
 {
-    use CursorPaginationLinks;
-
     /** @var class-string<\Illuminate\Http\Resources\Json\JsonResource> */
     public $collects = WordResource::class;
 
@@ -28,20 +25,6 @@ class WordCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection->all(),
-        ];
-    }
-
-    /**
-     * Add pagination links to the response.
-     *
-     * @param  \Illuminate\Http\Request                                  $request
-     * @return array{links: array{next: string|null, prev: string|null}}
-     */
-    #[\Override]
-    public function with($request): array
-    {
-        return [
-            'links' => $this->buildCursorLinks($request, $this->resource),
         ];
     }
 }
