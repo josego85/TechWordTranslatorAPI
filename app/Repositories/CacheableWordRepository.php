@@ -7,7 +7,7 @@ namespace App\Repositories;
 use App\Interfaces\WordRepositoryInterface;
 use App\Models\Word;
 use App\Services\CacheService;
-use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CacheableWordRepository implements WordRepositoryInterface
 {
@@ -16,13 +16,13 @@ class CacheableWordRepository implements WordRepositoryInterface
         private readonly CacheService $cache
     ) {}
 
-    public function getAll(int $perPage, ?string $cursor): CursorPaginator
+    public function getAll(int $perPage, int $page, ?string $search = null): LengthAwarePaginator
     {
-        $key = $this->cache->generateWordsKey($perPage, $cursor);
+        $key = $this->cache->generateWordsKey($perPage, $page, $search);
 
         return $this->cache->remember(
             $key,
-            fn () => $this->repository->getAll($perPage, $cursor)
+            fn () => $this->repository->getAll($perPage, $page, $search)
         );
     }
 

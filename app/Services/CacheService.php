@@ -32,8 +32,10 @@ class CacheService
         return "word:$id";
     }
 
-    public function generateWordsKey(int $perPage, ?string $cursor): string
+    public function generateWordsKey(int $perPage, int $page, ?string $search = null): string
     {
-        return "words:perPage:$perPage:cursor:" . ($cursor ?? 'null');
+        $searchPart = $search !== null ? ':search:' . md5($search) : '';
+
+        return "words:perPage:$perPage:page:$page$searchPart";
     }
 }

@@ -1,4 +1,9 @@
 extend type Query {
-    words: [Word!]! @all(model: "App\\Models\\Word")
+    words(
+        first: Int @rules(apply: ["min:1", "max:100"])
+        page: Int
+        search: String @scope(name: "search")
+    ): [Word!]! @paginate(model: "App\\Models\\Word", defaultCount: 15)
+
     word(id: ID! @whereKey): Word @find(model: "App\\Models\\Word")
 }

@@ -1,7 +1,9 @@
 type Translation {
   id: ID!
-  wordId: ID!
-  spanish_word: String!
-  german_word: String!
+  word_id: ID!
+  language: String!
+  translation: String!
   word: Word! @belongsTo
+  created_at: DateTime!
+  updated_at: DateTime!
 }

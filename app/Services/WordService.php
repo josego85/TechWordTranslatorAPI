@@ -7,15 +7,15 @@ namespace App\Services;
 use App\Exceptions\WordNotFoundException;
 use App\Interfaces\WordRepositoryInterface;
 use App\Models\Word;
-use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class WordService
 {
     public function __construct(private readonly WordRepositoryInterface $repository) {}
 
-    public function getAll(int $perPage, ?string $cursor): CursorPaginator
+    public function getAll(int $perPage, int $page, ?string $search = null): LengthAwarePaginator
     {
-        return $this->repository->getAll($perPage, $cursor);
+        return $this->repository->getAll($perPage, $page, $search);
     }
 
     /**
@@ -45,7 +45,7 @@ class WordService
     {
         $word = $this->repository->get($id);
 
-        if (!$word instanceof \App\Models\Word) {
+        if (! $word instanceof \App\Models\Word) {
             throw new WordNotFoundException("Word with id $id not found");
         }
 
@@ -62,7 +62,7 @@ class WordService
     {
         $word = $this->repository->get($id);
 
-        if (!$word instanceof \App\Models\Word) {
+        if (! $word instanceof \App\Models\Word) {
             throw new WordNotFoundException("Word with id $id not found");
         }
 
@@ -82,7 +82,7 @@ class WordService
     {
         $word = $this->repository->get($id);
 
-        if (!$word instanceof \App\Models\Word) {
+        if (! $word instanceof \App\Models\Word) {
             throw new WordNotFoundException("Word with id $id not found");
         }
 

@@ -7,22 +7,22 @@ namespace App\Services;
 use App\Exceptions\TranslationException;
 use App\Interfaces\TranslationRepositoryInterface;
 use App\Models\Translation;
-use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TranslationService
 {
     public function __construct(private readonly TranslationRepositoryInterface $repository) {}
 
-    public function getAll(int $perPage, ?string $cursor): CursorPaginator
+    public function getAll(int $perPage, int $page): LengthAwarePaginator
     {
-        return $this->repository->getAll($perPage, $cursor);
+        return $this->repository->getAll($perPage, $page);
     }
 
     public function get(int $id): ?Translation
     {
         $translation = $this->repository->get($id);
 
-        if (!$translation instanceof \App\Models\Translation) {
+        if (! $translation instanceof \App\Models\Translation) {
             throw new TranslationException("Translation with id $id not found");
         }
 
@@ -34,18 +34,18 @@ class TranslationService
         try {
             $payload = [
                 'word_id' => $data['word_id'],
-                'spanish_word' => $data['spanish_word'] ?? null,
-                'german_word' => $data['german_word'] ?? null,
+                'language' => $data['language'],
+                'translation' => $data['translation'],
             ];
 
             return $this->repository->create($payload);
         } catch (\Exception $e) {
-            throw new TranslationException('Error translations words', 0, $e);
+            throw new TranslationException('Error creating translation', 0, $e);
         }
     }
 
     /**
-     * Update a translations words.
+     * Update a translation.
      *
      *
      * @throws TranslationException
@@ -54,15 +54,15 @@ class TranslationService
     {
         $translation = $this->repository->get($id);
 
-        if (!$translation instanceof \App\Models\Translation) {
+        if (! $translation instanceof \App\Models\Translation) {
             throw new TranslationException("Translation with id $id not found");
         }
 
         try {
             $payload = [
-                'word_id' => $data['word_id'],
-                'spanish_word' => $data['spanish_word'] ?? null,
-                'german_word' => $data['german_word'] ?? null,
+                'word_id' => $data['word_id'] ?? $translation->word_id,
+                'language' => $data['language'] ?? $translation->language,
+                'translation' => $data['translation'] ?? $translation->translation,
             ];
 
             return $this->repository->update($translation, $payload);
@@ -80,7 +80,7 @@ class TranslationService
     {
         $translation = $this->repository->get($id);
 
-        if (!$translation instanceof \App\Models\Translation) {
+        if (! $translation instanceof \App\Models\Translation) {
             throw new TranslationException("Translation with id $id not found");
         }
 

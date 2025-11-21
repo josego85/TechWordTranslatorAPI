@@ -22,7 +22,7 @@ class TranslationController extends Controller
     {
         $paginator = $this->translationService->getAll(
             perPage: $request->getPerPage(),
-            cursor: $request->getCursor(),
+            page: $request->getPage(),
         );
 
         return new TranslationCollection($paginator);

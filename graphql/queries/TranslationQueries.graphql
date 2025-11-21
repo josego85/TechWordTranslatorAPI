@@ -1,4 +1,12 @@
 extend type Query {
-  translations: [Translation!]! @all(model: "App\\Models\\Translation")
+  translations(
+    language: String @eq
+    word_id: ID @eq
+  ): [Translation!]! @all(model: "App\\Models\\Translation")
+
   translation(id: ID! @whereKey): Translation @find(model: "App\\Models\\Translation")
+
+  translationsByLanguage(
+    language: String! @eq
+  ): [Translation!]! @all(model: "App\\Models\\Translation")
 }

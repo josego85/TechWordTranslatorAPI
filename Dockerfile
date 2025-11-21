@@ -1,4 +1,4 @@
-FROM node:22.17.0 AS node_builder
+FROM node:22.21.1 AS node_builder
 
 WORKDIR /var/www
 
@@ -8,7 +8,7 @@ COPY . .
 RUN npm run build
 
 
-FROM php:8.4.10-fpm
+FROM php:8.4.15-fpm
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
