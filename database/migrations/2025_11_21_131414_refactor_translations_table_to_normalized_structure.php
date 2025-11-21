@@ -19,7 +19,7 @@ return new class extends Migration
     public function up(): void
     {
         // Step 1: Create new normalized table
-        Schema::create('translations_new', function (Blueprint $table) {
+        Schema::create('translations_new', function(Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('word_id');
             $table->string('language', 5); // ISO 639-1 code (en, es, de, fr, etc)
@@ -63,7 +63,7 @@ return new class extends Migration
             }
 
             // Insert Spanish translation if exists
-            if (!empty($oldRecord->spanish_word)) {
+            if (! empty($oldRecord->spanish_word)) {
                 DB::table('translations_new')->insert([
                     'word_id' => $oldRecord->word_id,
                     'language' => 'es',
@@ -74,7 +74,7 @@ return new class extends Migration
             }
 
             // Insert German translation if exists
-            if (!empty($oldRecord->german_word)) {
+            if (! empty($oldRecord->german_word)) {
                 DB::table('translations_new')->insert([
                     'word_id' => $oldRecord->word_id,
                     'language' => 'de',
@@ -98,7 +98,7 @@ return new class extends Migration
     public function down(): void
     {
         // Step 1: Create old structure
-        Schema::create('translations_old', function (Blueprint $table) {
+        Schema::create('translations_old', function(Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('word_id');
             $table->string('spanish_word')->nullable();
@@ -112,10 +112,10 @@ return new class extends Migration
 
         // Step 2: Migrate data back (group by word_id)
         $normalizedTranslations = DB::table('translations')->get();
-        $grouped = [];
+        $grouped                = [];
 
         foreach ($normalizedTranslations as $translation) {
-            if (!isset($grouped[$translation->word_id])) {
+            if (! isset($grouped[$translation->word_id])) {
                 $grouped[$translation->word_id] = [
                     'word_id' => $translation->word_id,
                     'spanish_word' => null,

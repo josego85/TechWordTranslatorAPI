@@ -48,9 +48,6 @@ class Word extends Model
 
     /**
      * Get translation for a specific language.
-     *
-     * @param  string  $language
-     * @return Translation|null
      */
     public function getTranslation(string $language): ?Translation
     {
@@ -59,10 +56,6 @@ class Word extends Model
 
     /**
      * Update or create a translation for a specific language.
-     *
-     * @param  string  $language
-     * @param  string  $translation
-     * @return Translation
      */
     public function setTranslation(string $language, string $translation): Translation
     {
@@ -75,17 +68,16 @@ class Word extends Model
     /**
      * Scope a query to search words by english word or translations.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $search
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSearch($query, string $search)
     {
-        return $query->where(function ($q) use ($search) {
+        return $query->where(function($q) use ($search) {
             $q->where('english_word', 'LIKE', "%{$search}%")
-              ->orWhereHas('translations', function ($translationQuery) use ($search) {
-                  $translationQuery->where('translation', 'LIKE', "%{$search}%");
-              });
+                ->orWhereHas('translations', function($translationQuery) use ($search) {
+                    $translationQuery->where('translation', 'LIKE', "%{$search}%");
+                });
         });
     }
 }

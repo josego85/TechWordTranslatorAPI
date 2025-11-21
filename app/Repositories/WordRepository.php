@@ -20,13 +20,13 @@ class WordRepository implements WordRepositoryInterface
 
         // Apply search filter if provided
         if ($search !== null && $search !== '') {
-            $query->where(function ($q) use ($search) {
+            $query->where(function($q) use ($search) {
                 // Search in English word
                 $q->where('english_word', 'LIKE', "%{$search}%")
                   // OR search in any translation
-                  ->orWhereHas('translations', function ($translationQuery) use ($search) {
-                      $translationQuery->where('translation', 'LIKE', "%{$search}%");
-                  });
+                    ->orWhereHas('translations', function($translationQuery) use ($search) {
+                        $translationQuery->where('translation', 'LIKE', "%{$search}%");
+                    });
             });
         }
 

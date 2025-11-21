@@ -35,6 +35,7 @@ class CacheService
     public function generateWordsKey(int $perPage, int $page, ?string $search = null): string
     {
         $searchPart = $search !== null ? ':search:' . md5($search) : '';
+
         return "words:perPage:$perPage:page:$page$searchPart";
     }
 }

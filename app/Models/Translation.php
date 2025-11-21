@@ -44,8 +44,7 @@ class Translation extends Model
     /**
      * Scope a query to only include translations of a given language.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $language
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeLanguage($query, string $language)
