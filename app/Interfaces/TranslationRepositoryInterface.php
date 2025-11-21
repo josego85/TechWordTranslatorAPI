@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Interfaces;
 
 use App\Models\Translation;
-use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface TranslationRepositoryInterface
 {
-    public function getAll(int $perPage, ?string $cursor): CursorPaginator;
+    public function getAll(int $perPage, int $page): LengthAwarePaginator;
 
     public function get(int $id): ?Translation;
 

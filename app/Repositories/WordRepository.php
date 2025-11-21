@@ -20,11 +20,11 @@ class WordRepository implements WordRepositoryInterface
 
         // Apply search filter if provided
         if ($search !== null && $search !== '') {
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 // Search in English word
                 $q->where('english_word', 'LIKE', "%{$search}%")
                   // OR search in any translation
-                    ->orWhereHas('translations', function($translationQuery) use ($search) {
+                    ->orWhereHas('translations', function ($translationQuery) use ($search) {
                         $translationQuery->where('translation', 'LIKE', "%{$search}%");
                     });
             });
@@ -49,9 +49,9 @@ class WordRepository implements WordRepositoryInterface
 
     public function update(Word $word, string $englishWord): ?Word
     {
-        $word->updateAttributes(['english_word' => $englishWord]);
+        $word->update(['english_word' => $englishWord]);
 
-        return $word;
+        return $word->fresh();
     }
 
     public function delete(Word $word): bool

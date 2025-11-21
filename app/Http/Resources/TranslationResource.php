@@ -17,8 +17,10 @@ class TranslationResource extends JsonResource
         return [
             'id' => $this->id,
             'word_id' => $this->word_id,
-            'spanish_word' => $this->spanish_word,
-            'german_word' => $this->german_word,
+            'language' => $this->language,
+            'translation' => $this->translation,
+            'created_at' => $this->created_at?->toISOString(),
+            'updated_at' => $this->updated_at?->toISOString(),
         ];
     }
 }

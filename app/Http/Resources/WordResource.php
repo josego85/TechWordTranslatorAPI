@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Models\Translation;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -19,7 +20,7 @@ class WordResource extends JsonResource
             'word' => $this->english_word,
             'created_at' => $this->created_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),
-            'translations' => $this->translations->map(function($translation) {
+            'translations' => $this->translations->map(function (Translation $translation) {
                 return [
                     'language' => $translation->language,
                     'translation' => $translation->translation,
