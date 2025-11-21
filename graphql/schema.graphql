@@ -1,3 +1,5 @@
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
 #import types/Word.graphql
 #import types/Translation.graphql
 #import queries/WordQueries.graphql

@@ -20,6 +20,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Changed `english_word` field to `word`
   - Added `translations` array with simplified structure (removed `id`, `word_id`, `created_at`, `updated_at` from translations)
   - Translations now only include `language` and `translation` fields
+- Upgraded Laravel framework from **v12.20.0** to **v12.39.0**.
 - Upgraded PHP-FPM from 8.4.10 to 8.4.15
 - Updated Node.js version in Dockerfile from 22.17.0 to 22.21.1
 - Updated MySQL Docker image from 8.4.5 to 8.4.7
@@ -34,7 +35,16 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Added helper methods to `Word` model:
   - `getTranslation(string $language): ?Translation` - Get translation for specific language
   - `setTranslation(string $language, string $translation): Translation` - Update or create translation
+  - `scopeSearch(string $search)` - Search scope for querying words and translations
 - Added `scopeLanguage` query scope to `Translation` model
+- **GraphQL enhancements:**
+  - Added `DateTime` scalar type definition in schema
+  - Added pagination support to `words` query with `first` and `page` parameters
+  - Added search functionality to GraphQL `words` query using `@scope` directive
+  - Added filter parameters to `translations` query (`language`, `word_id`)
+  - Added `translationsByLanguage` query for fetching translations by specific language
+  - Added timestamps (`created_at`, `updated_at`) to `Word` and `Translation` GraphQL types
+  - Updated `Translation` type with normalized structure (`language` and `translation` fields)
 
 ### Improved
 - **Docker Compose Profiles**: Implemented profile-based architecture for optional development tools in `docker-compose.override.yml`
@@ -42,6 +52,15 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Added `tools` profile for enabling all optional tools at once
   - Optimized default development startup by making resource-intensive tools opt-in
   - Enhanced developer experience with faster startup times for daily development
+
+### Documentation
+- Updated `docs/guides/rest.md` with new pagination structure and search examples
+- Updated `docs/guides/graphql.md` with:
+  - Altair GraphQL Client browser extension installation instructions
+  - New query examples for pagination and search
+  - Updated schema documentation with normalized translation structure
+  - Added examples for filtering translations by language
+- All documentation now reflects the normalized database structure and new API features
 
 ### Removed
 - Removed `CursorPaginationLinks` trait and cursor pagination support

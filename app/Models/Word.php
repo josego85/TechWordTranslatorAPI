@@ -71,4 +71,21 @@ class Word extends Model
             ['translation' => $translation]
         );
     }
+
+    /**
+     * Scope a query to search words by english word or translations.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $search
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearch($query, string $search)
+    {
+        return $query->where(function ($q) use ($search) {
+            $q->where('english_word', 'LIKE', "%{$search}%")
+              ->orWhereHas('translations', function ($translationQuery) use ($search) {
+                  $translationQuery->where('translation', 'LIKE', "%{$search}%");
+              });
+        });
+    }
 }

@@ -1,9 +1,7 @@
-scalar DateTime
-
 type Word {
     id: ID!
     english_word: String!
-    created_at: DateTime
-    updated_at: DateTime
-    translations: [Translation!]! @hasMany(relation: "translations")
+    translations: [Translation!]! @hasMany
+    created_at: DateTime!
+    updated_at: DateTime!
 }
