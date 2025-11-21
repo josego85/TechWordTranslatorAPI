@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./:/var/www
-      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./docker/dev/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
     depends_on:
       - mysql
     networks:
@@ -25,7 +25,7 @@ services:
       - "8000:80"
     volumes:
       - ./:/var/www
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/dev/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - app
     networks:
@@ -44,7 +44,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./docker/mysql/conf.d:/etc/mysql/conf.d:ro
+      - ./docker/dev/mysql/conf.d:/etc/mysql/conf.d:ro
     networks:
       - app-network
 

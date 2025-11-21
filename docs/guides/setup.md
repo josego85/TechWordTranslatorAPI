@@ -4,7 +4,7 @@ This guide will help you setup the TechWordTranslatorAPI locally.
 
 ## Prerequisites
 
-- PHP 8.4.14
+- PHP 8.4.15
 - Laravel 12.20.0
 - Composer 2.8.12
 - Node.js v22.21.1 & NPM 10.9.2

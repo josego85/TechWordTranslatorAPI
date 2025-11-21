@@ -8,7 +8,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 ## [v1.13.3] - 2025-10-31
 
 ### Changed
-- Upgraded PHP-FPM from 8.4.10 to 8.4.14
+- Upgraded PHP-FPM from 8.4.10 to 8.4.15
 - Updated Node.js version in Dockerfile from 22.17.0 to 22.21.1
 - Updated MySQL Docker image from 8.4.5 to 8.4.7
 - Updated Nginx Docker image from 1.25.0 to 1.29.3
