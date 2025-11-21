@@ -62,9 +62,19 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Added examples for filtering translations by language
 - All documentation now reflects the normalized database structure and new API features
 
+### Fixed
+- Fixed PHPStan static analysis errors:
+  - Updated `TranslationController` to use offset pagination (`page` instead of `cursor`)
+  - Updated `TranslationResource` to use normalized fields (`language`, `translation`)
+  - Added explicit type hint for `Translation` model in `WordResource` closure
+  - Fixed `WordRepository::update()` to use Eloquent's `update()` method and `fresh()` for refreshed model
+  - Updated `TranslationService`, `TranslationRepository`, and `TranslationRepositoryInterface` to use offset pagination
+  - Updated `TranslationService` create/update methods to use normalized structure
+
 ### Removed
 - Removed `CursorPaginationLinks` trait and cursor pagination support
 - Removed `spanish_word` and `german_word` columns from translations table
+- Removed deprecated `updateAttributes()` method usage
 
 ---
 
