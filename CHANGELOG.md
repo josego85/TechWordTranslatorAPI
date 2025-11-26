@@ -29,6 +29,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - `nette/utils`: 4.0.8 → 4.0.9
 - Modified `rector-check` composer script to continue on errors (`|| true`)
 - Updated PHPStan configuration to ignore false positives from JWTAuth facade methods
+- Removed `--strict` flag from `composer validate` in CI workflow to allow exact version constraints (application best practice)
 
 ### Refactored
 
