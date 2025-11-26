@@ -14,3 +14,10 @@ parameters:
   ignoreErrors:
     # - identifier: missingType.iterableValue
     # - identifier: missingType.generics
+    # JWTAuth facade methods are valid but not recognized by PHPStan
+    -
+      message: '#Call to an undefined static method PHPOpenSourceSaver\\JWTAuth\\Facades\\JWTAuth::(attempt|parseToken)\(\)\.#'
+      path: app/Http/Controllers/API/V1/AuthController.php
+    -
+      message: '#Call to an undefined static method PHPOpenSourceSaver\\JWTAuth\\Facades\\JWTAuth::parseToken\(\)\.#'
+      path: app/Http/Middleware/JWTMiddleware.php
