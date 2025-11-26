@@ -1,6 +1,8 @@
 # TechWordTranslatorAPI
 
-[![Version](https://img.shields.io/badge/Version-1.14.0-blue.svg)](https://github.com/proyectosbeta/TechWordTranslatorAPI)
+[![CI](https://github.com/josego85/TechWordTranslatorAPI/workflows/CI/badge.svg)](https://github.com/josego85/TechWordTranslatorAPI/actions/workflows/ci.yml)
+[![codecov](https://github.com/josego85/TechWordTranslatorAPI/branch/main/graph/badge.svg)](https://codecov.io/gh/josego85/TechWordTranslatorAPI)
+[![Version](https://img.shields.io/badge/Version-1.14.1-blue.svg)](https://github.com/josego85/TechWordTranslatorAPI)
 [![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](LICENSE)
 [![PHP Version](https://img.shields.io/badge/PHP-8.4.15-blue.svg)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/Laravel-12.39.0-green.svg)](https://laravel.com/)
@@ -14,7 +16,7 @@
 [![Docker](https://img.shields.io/badge/docker-ready-blue?logo=docker)](https://www.docker.com/)
 [![SonarQube](https://img.shields.io/badge/SonarQube-Latest-orange?logo=sonarqube)](http://localhost:9000)
 [![JWT](https://img.shields.io/badge/JWT-Authentication-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
-![Last Commit](https://img.shields.io/github/last-commit/proyectosbeta/TechWordTranslatorAPI?logo=git&logoColor=white)
+![Last Commit](https://img.shields.io/github/last-commit/josego85/TechWordTranslatorAPI?logo=git&logoColor=white)
 
 > A RESTful API providing translations of IT-related terms into Spanish and German.
 
@@ -22,13 +24,14 @@
 
 ## 📚 Quick Links
 
-- [Getting Started Guide](docs/guides/setup.md)  
-- [API Documentation](docs/api/README.md)  
-- [REST API Reference](docs/guides/rest.md)  
-- [GraphQL API Reference](docs/guides/graphql.md)  
-- [Security & Performance](docs/guides/security.md)  
-- [Development Guide](docs/development/README.md)  
-- [Support](docs/SUPPORT.md)  
+- [Getting Started Guide](docs/guides/setup.md)
+- [Contributing Guidelines](CONTRIBUTING.md)
+- [API Documentation](docs/api/README.md)
+- [REST API Reference](docs/guides/rest.md)
+- [GraphQL API Reference](docs/guides/graphql.md)
+- [Security & Performance](docs/guides/security.md)
+- [Development Guide](docs/development/README.md)
+- [Support](docs/SUPPORT.md)
 - [Changelog](CHANGELOG.md)
 
 ---

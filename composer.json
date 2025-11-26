@@ -58,7 +58,18 @@
         ],
         "phpstan": "vendor/bin/phpstan analyse --memory-limit=512M",
         "pint-test": "./vendor/bin/pint --config=pint.json --test",
-        "pint": "./vendor/bin/pint --config=pint.json"
+        "pint": "./vendor/bin/pint --config=pint.json",
+        "pint-fix": "./vendor/bin/pint --config=pint.json",
+        "rector-check": "vendor/bin/rector process --dry-run",
+        "rector-fix": "vendor/bin/rector process",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "ci": [
+            "@pint-test",
+            "@phpstan",
+            "@rector-check",
+            "@test"
+        ]
     },
     "extra": {
         "laravel": {

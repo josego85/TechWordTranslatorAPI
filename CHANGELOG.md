@@ -1,7 +1,21 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.  
+All notable changes to this project will be documented in this file.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and adheres to the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) guidelines.
+
+---
+
+## [v1.14.1] - 2025-11-26
+
+### Added
+- CI/CD pipeline with GitHub Actions (security audit, tests with 85% coverage, code style, static analysis)
+- Dependabot configuration for automated dependency updates
+- GitHub templates (Issue templates, PR template)
+- CONTRIBUTING.md with contribution guidelines
+- Composer scripts: `composer ci`, `composer test`, `composer pint-test`, `composer phpstan`, `composer rector-check`
+
+### Changed
+- Updated README.md with CI and Codecov badges
 
 ---
 
