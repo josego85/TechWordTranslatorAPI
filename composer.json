@@ -15,7 +15,7 @@
         "laravel/tinker": "v2.10.1",
         "nuwave/lighthouse": "6.62",
         "php-open-source-saver/jwt-auth": "2.8.2",
-        "predis/predis": "3.0.1",
+        "predis/predis": "3.3.0",
         "spatie/laravel-csp": "2.10.3"
     },
     "require-dev": {
