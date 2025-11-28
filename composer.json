@@ -63,7 +63,7 @@
         "rector-check": "vendor/bin/rector process --dry-run || true",
         "rector-fix": "vendor/bin/rector process",
         "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage",
         "ci": [
             "@pint-test",
             "@phpstan",

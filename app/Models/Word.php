@@ -66,7 +66,7 @@ class Word extends Model
     }
 
     /**
-     * Scope a query to search words by english word or translations.
+     * Scope a query to search words by English word or translations.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder

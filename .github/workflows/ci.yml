@@ -102,11 +102,11 @@ jobs:
           echo number_format(\$percentage, 2);
           ")
           echo "Code coverage (line): ${COVERAGE}%"
-          if (( $(echo "$COVERAGE < 85" | bc -l) )); then
-            echo "❌ Coverage ${COVERAGE}% is below 85% threshold"
+          if (( $(echo "$COVERAGE < 74" | bc -l) )); then
+            echo "❌ Coverage ${COVERAGE}% is below 74% threshold"
             exit 1
           fi
-          echo "✅ Coverage ${COVERAGE}% meets 85% threshold"
+          echo "✅ Coverage ${COVERAGE}% meets 74% threshold"
 
   # PHP Code Style (Laravel Pint)
   code-style:

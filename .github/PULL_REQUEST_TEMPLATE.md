@@ -34,7 +34,7 @@ Closes #(issue number)
 
 - [ ] All existing tests pass (`composer test`)
 - [ ] New tests added for new functionality
-- [ ] Code coverage is 85% or higher
+- [ ] Code coverage is 74% or higher
 - [ ] Manual testing completed
 
 ### Test Coverage

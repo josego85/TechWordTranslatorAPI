@@ -51,7 +51,7 @@ class WordController extends Controller
     }
 
     /**
-     * Store a new english word
+     * Store a new English word.
      */
     public function store(StoreWordRequest $request)
     {
@@ -60,7 +60,7 @@ class WordController extends Controller
         try {
             $word = $this->wordService->create($data);
 
-            return response()->json(new WordResource($word));
+            return response()->json(new WordResource($word), 201);
         } catch (WordNotFoundException $e) {
             return response()->json([
                 'message' => $e->getMessage(),
@@ -69,7 +69,7 @@ class WordController extends Controller
     }
 
     /**
-     * Update the english word.
+     * Update the English word.
      */
     public function update(UpdateWordRequest $request)
     {
@@ -95,13 +95,11 @@ class WordController extends Controller
         try {
             $this->wordService->delete($id);
 
-            return response()->json([
-                'message' => 'Word deleted successfully',
-            ]);
+            return response()->json(null, 204);
         } catch (WordNotFoundException $e) {
             return response()->json([
                 'message' => $e->getMessage(),
-            ], 500);
+            ], 404);
         }
     }
 }
