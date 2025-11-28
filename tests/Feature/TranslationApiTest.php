@@ -51,7 +51,7 @@ class TranslationApiTest extends TestCase
 
     public function test_get_single_translation_returns_translation(): void
     {
-        $word = Word::factory()->create();
+        $word        = Word::factory()->create();
         $translation = Translation::factory()->for($word)->create([
             'language' => 'es',
             'translation' => 'Prueba',
@@ -112,7 +112,7 @@ class TranslationApiTest extends TestCase
 
     public function test_update_translation_successfully(): void
     {
-        $word = Word::factory()->create();
+        $word        = Word::factory()->create();
         $translation = Translation::factory()->for($word)->create([
             'language' => 'es',
             'translation' => 'Old Translation',
@@ -154,7 +154,7 @@ class TranslationApiTest extends TestCase
 
     public function test_delete_translation_successfully(): void
     {
-        $word = Word::factory()->create();
+        $word        = Word::factory()->create();
         $translation = Translation::factory()->for($word)->create();
 
         $response = $this->deleteJson("/api/v1/translations/{$translation->id}");

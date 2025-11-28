@@ -66,7 +66,7 @@ class WordModelTest extends TestCase
 
     public function test_set_translation_updates_existing_translation(): void
     {
-        $word = Word::factory()->create();
+        $word                = Word::factory()->create();
         $existingTranslation = Translation::factory()->for($word)->create([
             'language' => 'es',
             'translation' => 'old',

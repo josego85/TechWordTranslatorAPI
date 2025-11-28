@@ -15,7 +15,7 @@ class TranslationModelTest extends TestCase
 
     public function test_translation_belongs_to_word(): void
     {
-        $word = Word::factory()->create();
+        $word        = Word::factory()->create();
         $translation = Translation::factory()->for($word)->create();
 
         $this->assertInstanceOf(Word::class, $translation->word);

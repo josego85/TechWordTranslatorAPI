@@ -56,7 +56,7 @@ class TranslationServiceTest extends TestCase
 
     public function test_get_returns_translation_when_found(): void
     {
-        $translationId = 1;
+        $translationId       = 1;
         $expectedTranslation = Mockery::mock(Translation::class);
 
         $this->repositoryMock
@@ -128,7 +128,7 @@ class TranslationServiceTest extends TestCase
 
     public function test_update_translation_successfully(): void
     {
-        $translationId = 1;
+        $translationId       = 1;
         $existingTranslation = Mockery::mock(Translation::class);
         $existingTranslation->shouldReceive('getAttribute')->with('word_id')->andReturn(1);
         $existingTranslation->shouldReceive('getAttribute')->with('language')->andReturn('es');
@@ -163,7 +163,7 @@ class TranslationServiceTest extends TestCase
     public function test_update_translation_throws_exception_when_not_found(): void
     {
         $translationId = 999;
-        $data = ['translation' => 'new'];
+        $data          = ['translation' => 'new'];
 
         $this->repositoryMock
             ->shouldReceive('get')
@@ -179,7 +179,7 @@ class TranslationServiceTest extends TestCase
 
     public function test_update_translation_throws_exception_on_repository_failure(): void
     {
-        $translationId = 1;
+        $translationId       = 1;
         $existingTranslation = Mockery::mock(Translation::class);
         $existingTranslation->shouldReceive('getAttribute')->with('word_id')->andReturn(1);
         $existingTranslation->shouldReceive('getAttribute')->with('language')->andReturn('es');
@@ -207,7 +207,7 @@ class TranslationServiceTest extends TestCase
 
     public function test_delete_translation_successfully(): void
     {
-        $translationId = 1;
+        $translationId       = 1;
         $existingTranslation = Mockery::mock(Translation::class);
 
         $this->repositoryMock
@@ -245,7 +245,7 @@ class TranslationServiceTest extends TestCase
 
     public function test_delete_translation_throws_exception_on_repository_failure(): void
     {
-        $translationId = 1;
+        $translationId       = 1;
         $existingTranslation = Mockery::mock(Translation::class);
 
         $this->repositoryMock
