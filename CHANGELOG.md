@@ -9,7 +9,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Added
 
-- CI/CD pipeline with GitHub Actions (security audit, tests with 85% coverage, code style, static analysis)
+- CI/CD pipeline with GitHub Actions (security audit, tests with 74% coverage, code style, static analysis)
 - Dependabot configuration for automated dependency updates
 - GitHub templates (Issue templates, PR template)
 - CONTRIBUTING.md with contribution guidelines
