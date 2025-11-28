@@ -19,7 +19,7 @@ class WordService
     }
 
     /**
-     * Create a new english word.
+     * Create a new English word.
      *
      * @throws WordNotFoundException
      */
@@ -53,8 +53,7 @@ class WordService
     }
 
     /**
-     * Update a english word.
-     *
+     * Update an English word.
      *
      * @throws WordNotFoundException
      */
@@ -74,7 +73,7 @@ class WordService
     }
 
     /**
-     * Delete a english word
+     * Delete an English word.
      *
      * @throws WordNotFoundException
      */

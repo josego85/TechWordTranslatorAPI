@@ -27,8 +27,8 @@ class StoreTranslationRequest extends FormRequest
     {
         return [
             'word_id' => 'required|integer|exists:words,id',
-            'spanish_word' => 'nullable|string|max:255',
-            'german_word' => 'nullable|string|max:255',
+            'language' => 'required|string|max:10',
+            'translation' => 'required|string|max:255',
         ];
     }
 

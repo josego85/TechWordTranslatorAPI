@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Services;
 
-use App\Exceptions\TranslationException;
 use App\Exceptions\WordNotFoundException;
 use App\Interfaces\WordRepositoryInterface;
 use App\Models\Word;
 use App\Services\WordService;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Mockery;
 use Mockery\MockInterface;
 use Tests\TestCase;
@@ -26,13 +24,8 @@ class WordServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->wordRepositoryMock = Mockery::mock(WordRepositoryInterface::class)->shouldIgnoreMissing();
-
-        $this->wordService = new WordService($this->wordRepositoryMock);
-
-        DB::shouldReceive('beginTransaction')->byDefault();
-        DB::shouldReceive('commit')->byDefault();
-        DB::shouldReceive('rollBack')->byDefault();
+        $this->wordRepositoryMock = Mockery::mock(WordRepositoryInterface::class);
+        $this->wordService        = new WordService($this->wordRepositoryMock);
     }
 
     #[\Override]
@@ -42,95 +35,99 @@ class WordServiceTest extends TestCase
         parent::tearDown();
     }
 
-    public function test_get_all_words_with_translations_returns_collection_from_repository(): void
+    public function test_get_all_returns_paginated_words(): void
     {
-        $expectedCollection = new Collection([
-            Mockery::mock(Word::class)->shouldIgnoreMissing(),
-            Mockery::mock(Word::class)->shouldIgnoreMissing(),
-        ]);
+        $perPage = 15;
+        $page    = 1;
+        $search  = null;
+
+        $expectedPaginator = new LengthAwarePaginator([], 0, $perPage, $page);
 
         $this->wordRepositoryMock
             ->shouldReceive('getAll')
             ->once()
-            ->andReturn($expectedCollection);
+            ->with($perPage, $page, $search)
+            ->andReturn($expectedPaginator);
 
-        $result = $this->wordService->getAll();
+        $result = $this->wordService->getAll($perPage, $page, $search);
 
-        $this->assertInstanceOf(Collection::class, $result);
-        $this->assertSame($expectedCollection, $result);
-        $this->assertCount(2, $result);
+        $this->assertInstanceOf(LengthAwarePaginator::class, $result);
+        $this->assertSame($expectedPaginator, $result);
     }
 
-    public function test_create_word_with_translations_success(): void
+    public function test_get_all_with_search_returns_filtered_results(): void
     {
-        $wordData          = ['english_word' => 'test', 'translations' => ['es' => 'prueba']];
-        $mockedCreatedWord = Mockery::mock(Word::class)->shouldIgnoreMissing();
+        $perPage = 10;
+        $page    = 1;
+        $search  = 'test';
+
+        $expectedPaginator = new LengthAwarePaginator([], 0, $perPage, $page);
+
+        $this->wordRepositoryMock
+            ->shouldReceive('getAll')
+            ->once()
+            ->with($perPage, $page, $search)
+            ->andReturn($expectedPaginator);
+
+        $result = $this->wordService->getAll($perPage, $page, $search);
+
+        $this->assertInstanceOf(LengthAwarePaginator::class, $result);
+    }
+
+    public function test_create_word_successfully(): void
+    {
+        $data         = ['english_word' => 'test'];
+        $expectedWord = Mockery::mock(Word::class);
 
         $this->wordRepositoryMock
             ->shouldReceive('create')
             ->once()
-            ->with($wordData)
-            ->andReturn($mockedCreatedWord);
+            ->with(['english_word' => 'test'])
+            ->andReturn($expectedWord);
 
-        DB::shouldReceive('beginTransaction')->once();
-        DB::shouldReceive('commit')->once();
-        DB::shouldReceive('rollBack')->never();
+        $result = $this->wordService->create($data);
 
-        $result = $this->wordService->createWordWithTranslations($wordData);
-
-        $this->assertTrue($result);
+        $this->assertSame($expectedWord, $result);
     }
 
-    public function test_create_word_with_translations_repository_exception_rolls_back_and_throws_translation_exception(): void
+    public function test_create_word_throws_exception_on_failure(): void
     {
-        $wordData            = ['english_word' => 'test', 'translations' => ['es' => 'prueba']];
-        $repositoryException = new \Exception('Database error');
+        $data = ['english_word' => 'test'];
 
         $this->wordRepositoryMock
             ->shouldReceive('create')
             ->once()
-            ->with($wordData)
-            ->andThrow($repositoryException);
+            ->andThrow(new \Exception('Database error'));
 
-        DB::shouldReceive('beginTransaction')->once();
-        DB::shouldReceive('commit')->never();
-        DB::shouldReceive('rollBack')->once();
-
-        $this->expectException(TranslationException::class);
+        $this->expectException(WordNotFoundException::class);
         $this->expectExceptionMessage('Error creating word and translations');
 
-        try {
-            $this->wordService->createWordWithTranslations($wordData);
-        } catch (TranslationException $e) {
-            $this->assertSame($repositoryException, $e->getPrevious());
-            throw $e;
-        }
+        $this->wordService->create($data);
     }
 
-    public function test_show_word_with_translations_success(): void
+    public function test_get_word_returns_word_when_found(): void
     {
-        $wordId         = 1;
-        $mockedWord     = Mockery::mock(Word::class)->shouldIgnoreMissing();
-        $mockedWord->id = $wordId;
+        $wordId       = 1;
+        $expectedWord = Mockery::mock(Word::class);
 
         $this->wordRepositoryMock
-            ->shouldReceive('findWithTranslations')
+            ->shouldReceive('get')
             ->once()
             ->with($wordId)
-            ->andReturn($mockedWord);
+            ->andReturn($expectedWord);
 
-        $result = $this->wordService->showWordWithTranslations($wordId);
+        $result = $this->wordService->get($wordId);
 
         $this->assertInstanceOf(Word::class, $result);
-        $this->assertSame($mockedWord, $result);
+        $this->assertSame($expectedWord, $result);
     }
 
-    public function test_show_word_with_translations_not_found_throws_exception(): void
+    public function test_get_word_throws_exception_when_not_found(): void
     {
         $wordId = 999;
 
         $this->wordRepositoryMock
-            ->shouldReceive('findWithTranslations')
+            ->shouldReceive('get')
             ->once()
             ->with($wordId)
             ->andReturn(null);
@@ -138,182 +135,130 @@ class WordServiceTest extends TestCase
         $this->expectException(WordNotFoundException::class);
         $this->expectExceptionMessage("Word with id $wordId not found");
 
-        $this->wordService->showWordWithTranslations($wordId);
+        $this->wordService->get($wordId);
     }
 
-    public function test_update_word_with_translations_success(): void
+    public function test_update_word_successfully(): void
     {
-        $wordId          = 1;
-        $newEnglishWord  = 'updated';
-        $newTranslations = ['es' => 'actualizado'];
-
-        $existingWordMock     = Mockery::mock(Word::class)->shouldIgnoreMissing();
-        $existingWordMock->id = $wordId;
-
-        $updatedWordMock               = Mockery::mock(Word::class)->shouldIgnoreMissing();
-        $updatedWordMock->id           = $wordId;
-        $updatedWordMock->english_word = $newEnglishWord;
+        $wordId       = 1;
+        $englishWord  = 'updated';
+        $existingWord = Mockery::mock(Word::class);
+        $updatedWord  = Mockery::mock(Word::class);
 
         $this->wordRepositoryMock
-            ->shouldReceive('findWithTranslations')
+            ->shouldReceive('get')
             ->once()
             ->with($wordId)
-            ->andReturn($existingWordMock);
+            ->andReturn($existingWord);
 
         $this->wordRepositoryMock
             ->shouldReceive('update')
             ->once()
-            ->andReturn($updatedWordMock);
+            ->with($existingWord, $englishWord)
+            ->andReturn($updatedWord);
 
-        DB::shouldReceive('beginTransaction')->once();
-        DB::shouldReceive('commit')->once();
-        DB::shouldReceive('rollBack')->never();
+        $result = $this->wordService->update($wordId, $englishWord);
 
-        $result = $this->wordService->updateWordWithTranslations($wordId, $newEnglishWord, $newTranslations);
-
-        $this->assertInstanceOf(Word::class, $result);
-        $this->assertSame($existingWordMock, $result);
+        $this->assertSame($updatedWord, $result);
     }
 
-    public function test_update_word_with_translations_not_found_returns_null(): void
+    public function test_update_word_throws_exception_when_not_found(): void
     {
-        $wordId          = 999;
-        $newEnglishWord  = 'updated';
-        $newTranslations = ['es' => 'actualizado'];
+        $wordId      = 999;
+        $englishWord = 'updated';
 
         $this->wordRepositoryMock
-            ->shouldReceive('findWithTranslations')
+            ->shouldReceive('get')
             ->once()
             ->with($wordId)
             ->andReturn(null);
 
-        $this->wordRepositoryMock->shouldNotReceive('update');
+        $this->expectException(WordNotFoundException::class);
+        $this->expectExceptionMessage("Word with id $wordId not found");
 
-        DB::shouldReceive('beginTransaction')->once();
-        DB::shouldReceive('commit')->never();
-        DB::shouldReceive('rollBack')->never();
-
-        $result = $this->wordService->updateWordWithTranslations($wordId, $newEnglishWord, $newTranslations);
-        $this->assertNull($result);
+        $this->wordService->update($wordId, $englishWord);
     }
 
-    public function test_update_word_with_translations_repository_exception_rolls_back_and_throws_translation_exception(): void
+    public function test_update_word_throws_exception_on_repository_failure(): void
     {
-        $wordId              = 1;
-        $newEnglishWord      = 'updated';
-        $newTranslations     = ['es' => 'actualizado'];
-        $repositoryException = new \Exception('Update failed');
-
-        $existingWordMock     = Mockery::mock(Word::class)->shouldIgnoreMissing();
-        $existingWordMock->id = $wordId;
+        $wordId       = 1;
+        $englishWord  = 'updated';
+        $existingWord = Mockery::mock(Word::class);
 
         $this->wordRepositoryMock
-            ->shouldReceive('findWithTranslations')
+            ->shouldReceive('get')
             ->once()
             ->with($wordId)
-            ->andReturn($existingWordMock);
+            ->andReturn($existingWord);
 
         $this->wordRepositoryMock
             ->shouldReceive('update')
             ->once()
-            ->with(Mockery::any(), $newEnglishWord, $newTranslations)
-            ->andThrow($repositoryException);
+            ->andThrow(new \Exception('Database error'));
 
-        DB::shouldReceive('beginTransaction')->once();
-        DB::shouldReceive('commit')->never();
-        DB::shouldReceive('rollBack')->once();
+        $this->expectException(WordNotFoundException::class);
+        $this->expectExceptionMessage('Failed to update word');
 
-        $this->expectException(TranslationException::class);
-        $this->expectExceptionMessage('Error updating word and translations');
-
-        try {
-            $this->wordService->updateWordWithTranslations($wordId, $newEnglishWord, $newTranslations);
-        } catch (TranslationException $e) {
-            $this->assertSame($repositoryException, $e->getPrevious());
-            throw $e;
-        }
+        $this->wordService->update($wordId, $englishWord);
     }
 
-    public function test_destroy_word_with_translations_success(): void
+    public function test_delete_word_successfully(): void
     {
-        $wordId               = 1;
-        $existingWordMock     = Mockery::mock(Word::class)->shouldIgnoreMissing();
-        $existingWordMock->id = $wordId;
+        $wordId       = 1;
+        $existingWord = Mockery::mock(Word::class);
 
         $this->wordRepositoryMock
-            ->shouldReceive('findWithTranslations')
+            ->shouldReceive('get')
             ->once()
             ->with($wordId)
-            ->andReturn($existingWordMock);
+            ->andReturn($existingWord);
 
         $this->wordRepositoryMock
             ->shouldReceive('delete')
             ->once()
-            ->with($existingWordMock)
+            ->with($existingWord)
             ->andReturn(true);
 
-        DB::shouldReceive('beginTransaction')->once();
-        DB::shouldReceive('commit')->once();
-        DB::shouldReceive('rollBack')->never();
+        $this->wordService->delete($wordId);
 
-        $result = $this->wordService->destroyWordWithTranslations($wordId);
-
-        $this->assertTrue($result);
+        $this->assertTrue(true); // Assertion to confirm no exception was thrown
     }
 
-    public function test_destroy_word_with_translations_not_found_throws_exception(): void
+    public function test_delete_word_throws_exception_when_not_found(): void
     {
         $wordId = 999;
 
         $this->wordRepositoryMock
-            ->shouldReceive('findWithTranslations')
+            ->shouldReceive('get')
             ->once()
             ->with($wordId)
             ->andReturn(null);
 
-        $this->wordRepositoryMock->shouldNotReceive('delete');
-        DB::shouldNotReceive('beginTransaction');
-        DB::shouldNotReceive('commit');
-        DB::shouldNotReceive('rollBack');
-
         $this->expectException(WordNotFoundException::class);
         $this->expectExceptionMessage("Word with id $wordId not found");
 
-        $this->wordService->destroyWordWithTranslations($wordId);
+        $this->wordService->delete($wordId);
     }
 
-    public function test_destroy_word_with_translations_repository_exception_rolls_back_and_throws_translation_exception(): void
+    public function test_delete_word_throws_exception_on_repository_failure(): void
     {
-        $wordId              = 1;
-        $repositoryException = new \Exception('Delete failed');
-
-        $existingWordMock     = Mockery::mock(Word::class)->shouldIgnoreMissing();
-        $existingWordMock->id = $wordId;
+        $wordId       = 1;
+        $existingWord = Mockery::mock(Word::class);
 
         $this->wordRepositoryMock
-            ->shouldReceive('findWithTranslations')
+            ->shouldReceive('get')
             ->once()
             ->with($wordId)
-            ->andReturn($existingWordMock);
+            ->andReturn($existingWord);
 
         $this->wordRepositoryMock
             ->shouldReceive('delete')
             ->once()
-            ->with(Mockery::any())
-            ->andThrow($repositoryException);
+            ->andThrow(new \Exception('Database error'));
 
-        DB::shouldReceive('beginTransaction')->once();
-        DB::shouldReceive('commit')->never();
-        DB::shouldReceive('rollBack')->once();
+        $this->expectException(WordNotFoundException::class);
+        $this->expectExceptionMessage('Error deleting word');
 
-        $this->expectException(TranslationException::class);
-        $this->expectExceptionMessage('Error deleting word and translations');
-
-        try {
-            $this->wordService->destroyWordWithTranslations($wordId);
-        } catch (TranslationException $e) {
-            $this->assertSame($repositoryException, $e->getPrevious());
-            throw $e;
-        }
+        $this->wordService->delete($wordId);
     }
 }

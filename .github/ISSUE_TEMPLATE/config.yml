@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/proyectosbeta/TechWordTranslatorAPI/discussions
+    about: Ask questions and discuss with the community
+  - name: 📖 Documentation
+    url: https://github.com/proyectosbeta/TechWordTranslatorAPI/tree/main/docs
+    about: Read the documentation

@@ -50,7 +50,7 @@ class TranslationController extends Controller
         try {
             $translation = $this->translationService->create($data);
 
-            return response()->json(new TranslationResource($translation));
+            return response()->json(new TranslationResource($translation), 201);
         } catch (TranslationException $e) {
             return response()->json([
                 'message' => $e->getMessage(),
@@ -79,13 +79,11 @@ class TranslationController extends Controller
         try {
             $this->translationService->delete($id);
 
-            return response()->json([
-                'message' => 'Translations deleted successfully',
-            ]);
+            return response()->json(null, 204);
         } catch (TranslationException $e) {
             return response()->json([
                 'message' => $e->getMessage(),
-            ], 500);
+            ], 404);
         }
     }
 }

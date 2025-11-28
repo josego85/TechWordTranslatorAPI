@@ -40,8 +40,13 @@ class TranslationCollection extends ResourceCollection
     #[\Override]
     public function with($request): array
     {
-        return [
-            'links' => $this->buildCursorLinks($request, $this->resource),
-        ];
+        // Only add cursor links if using CursorPaginator
+        if ($this->resource instanceof \Illuminate\Pagination\CursorPaginator) {
+            return [
+                'links' => $this->buildCursorLinks($request, $this->resource),
+            ];
+        }
+
+        return [];
     }
 }

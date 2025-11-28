@@ -72,7 +72,7 @@ class TranslationService
     }
 
     /**
-     * Delete a english word
+     * Delete a translation.
      *
      * @throws TranslationException
      */
