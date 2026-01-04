@@ -5,6 +5,28 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.14.2] - 2026-01-04
+
+### Changed
+
+- Updated GitHub Actions dependencies for improved CI/CD security and performance:
+  - `actions/dependency-review-action`: 4.3.4 → 4.8.2
+  - `github/codeql-action`: 4.31.2 → 4.31.8
+  - `actions/checkout`: 6.0.0-pre.beta → 6.0.0
+- Updated Composer dependencies:
+  - `nuwave/lighthouse`: 6.62.0 → 6.63.1 (GraphQL server)
+  - `league/commonmark`: 2.7.1 → 2.8.0 (Markdown parser)
+  - Multiple Symfony components upgraded to 7.4.0:
+    - `symfony/console`, `symfony/http-kernel`, `symfony/http-foundation`
+    - `symfony/mailer`, `symfony/routing`, `symfony/process`
+    - `symfony/finder`, `symfony/mime`, `symfony/translation`
+    - `symfony/css-selector`, `symfony/error-handler`, `symfony/uid`, `symfony/var-dumper`, `symfony/clock`
+  - **BREAKING**: Symfony 8.0 components:
+    - `symfony/event-dispatcher`: 7.3.3 → 8.0.0
+    - `symfony/string`: 7.3.4 → 8.0.0
+
+---
+
 ## [v1.14.1] - 2025-11-28
 
 ### Added
