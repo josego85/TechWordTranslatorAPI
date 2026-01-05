@@ -47,7 +47,7 @@ class Translation extends Model
      * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeLanguage($query, string $language)
+    protected function scopeLanguage($query, string $language)
     {
         return $query->where('language', $language);
     }

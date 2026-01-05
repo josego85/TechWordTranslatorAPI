@@ -26,6 +26,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - PHP: 8.4.15 → 8.4.16
   - Redis: 7.4.5 → 7.4.7
   - NGINX: 1.29.3 → 1.29.4
+- Migrated validation rules from pipe-separated strings to array format (Laravel 12 best practice)
+- Updated Eloquent scopes visibility from `public` to `protected` (Laravel 11+ standard)
+- Replaced closures with arrow functions where applicable for cleaner code
+- Added `#[Override]` attributes to Form Request methods for type safety
 
 ### Security
 
