@@ -31,6 +31,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Updated development dependencies:
   - `rector/rector`: 2.2.8 → 2.3.0
   - `laravel/pint`: 1.24.0 → 1.27.0
+  - `larastan/larastan`: 3.5.0 → 3.8.1
 - Migrated validation rules from pipe-separated strings to array format (Laravel 12 best practice)
 - Updated Eloquent scopes visibility from `public` to `protected` (Laravel 11+ standard)
 - Replaced closures with arrow functions where applicable for cleaner code
