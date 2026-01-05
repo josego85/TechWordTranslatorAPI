@@ -40,6 +40,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Enhanced password complexity requirements (12+ characters, mixed case, numbers, symbols)
 - Sanitized error messages to prevent user enumeration and information disclosure
 - Added security event logging for audit trails
+- Implemented HTTP security headers middleware (HSTS, X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy, Permissions-Policy)
+- Upgraded Spatie CSP from v2.10.3 to v3.21.0 with strict deny-by-default policy (default-src 'none')
 
 ---
 

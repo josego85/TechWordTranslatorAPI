@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0b3ace40cbf2f2590ab28e7e66044bc",
+    "content-hash": "36acbaafb190caf549daaf7ad8d346c8",
     "packages": [
         {
             "name": "brick/math",
@@ -3885,28 +3885,28 @@
         },
         {
             "name": "spatie/laravel-csp",
-            "version": "2.10.3",
+            "version": "3.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-csp.git",
-                "reference": "15e40c28d46076b3d5a4268b63040b3900cc05d3"
+                "reference": "1c5a878dddc66283d80ff3bbe810c9dcda4ee919"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/15e40c28d46076b3d5a4268b63040b3900cc05d3",
-                "reference": "15e40c28d46076b3d5a4268b63040b3900cc05d3",
+                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/1c5a878dddc66283d80ff3bbe810c9dcda4ee919",
+                "reference": "1c5a878dddc66283d80ff3bbe810c9dcda4ee919",
                 "shasum": ""
             },
             "require": {
-                "illuminate/http": "^9.0|^10.0|^11.36.1|^12",
-                "illuminate/support": "^9.0|^10.0|^11.36.1|^12",
-                "php": "^8.1",
+                "illuminate/http": "^11.36.1|^12.0",
+                "illuminate/support": "^11.36.1|^12.0",
+                "php": "^8.3",
                 "spatie/laravel-package-tools": "^1.17"
             },
             "require-dev": {
-                "mockery/mockery": "^1.6.12",
-                "orchestra/testbench": "^7.0|^8.0|^9.9|^10",
-                "pestphp/pest": "^1.23.0|^2.36.0|^3",
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^9.9|^10.0",
+                "pestphp/pest": "^3.0",
                 "roave/security-advisories": "dev-master"
             },
             "type": "library",
@@ -3918,9 +3918,6 @@
                 }
             },
             "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
                 "psr-4": {
                     "Spatie\\Csp\\": "src"
                 }
@@ -3941,6 +3938,12 @@
                     "email": "freek@spatie.be",
                     "homepage": "https://spatie.be",
                     "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
                 }
             ],
             "description": "Add CSP headers to the responses of a Laravel app",
@@ -3955,7 +3958,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-csp/tree/2.10.3"
+                "source": "https://github.com/spatie/laravel-csp/tree/3.21.0"
             },
             "funding": [
                 {
@@ -3963,7 +3966,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-02-14T13:23:32+00:00"
+            "time": "2025-10-16T07:20:44+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
