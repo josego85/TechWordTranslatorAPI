@@ -26,6 +26,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - PHP: 8.4.15 → 8.4.16
   - Redis: 7.4.5 → 7.4.7
   - NGINX: 1.29.3 → 1.29.4
+- Updated dependencies:
+  - `webonyx/graphql-php`: 15.29.3 → 15.29.4 (indirect dependency patch update)
 - Updated development dependencies:
   - `rector/rector`: 2.2.8 → 2.3.0
   - `laravel/pint`: 1.24.0 → 1.27.0
