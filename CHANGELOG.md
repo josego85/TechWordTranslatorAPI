@@ -44,6 +44,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Added `#[Override]` attributes to Form Request methods for type safety
 - Applied Laravel Pint code style fixes for arrow function spacing
 - Cleaned up PHPStan configuration (removed obsolete error suppressions)
+- CI workflow: Updated composer validation to suppress version constraint warnings (`--no-check-all`)
 
 ### Security
 
