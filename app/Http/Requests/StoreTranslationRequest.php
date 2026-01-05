@@ -26,9 +26,9 @@ class StoreTranslationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'word_id' => 'required|integer|exists:words,id',
-            'language' => 'required|string|max:10',
-            'translation' => 'required|string|max:255',
+            'word_id' => ['required', 'integer', 'exists:words,id'],
+            'language' => ['required', 'string', 'max:10'],
+            'translation' => ['required', 'string', 'max:255'],
         ];
     }
 

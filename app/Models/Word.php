@@ -71,7 +71,7 @@ class Word extends Model
      * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSearch($query, string $search)
+    protected function scopeSearch($query, string $search)
     {
         return $query->where(function($q) use ($search) {
             $q->where('english_word', 'LIKE', "%{$search}%")

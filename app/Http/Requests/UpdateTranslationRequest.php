@@ -18,10 +18,10 @@ class UpdateTranslationRequest extends FormRequest
     public function rules()
     {
         return [
-            'translation_id' => 'required|integer|exists:translations,id',
-            'word_id' => 'sometimes|integer|exists:words,id',
-            'language' => 'sometimes|string|max:10',
-            'translation' => 'sometimes|string|max:255',
+            'translation_id' => ['required', 'integer', 'exists:translations,id'],
+            'word_id' => ['sometimes', 'integer', 'exists:words,id'],
+            'language' => ['sometimes', 'string', 'max:10'],
+            'translation' => ['sometimes', 'string', 'max:255'],
         ];
     }
 

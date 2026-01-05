@@ -24,9 +24,7 @@ class CacheServiceTest extends TestCase
         Cache::shouldReceive('remember')
             ->once()
             ->with('test_key', 1440, \Mockery::type('callable'))
-            ->andReturnUsing(function($key, $ttl, $callback) {
-                return $callback();
-            });
+            ->andReturnUsing(fn ($key, $ttl, $callback) => $callback());
 
         $result = $this->service->remember('test_key', fn () => 'cached_value');
 
@@ -50,9 +48,7 @@ class CacheServiceTest extends TestCase
 
         Cache::shouldReceive('forget')
             ->times(count($keys))
-            ->withArgs(function($key) use ($keys) {
-                return in_array($key, $keys, true);
-            });
+            ->withArgs(fn ($key) => in_array($key, $keys, true));
 
         $this->service->forget($keys);
 

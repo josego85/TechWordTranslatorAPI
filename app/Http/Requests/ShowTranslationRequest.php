@@ -18,7 +18,7 @@ class ShowTranslationRequest extends FormRequest
     public function rules()
     {
         return [
-            'translation' => 'required|integer|exists:translations,id',
+            'translation' => ['required', 'integer', 'exists:translations,id'],
         ];
     }
 

@@ -18,7 +18,7 @@ class ShowWordRequest extends FormRequest
     public function rules()
     {
         return [
-            'word' => 'required|integer|exists:words,id',
+            'word' => ['required', 'integer', 'exists:words,id'],
         ];
     }
 
