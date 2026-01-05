@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\LoginRequest;
+use App\Http\Requests\API\V1\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
@@ -34,57 +36,60 @@ class AuthController extends Controller
         return response()->json($response, $status);
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $input = $request->only('name', 'email', 'password', 'c_password');
-
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
-            'c_password' => 'required|same:password',
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
         ]);
 
-        if ($validator->fails()) {
-            return $this->sendError($validator->errors(), 'Validation Error', 422);
-        }
+        Log::info('User registered successfully', [
+            'email' => $user->email,
+            'ip' => $request->ip(),
+        ]);
 
-        $input['password'] = bcrypt($input['password']); // use bcrypt to hash the passwords
-        $user              = User::create($input); // eloquent creation of data
-
-        $success['user'] = $user;
-
-        return $this->sendResponse($success, 'User registered successfully', 201);
-
+        return $this->sendResponse(
+            ['user' => $user],
+            'User registered successfully',
+            201
+        );
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $input = $request->only('email', 'password');
-
-        $validator = Validator::make($input, [
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError($validator->errors(), 'Validation Error', 422);
-        }
+        $credentials = $request->only('email', 'password');
 
         try {
-            // this authenticates the user details with the database and generates a token
-            if (! $token = JWTAuth::attempt($input)) {
-                return $this->sendError([], 'Invalid login credentials', 400);
+            if (! $token = JWTAuth::attempt($credentials)) {
+                Log::warning('Failed login attempt', [
+                    'email' => $request->email,
+                    'ip' => $request->ip(),
+                    'user_agent' => $request->userAgent(),
+                ]);
+
+                return $this->sendError([], 'Invalid credentials', 401);
             }
         } catch (JWTException $e) {
-            return $this->sendError([], $e->getMessage(), 401);
+            Log::error('JWT Error during login', [
+                'email' => $request->email ?? 'unknown',
+                'ip' => $request->ip(),
+                'error' => $e->getMessage(),
+            ]);
+
+            return $this->sendError([], 'Authentication failed', 401);
         }
 
-        $success = [
-            'token' => $token,
-        ];
+        Log::info('Successful login', [
+            'email' => $request->email,
+            'ip' => $request->ip(),
+        ]);
 
-        return $this->sendResponse($success, 'Successful login', 200);
+        return $this->sendResponse(
+            ['token' => $token],
+            'Successful login',
+            200
+        );
     }
 
     public function getUser()
@@ -95,9 +100,35 @@ class AuthController extends Controller
                 return $this->sendError([], 'User not found', 401);
             }
         } catch (JWTException $e) {
-            return $this->sendError([], $e->getMessage(), 401);
+            // Log internal error but return generic message
+            Log::warning('JWT Authentication failed', [
+                'error' => $e->getMessage(),
+                'ip' => request()->ip(),
+            ]);
+
+            return $this->sendError([], 'Invalid or expired token', 401);
         }
 
         return $this->sendResponse($user, 'User data retrieved', 200);
+    }
+
+    public function logout(Request $request)
+    {
+        try {
+            JWTAuth::parseToken()->invalidate();
+
+            Log::info('User logged out', [
+                'ip' => $request->ip(),
+            ]);
+
+            return $this->sendResponse([], 'Successfully logged out', 200);
+        } catch (JWTException $e) {
+            Log::warning('Logout failed', [
+                'error' => $e->getMessage(),
+                'ip' => $request->ip(),
+            ]);
+
+            return $this->sendError([], 'Logout failed', 500);
+        }
     }
 }

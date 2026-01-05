@@ -5,6 +5,34 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- Form Request validation classes for authentication endpoints (`RegisterRequest`, `LoginRequest`)
+- Rate limiting on authentication endpoints (3 registrations/hour, 5 login attempts/minute)
+- Security logging for authentication events (failed attempts, successful logins, registrations, logouts)
+- Logout endpoint with JWT token invalidation (`POST /api/v1/user/logout`)
+- CORS configuration environment variable (`CORS_ALLOWED_ORIGINS`)
+
+### Changed
+
+- Refactored `AuthController` to use Form Request classes
+- Enhanced password validation (12+ chars, mixed case, numbers, symbols, uncompromised check)
+- Improved error handling with generic messages for security (prevent information leakage)
+- Updated CORS configuration to be restrictive (no wildcards, specific origins only)
+- Changed password confirmation field from `c_password` to `password_confirmation` (Laravel standard)
+
+### Security
+
+- Implemented restrictive CORS policy (configurable allowed origins)
+- Added comprehensive rate limiting to prevent brute force attacks
+- Enhanced password complexity requirements (12+ characters, mixed case, numbers, symbols)
+- Sanitized error messages to prevent user enumeration and information disclosure
+- Added security event logging for audit trails
+
+---
+
 ## [v1.14.2] - 2026-01-04
 
 ### Changed
