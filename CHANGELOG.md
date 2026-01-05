@@ -22,6 +22,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Improved error handling with generic messages for security (prevent information leakage)
 - Updated CORS configuration to be restrictive (no wildcards, specific origins only)
 - Changed password confirmation field from `c_password` to `password_confirmation` (Laravel standard)
+- Updated Docker infrastructure dependencies:
+  - PHP: 8.4.15 → 8.4.16
+  - Redis: 7.4.5 → 7.4.7
+  - NGINX: 1.29.3 → 1.29.4
 
 ### Security
 
