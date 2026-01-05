@@ -13,9 +13,9 @@
         "laravel/framework": "12.44.0",
         "laravel/sanctum": "v4.0.8",
         "laravel/tinker": "v2.10.2",
-        "nuwave/lighthouse": "6.63.2",
+        "nuwave/lighthouse": "6.64.0",
         "php-open-source-saver/jwt-auth": "2.8.3",
-        "predis/predis": "3.0.1",
+        "predis/predis": "3.3.0",
         "spatie/laravel-csp": "3.21.0"
     },
     "require-dev": {

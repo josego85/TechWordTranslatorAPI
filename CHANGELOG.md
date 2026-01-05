@@ -27,6 +27,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
   - Redis: 7.4.5 → 7.4.7
   - NGINX: 1.29.3 → 1.29.4
 - Updated dependencies:
+  - `predis/predis`: 3.0.1 → 3.3.0
+  - `nuwave/lighthouse`: 6.63.2 → 6.64.0
   - `webonyx/graphql-php`: 15.29.3 → 15.29.4 (indirect dependency patch update)
 - Updated development dependencies:
   - `rector/rector`: 2.2.8 → 2.3.0
