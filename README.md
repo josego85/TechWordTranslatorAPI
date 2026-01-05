@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/josego85/TechWordTranslatorAPI/workflows/CI/badge.svg)](https://github.com/josego85/TechWordTranslatorAPI/actions/workflows/ci.yml)
 [![codecov](https://github.com/josego85/TechWordTranslatorAPI/branch/main/graph/badge.svg)](https://codecov.io/gh/josego85/TechWordTranslatorAPI)
-[![Version](https://img.shields.io/badge/Version-1.14.2-blue.svg)](https://github.com/josego85/TechWordTranslatorAPI)
+[![Version](https://img.shields.io/badge/Version-1.15.0-blue.svg)](https://github.com/josego85/TechWordTranslatorAPI)
 [![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](LICENSE)
 [![PHP Version](https://img.shields.io/badge/PHP-8.4.16-blue.svg)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/Laravel-12.44.0-green.svg)](https://laravel.com/)

@@ -7,6 +7,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ## [Unreleased]
 
+---
+
+## [v1.15.0] - 2026-01-05
+
 ### Added
 
 - Form Request validation classes for authentication endpoints (`RegisterRequest`, `LoginRequest`)
