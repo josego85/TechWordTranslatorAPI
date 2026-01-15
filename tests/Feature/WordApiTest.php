@@ -175,4 +175,69 @@ class WordApiTest extends TestCase
 
         $response->assertStatus(404);
     }
+
+    public function test_show_word_exception_returns_404(): void
+    {
+        $word = Word::factory()->create();
+
+        // Mock the service to throw a not found exception
+        $this->mock(\App\Services\WordService::class, function($mock) use ($word) {
+            $mock->shouldReceive('get')
+                ->with($word->id)
+                ->once()
+                ->andThrow(new \App\Exceptions\WordNotFoundException('Word not found'));
+        });
+
+        $response = $this->getJson("/api/v1/words/{$word->id}");
+
+        $response->assertStatus(404)
+            ->assertJson([
+                'message' => 'Word not found',
+            ]);
+    }
+
+    public function test_create_word_exception_returns_404(): void
+    {
+        // Mock the service to throw a not found exception
+        $this->mock(\App\Services\WordService::class, function($mock) {
+            $mock->shouldReceive('create')
+                ->once()
+                ->andThrow(new \App\Exceptions\WordNotFoundException('Failed to create word'));
+        });
+
+        $data = [
+            'english_word' => 'Test',
+        ];
+
+        $response = $this->postJson('/api/v1/words', $data);
+
+        $response->assertStatus(404)
+            ->assertJson([
+                'message' => 'Failed to create word',
+            ]);
+    }
+
+    public function test_update_word_exception_returns_404(): void
+    {
+        $word = Word::factory()->create();
+
+        // Mock the service to throw a not found exception
+        $this->mock(\App\Services\WordService::class, function($mock) use ($word) {
+            $mock->shouldReceive('update')
+                ->with($word->id, \Mockery::any())
+                ->once()
+                ->andThrow(new \App\Exceptions\WordNotFoundException('Word not found'));
+        });
+
+        $data = [
+            'english_word' => 'Test',
+        ];
+
+        $response = $this->putJson("/api/v1/words/{$word->id}", $data);
+
+        $response->assertStatus(404)
+            ->assertJson([
+                'message' => 'Word not found',
+            ]);
+    }
 }

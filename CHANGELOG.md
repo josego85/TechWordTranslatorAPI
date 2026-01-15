@@ -9,7 +9,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
-## [v1.15.0] - 2026-01-05
+## [v1.15.0] - 2026-01-15
 
 ### Added
 
@@ -18,6 +18,12 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Security logging for authentication events (failed attempts, successful logins, registrations, logouts)
 - Logout endpoint with JWT token invalidation (`POST /api/v1/user/logout`)
 - CORS configuration environment variable (`CORS_ALLOWED_ORIGINS`)
+- Comprehensive test suite: 59 new tests covering authentication, JWT middleware, form requests, and resources
+  - `AuthApiTest`: Authentication flows (register, login, logout)
+  - `JWTMiddlewareTest`: JWT token validation and error handling
+  - `LoginRequestTest` & `RegisterRequestTest`: Form validation rules and messages
+  - `TranslationCollectionTest`: Resource collection pagination
+  - Enhanced coverage for `TranslationController`, `WordController` exception handling
 
 ### Changed
 
@@ -26,6 +32,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Improved error handling with generic messages for security (prevent information leakage)
 - Updated CORS configuration to be restrictive (no wildcards, specific origins only)
 - Changed password confirmation field from `c_password` to `password_confirmation` (Laravel standard)
+- **Test coverage increased from 63.2% to 91.9%** (28.7% improvement, exceeding 74% target)
 - Updated Docker infrastructure dependencies:
   - PHP: 8.4.15 → 8.4.16
   - Redis: 7.4.5 → 7.4.7
@@ -45,6 +52,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Applied Laravel Pint code style fixes for arrow function spacing
 - Cleaned up PHPStan configuration (removed obsolete error suppressions)
 - CI workflow: Updated composer validation to suppress version constraint warnings (`--no-check-all`)
+- Enhanced SecurityHeaders middleware test coverage (6 comprehensive test cases)
 
 ### Security
 
@@ -55,6 +63,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Added security event logging for audit trails
 - Implemented HTTP security headers middleware (HSTS, X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy, Permissions-Policy)
 - Upgraded Spatie CSP from v2.10.3 to v3.21.0 with strict deny-by-default policy (default-src 'none')
+
+### Removed
+
+- Deleted `tests/Feature/ExampleTest.php` (replaced with production-ready test suite)
 
 ---
 
