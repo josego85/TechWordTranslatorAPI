@@ -9,7 +9,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
-## [v1.15.0] - 2026-01-15
+## [v1.15.0] - 2026-01-16
 
 ### Added
 
@@ -52,6 +52,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - Applied Laravel Pint code style fixes for arrow function spacing
 - Cleaned up PHPStan configuration (removed obsolete error suppressions)
 - CI workflow: Updated composer validation to suppress version constraint warnings (`--no-check-all`)
+- CI workflow: Added JWT secret generation in test environment to fix authentication tests
 - Enhanced SecurityHeaders middleware test coverage (6 comprehensive test cases)
 
 ### Security
