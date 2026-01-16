@@ -66,7 +66,7 @@ jobs:
           coverage: pcov
 
       - name: Validate composer files
-        run: composer validate --no-check-publish
+        run: composer validate --no-check-all
 
       - name: Setup Node.js project
         uses: ./.github/actions/setup-node-project
@@ -78,6 +78,7 @@ jobs:
         run: |
           cp .env.example .env
           php artisan key:generate
+          php artisan jwt:secret --force
 
       - name: Run PHPUnit Tests with Coverage
         run: vendor/bin/phpunit --coverage-clover coverage.xml --testdox

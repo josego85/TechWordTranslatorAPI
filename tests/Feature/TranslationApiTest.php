@@ -172,4 +172,77 @@ class TranslationApiTest extends TestCase
 
         $response->assertStatus(404);
     }
+
+    public function test_create_translation_returns_500_on_service_failure(): void
+    {
+        $word = Word::factory()->create();
+
+        // Mock the service to throw an exception
+        $this->mock(\App\Services\TranslationService::class, function($mock) {
+            $mock->shouldReceive('create')
+                ->once()
+                ->andThrow(new \App\Exceptions\TranslationException('Failed to create translation'));
+        });
+
+        $data = [
+            'word_id' => $word->id,
+            'language' => 'fr',
+            'translation' => 'Test',
+        ];
+
+        $response = $this->postJson('/api/v1/translations', $data);
+
+        $response->assertStatus(500)
+            ->assertJson([
+                'message' => 'Failed to create translation',
+            ]);
+    }
+
+    public function test_show_translation_exception_returns_404(): void
+    {
+        $word        = Word::factory()->create();
+        $translation = Translation::factory()->for($word)->create();
+
+        // Mock the service to throw a not found exception for show
+        $this->mock(\App\Services\TranslationService::class, function($mock) use ($translation) {
+            $mock->shouldReceive('get')
+                ->with($translation->id)
+                ->once()
+                ->andThrow(new \App\Exceptions\TranslationException('Translation not found'));
+        });
+
+        $response = $this->getJson("/api/v1/translations/{$translation->id}");
+
+        $response->assertStatus(404)
+            ->assertJson([
+                'message' => 'Translation not found',
+            ]);
+    }
+
+    public function test_update_translation_exception_returns_404(): void
+    {
+        $word        = Word::factory()->create();
+        $translation = Translation::factory()->for($word)->create();
+
+        // Mock the service to throw a not found exception
+        $this->mock(\App\Services\TranslationService::class, function($mock) use ($translation) {
+            $mock->shouldReceive('update')
+                ->with($translation->id, \Mockery::any())
+                ->once()
+                ->andThrow(new \App\Exceptions\TranslationException('Translation not found'));
+        });
+
+        $data = [
+            'word_id' => $word->id,
+            'language' => 'es',
+            'translation' => 'Test',
+        ];
+
+        $response = $this->putJson("/api/v1/translations/{$translation->id}", $data);
+
+        $response->assertStatus(404)
+            ->assertJson([
+                'message' => 'Translation not found',
+            ]);
+    }
 }

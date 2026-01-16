@@ -14,8 +14,21 @@ Route::prefix('v1')
         Route::prefix('/user')
             ->name('user.')
             ->group(function() {
-                Route::post('register', [AuthController::class, 'register'])->name('register');
-                Route::post('login', [AuthController::class, 'login'])->name('login');
+                // Rate limiting: 3 registrations per hour per IP
+                Route::post('register', [AuthController::class, 'register'])
+                    ->middleware('throttle:3,60')
+                    ->name('register');
+
+                // Rate limiting: 5 login attempts per minute per IP
+                Route::post('login', [AuthController::class, 'login'])
+                    ->middleware('throttle:5,1')
+                    ->name('login');
+
+                // Logout endpoint (requires JWT)
+                Route::post('logout', [AuthController::class, 'logout'])
+                    ->middleware('jwt.verify')
+                    ->name('logout');
+
                 // Route::get('/',         [AuthController::class, 'getUser'])->name('getUser');
             });
 

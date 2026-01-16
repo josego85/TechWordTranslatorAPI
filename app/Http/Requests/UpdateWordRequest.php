@@ -18,8 +18,8 @@ class UpdateWordRequest extends FormRequest
     public function rules()
     {
         return [
-            'word' => 'required|integer|min:1|exists:words,id',
-            'english_word' => 'required|string|max:255',
+            'word' => ['required', 'integer', 'min:1', 'exists:words,id'],
+            'english_word' => ['required', 'string', 'max:255'],
         ];
     }
 

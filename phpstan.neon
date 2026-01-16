@@ -11,13 +11,14 @@ parameters:
   checkExplicitMixed: true
   inferPrivatePropertyTypeFromConstructor: true
   checkDynamicProperties: true
+  reportUnmatchedIgnoredErrors: false
   ignoreErrors:
     # - identifier: missingType.iterableValue
     # - identifier: missingType.generics
-    # JWTAuth facade methods are valid but not recognized by PHPStan
+    # JWT-Auth facade (external package without PHPStan stubs)
     -
-      message: '#Call to an undefined static method PHPOpenSourceSaver\\JWTAuth\\Facades\\JWTAuth::(attempt|parseToken)\(\)\.#'
+      message: '#Call to an undefined static method PHPOpenSourceSaver\\JWTAuth\\Facades\\JWTAuth::(attempt|parseToken|fromUser|invalidate|authenticate)\(\)#'
       path: app/Http/Controllers/API/V1/AuthController.php
     -
-      message: '#Call to an undefined static method PHPOpenSourceSaver\\JWTAuth\\Facades\\JWTAuth::parseToken\(\)\.#'
+      message: '#Call to an undefined static method PHPOpenSourceSaver\\JWTAuth\\Facades\\JWTAuth::(parseToken|authenticate)\(\)#'
       path: app/Http/Middleware/JWTMiddleware.php

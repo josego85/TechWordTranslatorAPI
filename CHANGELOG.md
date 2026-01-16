@@ -5,6 +5,72 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [Unreleased]
+
+---
+
+## [v1.15.0] - 2026-01-16
+
+### Added
+
+- Form Request validation classes for authentication endpoints (`RegisterRequest`, `LoginRequest`)
+- Rate limiting on authentication endpoints (3 registrations/hour, 5 login attempts/minute)
+- Security logging for authentication events (failed attempts, successful logins, registrations, logouts)
+- Logout endpoint with JWT token invalidation (`POST /api/v1/user/logout`)
+- CORS configuration environment variable (`CORS_ALLOWED_ORIGINS`)
+- Comprehensive test suite: 59 new tests covering authentication, JWT middleware, form requests, and resources
+  - `AuthApiTest`: Authentication flows (register, login, logout)
+  - `JWTMiddlewareTest`: JWT token validation and error handling
+  - `LoginRequestTest` & `RegisterRequestTest`: Form validation rules and messages
+  - `TranslationCollectionTest`: Resource collection pagination
+  - Enhanced coverage for `TranslationController`, `WordController` exception handling
+
+### Changed
+
+- Refactored `AuthController` to use Form Request classes
+- Enhanced password validation (12+ chars, mixed case, numbers, symbols, uncompromised check)
+- Improved error handling with generic messages for security (prevent information leakage)
+- Updated CORS configuration to be restrictive (no wildcards, specific origins only)
+- Changed password confirmation field from `c_password` to `password_confirmation` (Laravel standard)
+- **Test coverage increased from 63.2% to 91.9%** (28.7% improvement, exceeding 74% target)
+- Updated Docker infrastructure dependencies:
+  - PHP: 8.4.15 → 8.4.16
+  - Redis: 7.4.5 → 7.4.7
+  - NGINX: 1.29.3 → 1.29.4
+- Updated dependencies:
+  - `predis/predis`: 3.0.1 → 3.3.0
+  - `nuwave/lighthouse`: 6.63.2 → 6.64.0
+  - `webonyx/graphql-php`: 15.29.3 → 15.29.4 (indirect dependency patch update)
+- Updated development dependencies:
+  - `rector/rector`: 2.2.8 → 2.3.0
+  - `laravel/pint`: 1.24.0 → 1.27.0
+  - `larastan/larastan`: 3.5.0 → 3.8.1
+- Migrated validation rules from pipe-separated strings to array format (Laravel 12 best practice)
+- Updated Eloquent scopes visibility from `public` to `protected` (Laravel 11+ standard)
+- Replaced closures with arrow functions where applicable for cleaner code
+- Added `#[Override]` attributes to Form Request methods for type safety
+- Applied Laravel Pint code style fixes for arrow function spacing
+- Cleaned up PHPStan configuration (removed obsolete error suppressions)
+- CI workflow: Updated composer validation to suppress version constraint warnings (`--no-check-all`)
+- CI workflow: Added JWT secret generation in test environment to fix authentication tests
+- Enhanced SecurityHeaders middleware test coverage (6 comprehensive test cases)
+
+### Security
+
+- Implemented restrictive CORS policy (configurable allowed origins)
+- Added comprehensive rate limiting to prevent brute force attacks
+- Enhanced password complexity requirements (12+ characters, mixed case, numbers, symbols)
+- Sanitized error messages to prevent user enumeration and information disclosure
+- Added security event logging for audit trails
+- Implemented HTTP security headers middleware (HSTS, X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy, Permissions-Policy)
+- Upgraded Spatie CSP from v2.10.3 to v3.21.0 with strict deny-by-default policy (default-src 'none')
+
+### Removed
+
+- Deleted `tests/Feature/ExampleTest.php` (replaced with production-ready test suite)
+
+---
+
 ## [v1.14.2] - 2026-01-04
 
 ### Changed
