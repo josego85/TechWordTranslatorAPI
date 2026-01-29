@@ -5,7 +5,18 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
-## [Unreleased]
+## [v1.15.1] - 2026-01-29
+
+### Changed
+
+- Updated GitHub Actions dependencies:
+  - `actions/upload-artifact`: 5.0.0 → 6.0.0
+  - `actions/cache`: 4.2.0 → 5.0.1
+
+### Security
+
+- Updated `phpunit/phpunit`: 11.5.46 → 11.5.50 (security patch)
+- Updated `symfony/process`: 7.4.3 → 7.4.5 (security patch)
 
 ---
 
