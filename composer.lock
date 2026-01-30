@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "39a3f2aa6e86af9821407be33eeaa381",
+    "content-hash": "5a902a8f6fb6ae9c444b73a5dd0965e9",
     "packages": [
         {
             "name": "brick/math",
@@ -3885,16 +3885,16 @@
         },
         {
             "name": "spatie/laravel-csp",
-            "version": "3.21.0",
+            "version": "3.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-csp.git",
-                "reference": "1c5a878dddc66283d80ff3bbe810c9dcda4ee919"
+                "reference": "d0a4f1e970f4b1d81bed4afe8c1125d2c390f73d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/1c5a878dddc66283d80ff3bbe810c9dcda4ee919",
-                "reference": "1c5a878dddc66283d80ff3bbe810c9dcda4ee919",
+                "url": "https://api.github.com/repos/spatie/laravel-csp/zipball/d0a4f1e970f4b1d81bed4afe8c1125d2c390f73d",
+                "reference": "d0a4f1e970f4b1d81bed4afe8c1125d2c390f73d",
                 "shasum": ""
             },
             "require": {
@@ -3958,7 +3958,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-csp/tree/3.21.0"
+                "source": "https://github.com/spatie/laravel-csp/tree/3.22.0"
             },
             "funding": [
                 {
@@ -3966,7 +3966,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-10-16T07:20:44+00:00"
+            "time": "2026-01-24T18:56:15+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -10132,5 +10132,5 @@
         "php": "^8.4"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
