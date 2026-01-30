@@ -10,9 +10,9 @@
     "require": {
         "php": "^8.4",
         "guzzlehttp/guzzle": "7.9.3",
-        "laravel/framework": "12.44.0",
-        "laravel/sanctum": "v4.0.8",
-        "laravel/tinker": "v2.10.2",
+        "laravel/framework": "12.49.0",
+        "laravel/sanctum": "v4.3.0",
+        "laravel/tinker": "v2.11.0",
         "nuwave/lighthouse": "6.64.0",
         "php-open-source-saver/jwt-auth": "2.8.3",
         "predis/predis": "3.3.0",
