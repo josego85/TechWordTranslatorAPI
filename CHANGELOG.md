@@ -5,6 +5,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.15.2] - 2026-02-07
+
+### Changed
+
+- Updated `psy/psysh`: 0.12.18 → 0.12.19 ([#51](https://github.com/josego85/TechWordTranslatorAPI/pull/51))
+
+---
+
 ## [v1.15.1] - 2026-01-30
 
 ### Changed
