@@ -1,6 +1,6 @@
 # TechWordTranslatorAPI
 
-[![Version](https://img.shields.io/badge/Version-1.15.2-blue.svg)](https://github.com/josego85/TechWordTranslatorAPI)
+[![Version](https://img.shields.io/badge/Version-1.15.3-blue.svg)](https://github.com/josego85/TechWordTranslatorAPI)
 [![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](LICENSE)
 [![PHP Version](https://img.shields.io/badge/PHP-8.4.16-blue.svg)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/Laravel-12.44.0-green.svg)](https://laravel.com/)
