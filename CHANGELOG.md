@@ -5,9 +5,17 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.15.3] - 2026-02-12
+
+### Security
+
+- axios: Updated from 1.12.2 to 1.13.5 to address security vulnerabilities in the npm_and_yarn dependency group (#54)
+
+---
+
 ## [v1.15.2] - 2026-02-07
 
-### Changed
+### Security
 
 - Updated `psy/psysh`: 0.12.18 → 0.12.19 ([#51](https://github.com/josego85/TechWordTranslatorAPI/pull/51))
 
