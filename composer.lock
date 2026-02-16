@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "39a3f2aa6e86af9821407be33eeaa381",
+    "content-hash": "d09e593fa4e040b5099452cba8fd311d",
     "packages": [
         {
             "name": "brick/math",
@@ -2832,16 +2832,16 @@
         },
         {
             "name": "nuwave/lighthouse",
-            "version": "v6.64.0",
+            "version": "v6.64.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nuwave/lighthouse.git",
-                "reference": "a7f2e1095aaff569ab84db5b291495ce903c9a9f"
+                "reference": "e3a8509fddc248740afe30022173a6fa8d78d585"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nuwave/lighthouse/zipball/a7f2e1095aaff569ab84db5b291495ce903c9a9f",
-                "reference": "a7f2e1095aaff569ab84db5b291495ce903c9a9f",
+                "url": "https://api.github.com/repos/nuwave/lighthouse/zipball/e3a8509fddc248740afe30022173a6fa8d78d585",
+                "reference": "e3a8509fddc248740afe30022173a6fa8d78d585",
                 "shasum": ""
             },
             "require": {
@@ -2958,7 +2958,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2025-12-16T15:34:38+00:00"
+            "time": "2026-01-13T16:06:47+00:00"
         },
         {
             "name": "php-open-source-saver/jwt-auth",
