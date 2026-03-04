@@ -34,8 +34,8 @@ class TranslationCollection extends ResourceCollection
     /**
      * Add pagination links to the response.
      *
-     * @param  \Illuminate\Http\Request                                  $request
-     * @return array{links: array{next: string|null, prev: string|null}}
+     * @param  \Illuminate\Http\Request                                          $request
+     * @return array{links: array{next: string|null, prev: string|null}}|array{}
      */
     #[\Override]
     public function with($request): array

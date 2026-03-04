@@ -7,17 +7,28 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ## [Unreleased]
 
+### Changed
+
+- **deps**: Upgraded `laravel/framework` from 12.44.0 to 12.53.0 (race condition fixes in BladeCompiler, memory leak fix in `Arr::dot()`, model serialization fix for queue jobs)
+- **deps**: Upgraded `predis/predis` from 3.3.0 to 3.4.1 (Redis client used for JWT blacklist)
+- **deps**: Upgraded `spatie/laravel-csp` from 3.21.0 to 3.23.0 (CSP security headers)
+- **deps**: Upgraded `nuwave/lighthouse` from 6.64.0 to 6.65.0 (GraphQL engine)
+- **deps**: Upgraded `guzzlehttp/guzzle` from 7.9.3 to 7.10.0, `laravel/sanctum` from 4.0.8 to 4.3.1, `laravel/tinker` from 2.10.2 to 2.11.1
+- **deps-dev**: Upgraded `larastan/larastan` from 3.8.1 to 3.9.3, `nunomaduro/collision` to 8.9.1, `fakerphp/faker` to 1.24.1, `laravel/pint` to 1.27.1, `spatie/laravel-ignition` to 2.11.0
+- **phpstan**: Bumped analysis level from 2 to 5 — stricter type checking now enforced across the codebase
+
+### Fixed
+
+- **types**: Fixed 13 PHPStan level-5 errors: `JWTMiddleware` return type, dead code in `AppServiceProvider`, `CacheService::remember` `callable→Closure`, `$fillable` phpdoc `list<string>`, `HasMany<Translation, $this>` return type enabling inference in `WordResource`, `CursorPaginationLinks` loop replaced with explicit keys, `TranslationCollection::with()` return type
+- **rector**: Upgraded `rector/rector` from 2.3.0 to 2.3.8 to fix "Service name must be a non-empty string" bug (missing `AnonymousClassVisitor` in bundled PHPStan)
+- **rector**: Disabled parallel mode (`withoutParallel`) and excluded `bootstrap/cache` to make `composer rector-check` pass inside Docker
+
 ### Security
 
 - **jwt**: Reduced access token TTL from 60 to 15 minutes and refresh TTL from 2 weeks to 24 hours (CWE-613)
 - **jwt**: Added `POST /api/v1/user/refresh` endpoint with blacklist invalidation of previous token
 - **redis**: Configured `noeviction` policy and AOF persistence to prevent blacklist entries from being silently evicted or lost on restart
 - **docker**: Added healthchecks for Redis and MySQL; app container now waits for both to be healthy before starting
-
-### Fixed
-
-- **rector**: Upgraded `rector/rector` from 2.3.0 to 2.3.8 to fix "Service name must be a non-empty string" bug (missing `AnonymousClassVisitor` in bundled PHPStan)
-- **rector**: Disabled parallel mode (`withoutParallel`) and excluded `bootstrap/cache` to make `composer rector-check` pass inside Docker
 
 
 

@@ -35,8 +35,6 @@ class AppServiceProvider extends ServiceProvider
                 $repository,
                 $app->make(CacheService::class)
             );
-
-            return $repository;
         });
 
         $this->app->bind(TranslationRepositoryInterface::class, function($app) {

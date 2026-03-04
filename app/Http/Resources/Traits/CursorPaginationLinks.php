@@ -17,20 +17,12 @@ trait CursorPaginationLinks
      */
     protected function buildCursorLinks(Request $request, CursorPaginator $paginator): array
     {
-        $links = [];
-        $map   = [
-            'next' => 'nextCursor',
-            'prev' => 'previousCursor',
+        $nextCursor = $paginator->nextCursor()?->encode();
+        $prevCursor = $paginator->previousCursor()?->encode();
+
+        return [
+            'next' => $nextCursor ? $request->fullUrlWithQuery(['cursor' => $nextCursor]) : null,
+            'prev' => $prevCursor ? $request->fullUrlWithQuery(['cursor' => $prevCursor]) : null,
         ];
-
-        foreach ($map as $key => $method) {
-            $cursor = $paginator->{$method}()?->encode();
-
-            $links[$key] = $cursor
-                ? $request->fullUrlWithQuery(['cursor' => $cursor])
-                : null;
-        }
-
-        return $links;
     }
 }
