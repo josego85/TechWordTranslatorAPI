@@ -5,6 +5,19 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [Unreleased]
+
+### Security
+
+- **jwt**: Reduced access token TTL from 60 to 15 minutes and refresh TTL from 2 weeks to 24 hours (CWE-613)
+- **jwt**: Added `POST /api/v1/user/refresh` endpoint with blacklist invalidation of previous token
+- **redis**: Configured `noeviction` policy and AOF persistence to prevent blacklist entries from being silently evicted or lost on restart
+- **docker**: Added healthchecks for Redis and MySQL; app container now waits for both to be healthy before starting
+
+
+
+---
+
 ## [v1.15.4] - 2026-03-04
 
 ### Security
