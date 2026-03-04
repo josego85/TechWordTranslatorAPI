@@ -8,6 +8,9 @@ use Rector\Set\ValueObject\SetList;
 use RectorLaravel\Set\LaravelSetList;
 
 return RectorConfig::configure()
+    // Parallel workers crash inside Docker due to process communication issues.
+    // Single-process mode is reliable and sufficient for this codebase size.
+    ->withoutParallel()
     ->withPaths([
         __DIR__ . '/app',
         __DIR__ . '/bootstrap',
@@ -16,6 +19,9 @@ return RectorConfig::configure()
         __DIR__ . '/resources',
         __DIR__ . '/routes',
         __DIR__ . '/tests',
+    ])
+    ->withSkip([
+        __DIR__ . '/bootstrap/cache',
     ])
     ->withPhpVersion(80400) // ✅ PHP 8.4
     ->withPhpSets()

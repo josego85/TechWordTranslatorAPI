@@ -14,6 +14,11 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - **redis**: Configured `noeviction` policy and AOF persistence to prevent blacklist entries from being silently evicted or lost on restart
 - **docker**: Added healthchecks for Redis and MySQL; app container now waits for both to be healthy before starting
 
+### Fixed
+
+- **rector**: Upgraded `rector/rector` from 2.3.0 to 2.3.8 to fix "Service name must be a non-empty string" bug (missing `AnonymousClassVisitor` in bundled PHPStan)
+- **rector**: Disabled parallel mode (`withoutParallel`) and excluded `bootstrap/cache` to make `composer rector-check` pass inside Docker
+
 
 
 ---
