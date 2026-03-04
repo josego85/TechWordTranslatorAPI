@@ -10,6 +10,11 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 ### Changed
 
 - **deps**: Upgraded `laravel/framework` from 12.44.0 to 12.53.0 (race condition fixes in BladeCompiler, memory leak fix in `Arr::dot()`, model serialization fix for queue jobs)
+- **deps**: Upgraded `predis/predis` from 3.3.0 to 3.4.1 (Redis client used for JWT blacklist)
+- **deps**: Upgraded `spatie/laravel-csp` from 3.21.0 to 3.23.0 (CSP security headers)
+- **deps**: Upgraded `nuwave/lighthouse` from 6.64.0 to 6.65.0 (GraphQL engine)
+- **deps**: Upgraded `guzzlehttp/guzzle` from 7.9.3 to 7.10.0, `laravel/sanctum` from 4.0.8 to 4.3.1, `laravel/tinker` from 2.10.2 to 2.11.1
+- **deps-dev**: Upgraded `larastan/larastan` from 3.8.1 to 3.9.3, `nunomaduro/collision` to 8.9.1, `fakerphp/faker` to 1.24.1, `laravel/pint` to 1.27.1, `spatie/laravel-ignition` to 2.11.0
 
 ### Fixed
 
