@@ -223,6 +223,44 @@ class AuthApiTest extends TestCase
             ->with('Logout failed', \Mockery::on(fn ($context) => isset($context['error']) && isset($context['ip'])));
     }
 
+    public function test_refresh_token_successfully(): void
+    {
+        $user  = User::factory()->create();
+        $token = JWTAuth::fromUser($user);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->postJson('/api/v1/user/refresh');
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => ['token'],
+                'message',
+            ])
+            ->assertJson([
+                'message' => 'Token refreshed successfully',
+            ]);
+
+        $this->assertNotEmpty($response->json('data.token'));
+
+        Log::shouldHaveReceived('info')
+            ->once()
+            ->with('Token refreshed', \Mockery::on(fn ($context) => isset($context['ip'])));
+    }
+
+    public function test_refresh_token_fails_without_token(): void
+    {
+        $response = $this->postJson('/api/v1/user/refresh');
+
+        $response->assertStatus(401)
+            ->assertJson([
+                'message' => 'Could not refresh token',
+            ]);
+
+        Log::shouldHaveReceived('warning')
+            ->once()
+            ->with('Token refresh failed', \Mockery::on(fn ($context) => isset($context['error']) && isset($context['ip'])));
+    }
+
     public function test_send_response_helper_formats_correctly(): void
     {
         $user = User::factory()->create([

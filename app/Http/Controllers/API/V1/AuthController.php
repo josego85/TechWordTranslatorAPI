@@ -112,6 +112,26 @@ class AuthController extends Controller
         return $this->sendResponse($user, 'User data retrieved', 200);
     }
 
+    public function refresh(Request $request)
+    {
+        try {
+            $token = JWTAuth::parseToken()->refresh();
+
+            Log::info('Token refreshed', [
+                'ip' => $request->ip(),
+            ]);
+
+            return $this->sendResponse(['token' => $token], 'Token refreshed successfully', 200);
+        } catch (JWTException $e) {
+            Log::warning('Token refresh failed', [
+                'error' => $e->getMessage(),
+                'ip' => $request->ip(),
+            ]);
+
+            return $this->sendError([], 'Could not refresh token', 401);
+        }
+    }
+
     public function logout(Request $request)
     {
         try {
