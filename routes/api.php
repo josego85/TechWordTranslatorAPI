@@ -24,6 +24,11 @@ Route::prefix('v1')
                     ->middleware('throttle:5,1')
                     ->name('login');
 
+                // Refresh token endpoint (requires JWT)
+                Route::post('refresh', [AuthController::class, 'refresh'])
+                    ->middleware('jwt.verify')
+                    ->name('refresh');
+
                 // Logout endpoint (requires JWT)
                 Route::post('logout', [AuthController::class, 'logout'])
                     ->middleware('jwt.verify')
