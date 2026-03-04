@@ -5,6 +5,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.15.4] - 2026-03-04
+
+### Security
+
+- **rollup**: Patched high-severity Arbitrary File Write via Path Traversal vulnerability affecting versions 4.0.0–4.58.0 ([GHSA-mw96-cpmx-2vgc](https://github.com/advisories/GHSA-mw96-cpmx-2vgc))
+
+---
+
 ## [v1.15.3] - 2026-02-12
 
 ### Security
