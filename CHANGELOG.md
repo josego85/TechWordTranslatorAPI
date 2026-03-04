@@ -7,17 +7,21 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ## [Unreleased]
 
+### Changed
+
+- **deps**: Upgraded `laravel/framework` from 12.44.0 to 12.53.0 (race condition fixes in BladeCompiler, memory leak fix in `Arr::dot()`, model serialization fix for queue jobs)
+
+### Fixed
+
+- **rector**: Upgraded `rector/rector` from 2.3.0 to 2.3.8 to fix "Service name must be a non-empty string" bug (missing `AnonymousClassVisitor` in bundled PHPStan)
+- **rector**: Disabled parallel mode (`withoutParallel`) and excluded `bootstrap/cache` to make `composer rector-check` pass inside Docker
+
 ### Security
 
 - **jwt**: Reduced access token TTL from 60 to 15 minutes and refresh TTL from 2 weeks to 24 hours (CWE-613)
 - **jwt**: Added `POST /api/v1/user/refresh` endpoint with blacklist invalidation of previous token
 - **redis**: Configured `noeviction` policy and AOF persistence to prevent blacklist entries from being silently evicted or lost on restart
 - **docker**: Added healthchecks for Redis and MySQL; app container now waits for both to be healthy before starting
-
-### Fixed
-
-- **rector**: Upgraded `rector/rector` from 2.3.0 to 2.3.8 to fix "Service name must be a non-empty string" bug (missing `AnonymousClassVisitor` in bundled PHPStan)
-- **rector**: Disabled parallel mode (`withoutParallel`) and excluded `bootstrap/cache` to make `composer rector-check` pass inside Docker
 
 
 
