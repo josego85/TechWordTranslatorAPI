@@ -15,9 +15,11 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - **deps**: Upgraded `nuwave/lighthouse` from 6.64.0 to 6.65.0 (GraphQL engine)
 - **deps**: Upgraded `guzzlehttp/guzzle` from 7.9.3 to 7.10.0, `laravel/sanctum` from 4.0.8 to 4.3.1, `laravel/tinker` from 2.10.2 to 2.11.1
 - **deps-dev**: Upgraded `larastan/larastan` from 3.8.1 to 3.9.3, `nunomaduro/collision` to 8.9.1, `fakerphp/faker` to 1.24.1, `laravel/pint` to 1.27.1, `spatie/laravel-ignition` to 2.11.0
+- **phpstan**: Bumped analysis level from 2 to 5 — stricter type checking now enforced across the codebase
 
 ### Fixed
 
+- **types**: Fixed 13 PHPStan level-5 errors: `JWTMiddleware` return type, dead code in `AppServiceProvider`, `CacheService::remember` `callable→Closure`, `$fillable` phpdoc `list<string>`, `HasMany<Translation, $this>` return type enabling inference in `WordResource`, `CursorPaginationLinks` loop replaced with explicit keys, `TranslationCollection::with()` return type
 - **rector**: Upgraded `rector/rector` from 2.3.0 to 2.3.8 to fix "Service name must be a non-empty string" bug (missing `AnonymousClassVisitor` in bundled PHPStan)
 - **rector**: Disabled parallel mode (`withoutParallel`) and excluded `bootstrap/cache` to make `composer rector-check` pass inside Docker
 

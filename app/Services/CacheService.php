@@ -10,7 +10,7 @@ class CacheService
 {
     private const int CACHE_TTL = 1440; // 24 hours in minutes
 
-    public function remember(string $key, callable $callback)
+    public function remember(string $key, \Closure $callback)
     {
         return Cache::remember($key, self::CACHE_TTL, $callback);
     }

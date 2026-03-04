@@ -22,7 +22,7 @@ class Word extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'english_word',
@@ -40,6 +40,8 @@ class Word extends Model
 
     /**
      * Get the translations for the word.
+     *
+     * @return HasMany<Translation, $this>
      */
     public function translations(): HasMany
     {
