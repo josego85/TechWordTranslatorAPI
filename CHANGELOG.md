@@ -29,8 +29,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - **jwt**: Added `POST /api/v1/user/refresh` endpoint with blacklist invalidation of previous token
 - **redis**: Configured `noeviction` policy and AOF persistence to prevent blacklist entries from being silently evicted or lost on restart
 - **docker**: Added healthchecks for Redis and MySQL; app container now waits for both to be healthy before starting
-
-
+- **auth**: Added per-email soft lockout via `RateLimiter` (`throttle:login-by-email`): 10 attempts / 15 min regardless of IP rotation. Keys stored as SHA-256 hash to avoid PII in Redis. No migration, no DB writes, auto-expires (NIST SP 800-63B compliant)
+- **audit**: Added `Log::info/warning` to `WordController` and `TranslationController` for store/update/destroy — closes the gap where content mutations left no audit trail. 6 new tests
 
 ---
 

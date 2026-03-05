@@ -29,6 +29,14 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()));
 
+        // Per-email soft lockout: 10 attempts per 15 minutes, regardless of IP.
+        // Blocks credential stuffing with IP rotation without locking out legitimate users permanently.
+        // SHA-256 hash avoids storing PII directly in Redis keys.
+        RateLimiter::for(
+            'login-by-email',
+            fn (Request $request) => Limit::perMinutes(15, 10)->by('email:' . hash('sha256', $request->str('email')->lower()->value()))
+        );
+
         $this->routes(function() {
             Route::middleware('api')
                 ->prefix('api')

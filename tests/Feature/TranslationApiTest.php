@@ -7,6 +7,7 @@ namespace Tests\Feature;
 use App\Models\Translation;
 use App\Models\Word;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class TranslationApiTest extends TestCase
@@ -18,6 +19,7 @@ class TranslationApiTest extends TestCase
     {
         parent::setUp();
         $this->withoutMiddleware();
+        Log::spy();
     }
 
     public function test_get_translations_returns_paginated_list(): void
@@ -171,6 +173,49 @@ class TranslationApiTest extends TestCase
         $response = $this->deleteJson('/api/v1/translations/9999');
 
         $response->assertStatus(404);
+    }
+
+    public function test_create_translation_logs_info(): void
+    {
+        $word = Word::factory()->create();
+
+        $this->postJson('/api/v1/translations', [
+            'word_id' => $word->id,
+            'language' => 'fr',
+            'translation' => 'Refactorisation',
+        ])->assertStatus(201);
+
+        Log::shouldHaveReceived('info')
+            ->once()
+            ->with('Translation created', \Mockery::on(fn ($context) => $context['word_id'] === $word->id && $context['language'] === 'fr' && isset($context['translation_id']) && isset($context['ip'])));
+    }
+
+    public function test_update_translation_logs_info(): void
+    {
+        $word        = Word::factory()->create();
+        $translation = Translation::factory()->for($word)->create(['language' => 'es', 'translation' => 'Viejo']);
+
+        $this->putJson("/api/v1/translations/{$translation->id}", [
+            'word_id' => $word->id,
+            'language' => 'es',
+            'translation' => 'Nuevo',
+        ])->assertStatus(200);
+
+        Log::shouldHaveReceived('info')
+            ->once()
+            ->with('Translation updated', \Mockery::on(fn ($context) => $context['translation_id'] === $translation->id && isset($context['ip'])));
+    }
+
+    public function test_delete_translation_logs_warning(): void
+    {
+        $word        = Word::factory()->create();
+        $translation = Translation::factory()->for($word)->create();
+
+        $this->deleteJson("/api/v1/translations/{$translation->id}")->assertStatus(204);
+
+        Log::shouldHaveReceived('warning')
+            ->once()
+            ->with('Translation deleted', \Mockery::on(fn ($context) => $context['translation_id'] === $translation->id && isset($context['ip'])));
     }
 
     public function test_create_translation_returns_500_on_service_failure(): void
