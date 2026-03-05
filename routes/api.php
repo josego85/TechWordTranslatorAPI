@@ -19,9 +19,9 @@ Route::prefix('v1')
                     ->middleware('throttle:3,60')
                     ->name('register');
 
-                // Rate limiting: 5 login attempts per minute per IP
+                // Rate limiting: 5 attempts/min per IP + 10 attempts/15min per email (IP-rotation resistant)
                 Route::post('login', [AuthController::class, 'login'])
-                    ->middleware('throttle:5,1')
+                    ->middleware(['throttle:5,1', 'throttle:login-by-email'])
                     ->name('login');
 
                 // Refresh token endpoint (requires JWT)

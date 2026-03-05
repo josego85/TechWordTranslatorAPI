@@ -13,6 +13,7 @@ use App\Http\Requests\UpdateTranslationRequest;
 use App\Http\Resources\TranslationCollection;
 use App\Http\Resources\TranslationResource;
 use App\Services\TranslationService;
+use Illuminate\Support\Facades\Log;
 
 class TranslationController extends Controller
 {
@@ -50,6 +51,8 @@ class TranslationController extends Controller
         try {
             $translation = $this->translationService->create($data);
 
+            Log::info('Translation created', ['translation_id' => $translation->id, 'word_id' => $translation->word_id, 'language' => $translation->language, 'ip' => $request->ip()]);
+
             return response()->json(new TranslationResource($translation), 201);
         } catch (TranslationException $e) {
             return response()->json([
@@ -66,6 +69,8 @@ class TranslationController extends Controller
         try {
             $translation = $this->translationService->update($id, $data);
 
+            Log::info('Translation updated', ['translation_id' => $translation->id, 'word_id' => $translation->word_id, 'language' => $translation->language, 'ip' => $request->ip()]);
+
             return response()->json(new TranslationResource($translation));
         } catch (TranslationException $e) {
             return response()->json([
@@ -78,6 +83,8 @@ class TranslationController extends Controller
     {
         try {
             $this->translationService->delete($id);
+
+            Log::warning('Translation deleted', ['translation_id' => $id, 'ip' => request()->ip()]);
 
             return response()->json(null, 204);
         } catch (TranslationException $e) {

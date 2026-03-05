@@ -7,6 +7,7 @@ namespace Tests\Feature;
 use App\Models\Translation;
 use App\Models\Word;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class WordApiTest extends TestCase
@@ -18,6 +19,7 @@ class WordApiTest extends TestCase
     {
         parent::setUp();
         $this->withoutMiddleware();
+        Log::spy();
     }
 
     public function test_get_words_returns_paginated_list(): void
@@ -194,6 +196,39 @@ class WordApiTest extends TestCase
             ->assertJson([
                 'message' => 'Word not found',
             ]);
+    }
+
+    public function test_create_word_logs_info(): void
+    {
+        $response = $this->postJson('/api/v1/words', ['english_word' => 'Refactor']);
+
+        $response->assertStatus(201);
+
+        Log::shouldHaveReceived('info')
+            ->once()
+            ->with('Word created', \Mockery::on(fn ($context) => $context['english_word'] === 'Refactor' && isset($context['word_id']) && isset($context['ip'])));
+    }
+
+    public function test_update_word_logs_info(): void
+    {
+        $word = Word::factory()->create(['english_word' => 'Old']);
+
+        $this->putJson("/api/v1/words/{$word->id}", ['english_word' => 'New'])->assertStatus(200);
+
+        Log::shouldHaveReceived('info')
+            ->once()
+            ->with('Word updated', \Mockery::on(fn ($context) => $context['word_id'] === $word->id && $context['english_word'] === 'New' && isset($context['ip'])));
+    }
+
+    public function test_delete_word_logs_warning(): void
+    {
+        $word = Word::factory()->create();
+
+        $this->deleteJson("/api/v1/words/{$word->id}")->assertStatus(204);
+
+        Log::shouldHaveReceived('warning')
+            ->once()
+            ->with('Word deleted', \Mockery::on(fn ($context) => $context['word_id'] === $word->id && isset($context['ip'])));
     }
 
     public function test_create_word_exception_returns_404(): void

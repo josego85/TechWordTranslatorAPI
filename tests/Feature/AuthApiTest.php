@@ -280,6 +280,12 @@ class AuthApiTest extends TestCase
             ]);
     }
 
+    public function test_login_route_has_per_email_rate_limiter(): void
+    {
+        $route = resolve('router')->getRoutes()->getByName('api.v1.user.login');
+        $this->assertContains('throttle:login-by-email', $route->middleware());
+    }
+
     public function test_send_error_helper_formats_correctly(): void
     {
         User::factory()->create([
