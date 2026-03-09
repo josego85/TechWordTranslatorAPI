@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Models\Translation;
+use App\Models\Word;
+use App\Policies\TranslationPolicy;
+use App\Policies\WordPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,7 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Word::class => WordPolicy::class,
+        Translation::class => TranslationPolicy::class,
     ];
 
     /**

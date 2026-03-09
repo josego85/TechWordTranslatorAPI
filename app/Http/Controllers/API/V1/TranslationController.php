@@ -12,7 +12,9 @@ use App\Http\Requests\StoreTranslationRequest;
 use App\Http\Requests\UpdateTranslationRequest;
 use App\Http\Resources\TranslationCollection;
 use App\Http\Resources\TranslationResource;
+use App\Models\Translation;
 use App\Services\TranslationService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class TranslationController extends Controller
@@ -79,12 +81,16 @@ class TranslationController extends Controller
         }
     }
 
-    public function destroy(int $id)
+    public function destroy(Request $request, int $id)
     {
+        if ($request->user() === null || $request->user()->cannot('write', Translation::class)) {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+
         try {
             $this->translationService->delete($id);
 
-            Log::warning('Translation deleted', ['translation_id' => $id, 'ip' => request()->ip()]);
+            Log::warning('Translation deleted', ['translation_id' => $id, 'ip' => $request->ip()]);
 
             return response()->json(null, 204);
         } catch (TranslationException $e) {
