@@ -3,12 +3,12 @@
 ## Completed ✅
 
 - ~~Add filter and order by name in endpoints~~ (v1.14.0 - Search functionality added)
+- ~~Security improvements~~ (CORS, rate limiting, password validation, JWT TTL, security headers, CSP, per-email soft lockout, content audit trail — see SECURITY_AUDIT.md)
+- ~~Add logs~~ (auth events + Word/Translation CRUD mutations via Log:: — partition by date pending if volume requires it)
 
 ## In Progress
 
-- Security improvements
 - Add PHPUnit tests coverage
-- Add logs (with partition table for date range)
 - Add Opcache configuration
 - Monitor (Grafana)
 - Add Swagger/OpenAPI documentation
