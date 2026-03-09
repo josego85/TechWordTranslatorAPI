@@ -5,6 +5,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- **docs**: Added `CLAUDE.md` — comprehensive reference guide for Claude Code covering architecture, security layers, CI/CD workflows, quality gates, naming conventions, and development commands
+
+---
+
 ## [v1.16.0] - 2026-03-09
 
 ### Changed
