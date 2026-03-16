@@ -19,10 +19,10 @@
         "spatie/laravel-csp": "3.23.0"
     },
     "require-dev": {
-        "driftingly/rector-laravel": "2.1.9",
+        "driftingly/rector-laravel": "2.1.12",
         "fakerphp/faker": "v1.24.1",
         "larastan/larastan": "3.9.3",
-        "laravel/pint": "1.27.1",
+        "laravel/pint": "1.29.0",
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "8.9.1",
         "phpunit/phpunit": "11.5.50",
