@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-03-09
+Last updated: 2026-03-09 (Policies + Sanctum service tokens)
 
 ---
 
@@ -52,9 +52,10 @@ Last updated: 2026-03-09
 
 ```
 HTTP Request
-    └─> Middleware (JWT, SecurityHeaders, CORS, CSP, Rate Limiting)
-        └─> FormRequest (input validation)
+    └─> Middleware (JWT / Sanctum, SecurityHeaders, CORS, CSP, Rate Limiting)
+        └─> FormRequest (validation + Policy authorization)
             └─> Controller (app/Http/Controllers/API/V1/)
+                └─> Policy (app/Policies/) ← Gate::allows('write', Model)
                 └─> Service (app/Services/)
                     └─> Repository (app/Repositories/)
                         └─> Model (app/Models/) → MySQL
@@ -66,12 +67,14 @@ HTTP Request
 ```
 app/
 ├── Http/
-│   ├── Controllers/API/V1/   # AuthController, WordController, TranslationController
+│   ├── Controllers/API/V1/   # AuthController, WordController, TranslationController, ServiceTokenController
 │   ├── Middleware/            # JWTMiddleware, SecurityHeaders
-│   ├── Requests/              # Form requests with validation
+│   ├── Requests/              # Form requests with validation + Policy authorization
 │   └── Resources/             # JSON:API resources (WordResource, TranslationResource)
 ├── Interfaces/                # Contracts: WordRepositoryInterface, TranslationRepositoryInterface
 ├── Models/                    # User, Word, Translation
+├── Policies/                  # WordPolicy, TranslationPolicy — write authorization via Gate
+├── Providers/                 # AuthServiceProvider — model→policy mappings registered here
 ├── Repositories/              # WordRepository, TranslationRepository, CacheableWordRepository
 ├── Services/                  # WordService, TranslationService, CacheService
 ├── Support/Csp/               # ContentPolicy (Spatie CSP)
@@ -114,9 +117,9 @@ POST  /api/v1/user/logout     [jwt.verify]
 ```
 GET    /api/v1/words           Paginated, searchable via ?search=
 GET    /api/v1/words/{id}      With embedded translations
-POST   /api/v1/words           [jwt.verify]
-PUT    /api/v1/words/{id}      [jwt.verify]
-DELETE /api/v1/words/{id}      [jwt.verify]
+POST   /api/v1/words           [auth:api,sanctum] + WordPolicy::write
+PUT    /api/v1/words/{id}      [auth:api,sanctum] + WordPolicy::write
+DELETE /api/v1/words/{id}      [auth:api,sanctum] + WordPolicy::write
 ```
 
 ### Translations
@@ -124,9 +127,16 @@ DELETE /api/v1/words/{id}      [jwt.verify]
 ```
 GET    /api/v1/translations    Paginated
 GET    /api/v1/translations/{id}
-POST   /api/v1/translations    [jwt.verify]
-PUT    /api/v1/translations/{id} [jwt.verify]
-DELETE /api/v1/translations/{id} [jwt.verify]
+POST   /api/v1/translations    [auth:api,sanctum] + TranslationPolicy::write
+PUT    /api/v1/translations/{id} [auth:api,sanctum] + TranslationPolicy::write
+DELETE /api/v1/translations/{id} [auth:api,sanctum] + TranslationPolicy::write
+```
+
+### Service Tokens (Sanctum)
+
+```
+POST   /api/v1/service-tokens           [jwt.verify] — creates Sanctum token for MCP server
+DELETE /api/v1/service-tokens/{tokenId} [jwt.verify] — revokes token
 ```
 
 ### GraphQL
@@ -214,6 +224,24 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains; preload  (HTTPS 
 - Mixed uppercase and lowercase
 - Numbers and symbols required
 - `uncompromised()` check (HaveIBeenPwned API)
+
+#### Dual Authentication (JWT + Sanctum)
+
+- **JWT guard** (`api`): human users — short-lived tokens (15 min), full write access
+- **Sanctum guard**: MCP server — long-lived opaque tokens, scoped abilities
+- Write routes use `auth:api,sanctum` middleware — Laravel tries JWT first, falls back to Sanctum
+- `currentAccessToken()` returns `null` for JWT users, `PersonalAccessToken` for Sanctum users
+- **Sanctum token abilities**: `['words:write', 'translations:write']`
+- Service token lifecycle: human logs in (JWT) → calls `POST /api/v1/service-tokens` → gets Sanctum token for MCP
+
+#### Authorization (Laravel Policies)
+
+- `WordPolicy::write(User $user)` — registered in `AuthServiceProvider` for `Word` model
+- `TranslationPolicy::write(User $user)` — registered for `Translation` model
+- Rule: JWT user (`currentAccessToken() === null`) → always allowed; Sanctum user → must `tokenCan(ability)`
+- FormRequests call `$user->can('write', Model::class)` in `authorize()`
+- Controllers `destroy()` call `$request->user()->cannot('write', Model::class)`
+- PHPDoc workaround: `/** @var mixed $token */ $token = $user->currentAccessToken();` to silence PHPStan false positive (Sanctum PHPDoc says non-nullable but runtime can be null)
 
 #### Audit Logging
 - Auth events: register, login (success/fail), refresh, logout (IP + user agent logged)

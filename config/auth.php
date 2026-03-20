@@ -47,6 +47,11 @@ return [
             'driver' => 'jwt',
             'provider' => 'users',
         ],
+
+        'sanctum' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
     ],
 
     /*

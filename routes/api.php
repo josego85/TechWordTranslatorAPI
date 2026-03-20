@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\ServiceTokenController;
 use App\Http\Controllers\API\V1\TranslationController;
 use App\Http\Controllers\API\V1\WordController;
 use Illuminate\Support\Facades\Route;
@@ -37,12 +38,21 @@ Route::prefix('v1')
                 // Route::get('/',         [AuthController::class, 'getUser'])->name('getUser');
             });
 
-        Route::middleware('jwt.verify')->group(function() {
+        // Words and translations: accept JWT (humans) or Sanctum service tokens (MCP server)
+        Route::middleware('auth:api,sanctum')->group(function() {
             Route::apiResource('words', WordController::class)
                 ->only('store', 'update', 'destroy');
 
             Route::apiResource('translations', TranslationController::class)
                 ->only('store', 'update', 'destroy');
+        });
+
+        // Service tokens: JWT only — only authenticated humans may issue or revoke tokens
+        Route::middleware('jwt.verify')->group(function() {
+            Route::post('service-tokens', [ServiceTokenController::class, 'store'])
+                ->name('service-tokens.store');
+            Route::delete('service-tokens/{tokenId}', [ServiceTokenController::class, 'destroy'])
+                ->name('service-tokens.destroy');
         });
 
         Route::apiResource('translations', TranslationController::class)

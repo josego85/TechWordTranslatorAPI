@@ -10,6 +10,25 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 ### Added
 
 - **docs**: Added `CLAUDE.md` — comprehensive reference guide for Claude Code covering architecture, security layers, CI/CD workflows, quality gates, naming conventions, and development commands
+- **auth**: Added `sanctum` guard in `config/auth.php` for Sanctum opaque token authentication
+- **auth**: Added `ServiceTokenController` (SRP) — creates and revokes Sanctum service tokens for machine-to-machine clients (MCP server); scoped to `['words:write', 'translations:write']` abilities; protected by `jwt.verify` so only authenticated humans can issue tokens
+- **routes**: Added `POST /api/v1/service-tokens` and `DELETE /api/v1/service-tokens/{tokenId}` under `jwt.verify` (JWT-only, human users)
+- **auth**: Added `WordPolicy` and `TranslationPolicy` with `write()` method — centralize authorization logic for both JWT users (always allowed) and Sanctum service tokens (must carry the corresponding `words:write` / `translations:write` ability); registered in `AuthServiceProvider` following the Open/Closed principle
+- **tests**: Added 8 unit tests in `tests/Unit/Policies/` covering `WordPolicy` and `TranslationPolicy` for all auth scenarios: JWT user (no Sanctum token), Sanctum token with correct ability, Sanctum token with wrong ability, and Sanctum token with no abilities
+- **auth**: Added `DestroyWordRequest` and `DestroyTranslationRequest` — FormRequests for `DELETE` routes, delegating authorization to the corresponding Policy via `$user->can('write', Model::class)`; consistent with the Store/Update pattern
+- **tests**: Added `ServiceTokenApiTest` — 9 integration tests covering token creation (201), revocation (204), unauthenticated access (401), IDOR guard (cross-user revocation), and audit log assertions
+
+### Changed
+
+- **routes**: Words and translations write routes (`store`, `update`, `destroy`) moved from `jwt.verify` to `auth:api,sanctum` — now accept both JWT tokens (humans) and Sanctum service tokens (MCP server)
+- **auth**: `ServiceTokenController` uses `Auth::guard('api')->user()` instead of `$request->user()` to reliably resolve the JWT-authenticated user under the custom `jwt.verify` middleware
+- **auth**: `StoreWordRequest`, `UpdateWordRequest`, `StoreTranslationRequest`, `UpdateTranslationRequest` — `authorize()` now delegates to the corresponding Policy via `$user->can('write', Model::class)` instead of inline `tokenCan()` checks
+- **auth**: `WordController::destroy()` and `TranslationController::destroy()` — replaced manual authorization block with `DestroyWordRequest` / `DestroyTranslationRequest`; authorization fully moved out of the controller
+- **logging**: `ServiceTokenController::store()` now logs `Log::info('Service token created')` and `destroy()` logs `Log::warning('Service token revoked')` with `user_id`, `token_id`, and `ip` — consistent with Word/Translation mutation logging
+
+### Security
+
+- **deps**: Upgraded `league/commonmark` 2.8.1 → 2.8.2 — fixes CVE-2026-33347 (embed extension `allowed_domains` bypass, severity: medium). Transitive dependency via `laravel/framework`; only `composer.lock` updated
 
 ---
 

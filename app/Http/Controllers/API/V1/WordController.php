@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\WordNotFoundException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DestroyWordRequest;
 use App\Http\Requests\IndexRequest;
 use App\Http\Requests\ShowWordRequest;
 use App\Http\Requests\StoreWordRequest;
@@ -95,12 +96,12 @@ class WordController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(DestroyWordRequest $request, int $id)
     {
         try {
             $this->wordService->delete($id);
 
-            Log::warning('Word deleted', ['word_id' => $id, 'ip' => request()->ip()]);
+            Log::warning('Word deleted', ['word_id' => $id, 'ip' => $request->ip()]);
 
             return response()->json(null, 204);
         } catch (WordNotFoundException $e) {

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\TranslationException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DestroyTranslationRequest;
 use App\Http\Requests\IndexRequest;
 use App\Http\Requests\ShowTranslationRequest;
 use App\Http\Requests\StoreTranslationRequest;
@@ -79,12 +80,12 @@ class TranslationController extends Controller
         }
     }
 
-    public function destroy(int $id)
+    public function destroy(DestroyTranslationRequest $request, int $id)
     {
         try {
             $this->translationService->delete($id);
 
-            Log::warning('Translation deleted', ['translation_id' => $id, 'ip' => request()->ip()]);
+            Log::warning('Translation deleted', ['translation_id' => $id, 'ip' => $request->ip()]);
 
             return response()->json(null, 204);
         } catch (TranslationException $e) {

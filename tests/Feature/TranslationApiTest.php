@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Models\Translation;
+use App\Models\User;
 use App\Models\Word;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Log;
@@ -19,6 +20,7 @@ class TranslationApiTest extends TestCase
     {
         parent::setUp();
         $this->withoutMiddleware();
+        $this->actingAs(User::factory()->create(), 'api');
         Log::spy();
     }
 
