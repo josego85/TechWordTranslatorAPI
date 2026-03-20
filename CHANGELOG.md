@@ -20,6 +20,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Changed
 
+- **ci**: Bumped GitHub Actions SHAs — `actions/checkout` v5→v5.0.2, `actions/dependency-review-action` v4.8.2→v4.9.0, `actions/cache` v5.0.1→v5.0.3, `github/codeql-action` v4.31.10→v4.32.6
+- **deps**: Upgraded `predis/predis` 3.4.1 → 3.4.2 (patch — Redis/Valkey client used for JWT blacklist)
+- **deps**: Upgraded `php-open-source-saver/jwt-auth` 2.8.3 → 2.9.0 (minor — JWT auth library; Laravel 12 / PHP 8.4 compatibility improvements)
+- **deps**: Upgraded `laravel/framework` 12.53.0 → 12.55.1 — includes `Rule::string()` fluent validation builder (12.55.0) and associated patch fixes
+- **deps-dev**: Upgraded `laravel/pint` 1.27.1 → 1.29.0, `rector/rector` 2.3.8 → 2.3.9, `spatie/laravel-ignition` 2.11.0 → 2.12.0, `driftingly/rector-laravel` 2.1.9 → 2.2.0
+- **validation**: Migrated all `'string'` + `'max:N'` string rules to `Rule::string()->max(N)` fluent builder across all FormRequests (`StoreWordRequest`, `UpdateWordRequest`, `StoreTranslationRequest`, `UpdateTranslationRequest`, `RegisterRequest`, `LoginRequest`, `IndexRequest`)
+- **types**: Fixed 3 PHPStan level-5 errors surfaced by `phpstan/phpstan` 2.1.42 — `IndexRequest::getSearch()` return type (`input()→string()`), `AuthController::register()` (`bcrypt` arg via `string()`), `WordController::update()` (`english_word` via `string()`)
+- **style**: Auto-applied `fully_qualified_strict_types` rule introduced by `laravel/pint` 1.29.0 across 29 files (no logic changes)
 - **routes**: Words and translations write routes (`store`, `update`, `destroy`) moved from `jwt.verify` to `auth:api,sanctum` — now accept both JWT tokens (humans) and Sanctum service tokens (MCP server)
 - **auth**: `ServiceTokenController` uses `Auth::guard('api')->user()` instead of `$request->user()` to reliably resolve the JWT-authenticated user under the custom `jwt.verify` middleware
 - **auth**: `StoreWordRequest`, `UpdateWordRequest`, `StoreTranslationRequest`, `UpdateTranslationRequest` — `authorize()` now delegates to the corresponding Policy via `$user->can('write', Model::class)` instead of inline `tokenCan()` checks

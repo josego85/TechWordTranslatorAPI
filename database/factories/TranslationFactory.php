@@ -9,7 +9,7 @@ use App\Models\Word;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Translation>
+ * @extends Factory<Translation>
  */
 class TranslationFactory extends Factory
 {

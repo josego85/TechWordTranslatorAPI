@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Exceptions\WordNotFoundException;
 use App\Models\Translation;
 use App\Models\User;
 use App\Models\Word;
+use App\Services\WordService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
@@ -185,11 +187,11 @@ class WordApiTest extends TestCase
         $word = Word::factory()->create();
 
         // Mock the service to throw a not found exception
-        $this->mock(\App\Services\WordService::class, function($mock) use ($word) {
+        $this->mock(WordService::class, function($mock) use ($word) {
             $mock->shouldReceive('get')
                 ->with($word->id)
                 ->once()
-                ->andThrow(new \App\Exceptions\WordNotFoundException('Word not found'));
+                ->andThrow(new WordNotFoundException('Word not found'));
         });
 
         $response = $this->getJson("/api/v1/words/{$word->id}");
@@ -236,10 +238,10 @@ class WordApiTest extends TestCase
     public function test_create_word_exception_returns_404(): void
     {
         // Mock the service to throw a not found exception
-        $this->mock(\App\Services\WordService::class, function($mock) {
+        $this->mock(WordService::class, function($mock) {
             $mock->shouldReceive('create')
                 ->once()
-                ->andThrow(new \App\Exceptions\WordNotFoundException('Failed to create word'));
+                ->andThrow(new WordNotFoundException('Failed to create word'));
         });
 
         $data = [
@@ -259,11 +261,11 @@ class WordApiTest extends TestCase
         $word = Word::factory()->create();
 
         // Mock the service to throw a not found exception
-        $this->mock(\App\Services\WordService::class, function($mock) use ($word) {
+        $this->mock(WordService::class, function($mock) use ($word) {
             $mock->shouldReceive('update')
                 ->with($word->id, \Mockery::any())
                 ->once()
-                ->andThrow(new \App\Exceptions\WordNotFoundException('Word not found'));
+                ->andThrow(new WordNotFoundException('Word not found'));
         });
 
         $data = [

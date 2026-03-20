@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class ServiceTokenController extends Controller
 {
     public function store(Request $request): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user  = Auth::guard('api')->user();
         $token = $user->createToken(
             name: 'mcp-server',
@@ -34,7 +35,7 @@ class ServiceTokenController extends Controller
 
     public function destroy(Request $request, int $tokenId): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Auth::guard('api')->user();
         $user->tokens()->where('id', $tokenId)->delete();
 

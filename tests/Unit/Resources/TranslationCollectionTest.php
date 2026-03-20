@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Resources;
 
 use App\Http\Resources\TranslationCollection;
+use App\Http\Resources\TranslationResource;
 use App\Models\Translation;
 use App\Models\Word;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -106,7 +107,7 @@ class TranslationCollectionTest extends TestCase
 
         $collection = new TranslationCollection($paginator);
 
-        $this->assertEquals(\App\Http\Resources\TranslationResource::class, $collection->collects);
+        $this->assertEquals(TranslationResource::class, $collection->collects);
     }
 
     public function test_to_array_handles_empty_collection(): void

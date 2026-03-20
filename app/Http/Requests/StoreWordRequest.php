@@ -8,6 +8,7 @@ use App\Models\Word;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class StoreWordRequest extends FormRequest
 {
@@ -22,14 +23,12 @@ class StoreWordRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, mixed>
      */
     public function rules(): array
     {
         return [
-            'english_word' => ['required', 'string', 'max:255'],
+            'english_word' => ['required', Rule::string()->max(255)],
         ];
     }
 

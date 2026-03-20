@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 /**
@@ -11,13 +13,13 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
  */
 class WordCollection extends ResourceCollection
 {
-    /** @var class-string<\Illuminate\Http\Resources\Json\JsonResource> */
+    /** @var class-string<JsonResource> */
     public $collects = WordResource::class;
 
     /**
      * Transform the resource collection into an array.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  Request              $request
      * @return array{data: mixed[]}
      */
     #[\Override]

@@ -8,6 +8,7 @@ use App\Models\Translation;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class UpdateTranslationRequest extends FormRequest
 {
@@ -18,13 +19,16 @@ class UpdateTranslationRequest extends FormRequest
         return $user !== null && $user->can('write', Translation::class);
     }
 
-    public function rules()
+    /**
+     * @return array<string, mixed>
+     */
+    public function rules(): array
     {
         return [
             'translation_id' => ['required', 'integer', 'exists:translations,id'],
             'word_id' => ['sometimes', 'integer', 'exists:words,id'],
-            'language' => ['sometimes', 'string', 'max:10'],
-            'translation' => ['sometimes', 'string', 'max:255'],
+            'language' => ['sometimes', Rule::string()->max(10)],
+            'translation' => ['sometimes', Rule::string()->max(255)],
         ];
     }
 
