@@ -6,15 +6,14 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\TranslationException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DestroyTranslationRequest;
 use App\Http\Requests\IndexRequest;
 use App\Http\Requests\ShowTranslationRequest;
 use App\Http\Requests\StoreTranslationRequest;
 use App\Http\Requests\UpdateTranslationRequest;
 use App\Http\Resources\TranslationCollection;
 use App\Http\Resources\TranslationResource;
-use App\Models\Translation;
 use App\Services\TranslationService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class TranslationController extends Controller
@@ -81,12 +80,8 @@ class TranslationController extends Controller
         }
     }
 
-    public function destroy(Request $request, int $id)
+    public function destroy(DestroyTranslationRequest $request, int $id)
     {
-        if ($request->user() === null || $request->user()->cannot('write', Translation::class)) {
-            return response()->json(['message' => 'Forbidden'], 403);
-        }
-
         try {
             $this->translationService->delete($id);
 

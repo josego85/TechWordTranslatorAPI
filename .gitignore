@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 /.scannerwork
 /coverage
+/docs/tasks

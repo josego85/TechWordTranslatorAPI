@@ -6,15 +6,14 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\WordNotFoundException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DestroyWordRequest;
 use App\Http\Requests\IndexRequest;
 use App\Http\Requests\ShowWordRequest;
 use App\Http\Requests\StoreWordRequest;
 use App\Http\Requests\UpdateWordRequest;
 use App\Http\Resources\WordCollection;
 use App\Http\Resources\WordResource;
-use App\Models\Word;
 use App\Services\WordService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class WordController extends Controller
@@ -97,12 +96,8 @@ class WordController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, int $id)
+    public function destroy(DestroyWordRequest $request, int $id)
     {
-        if ($request->user() === null || $request->user()->cannot('write', Word::class)) {
-            return response()->json(['message' => 'Forbidden'], 403);
-        }
-
         try {
             $this->wordService->delete($id);
 
