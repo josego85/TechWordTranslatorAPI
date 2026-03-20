@@ -20,11 +20,11 @@ Last updated: 2026-03-09 (Policies + Sanctum service tokens)
 
 | Layer | Technology | Version |
 |-------|-----------|---------|
-| Framework | Laravel | 12.53.0 |
+| Framework | Laravel | 12.55.1 |
 | Language | PHP | ^8.4 |
 | Database | MySQL | 8.4.7 |
 | Cache/Queue | Redis | 7.4.7 |
-| Authentication | JWT (php-open-source-saver/jwt-auth) | 2.8.3 |
+| Authentication | JWT (php-open-source-saver/jwt-auth) | 2.9.0 |
 | GraphQL | Lighthouse (nuwave/lighthouse) | 6.65.0 |
 | Web server | Nginx | 1.29.4 |
 | Node.js | Frontend build | 22.21.1 |

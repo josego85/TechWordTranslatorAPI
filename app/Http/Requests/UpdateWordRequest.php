@@ -8,6 +8,7 @@ use App\Models\Word;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class UpdateWordRequest extends FormRequest
 {
@@ -18,11 +19,14 @@ class UpdateWordRequest extends FormRequest
         return $user !== null && $user->can('write', Word::class);
     }
 
-    public function rules()
+    /**
+     * @return array<string, mixed>
+     */
+    public function rules(): array
     {
         return [
             'word' => ['required', 'integer', 'min:1', 'exists:words,id'],
-            'english_word' => ['required', 'string', 'max:255'],
+            'english_word' => ['required', Rule::string()->max(255)],
         ];
     }
 

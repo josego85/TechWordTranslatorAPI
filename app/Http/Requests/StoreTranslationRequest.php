@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use App\Models\Translation;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class StoreTranslationRequest extends FormRequest
 {
@@ -23,16 +23,14 @@ class StoreTranslationRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array|string>
+     * @return array<string, mixed>
      */
     public function rules(): array
     {
         return [
             'word_id' => ['required', 'integer', 'exists:words,id'],
-            'language' => ['required', 'string', 'max:10'],
-            'translation' => ['required', 'string', 'max:255'],
+            'language' => ['required', Rule::string()->max(10)],
+            'translation' => ['required', Rule::string()->max(255)],
         ];
     }
 

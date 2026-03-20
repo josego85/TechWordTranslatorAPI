@@ -7,6 +7,7 @@ namespace App\Http\Requests\API\V1;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class LoginRequest extends FormRequest
 {
@@ -19,7 +20,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email'],
-            'password' => ['required', 'string'],
+            'password' => ['required', Rule::string()],
         ];
     }
 

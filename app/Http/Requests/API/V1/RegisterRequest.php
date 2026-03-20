@@ -7,6 +7,7 @@ namespace App\Http\Requests\API\V1;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends FormRequest
@@ -19,7 +20,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', Rule::string()->max(255)],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => [
                 'required',

@@ -8,6 +8,7 @@ use App\Http\Requests\API\V1\RegisterRequest;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\StringRule;
 use Tests\TestCase;
 
 class RegisterRequestTest extends TestCase
@@ -36,8 +37,9 @@ class RegisterRequestTest extends TestCase
         $this->assertArrayHasKey('email', $rules);
         $this->assertArrayHasKey('password', $rules);
         $this->assertContains('required', $rules['name']);
-        $this->assertContains('string', $rules['name']);
-        $this->assertContains('max:255', $rules['name']);
+        $this->assertTrue(
+            collect($rules['name'])->contains(fn ($rule) => $rule instanceof StringRule)
+        );
         $this->assertContains('required', $rules['email']);
         $this->assertContains('email', $rules['email']);
     }

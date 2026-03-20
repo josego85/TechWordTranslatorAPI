@@ -7,6 +7,7 @@ namespace Tests\Unit\Requests;
 use App\Http\Requests\API\V1\LoginRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\StringRule;
 use Tests\TestCase;
 
 class LoginRequestTest extends TestCase
@@ -36,7 +37,9 @@ class LoginRequestTest extends TestCase
         $this->assertContains('required', $rules['email']);
         $this->assertContains('email', $rules['email']);
         $this->assertContains('required', $rules['password']);
-        $this->assertContains('string', $rules['password']);
+        $this->assertTrue(
+            collect($rules['password'])->contains(fn ($rule) => $rule instanceof StringRule)
+        );
     }
 
     public function test_validation_passes_with_valid_data(): void
