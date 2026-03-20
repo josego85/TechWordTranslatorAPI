@@ -26,6 +26,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - **auth**: `WordController::destroy()` and `TranslationController::destroy()` — replaced manual authorization block with `DestroyWordRequest` / `DestroyTranslationRequest`; authorization fully moved out of the controller
 - **logging**: `ServiceTokenController::store()` now logs `Log::info('Service token created')` and `destroy()` logs `Log::warning('Service token revoked')` with `user_id`, `token_id`, and `ip` — consistent with Word/Translation mutation logging
 
+### Security
+
+- **deps**: Upgraded `league/commonmark` 2.8.1 → 2.8.2 — fixes CVE-2026-33347 (embed extension `allowed_domains` bypass, severity: medium). Transitive dependency via `laravel/framework`; only `composer.lock` updated
+
 ---
 
 ## [v1.16.0] - 2026-03-09
