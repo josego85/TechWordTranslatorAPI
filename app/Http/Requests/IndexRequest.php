@@ -29,6 +29,6 @@ class IndexRequest extends FormRequest
 
     public function getSearch(): ?string
     {
-        return $this->input('search');
+        return $this->string('search')->toString() ?: null;
     }
 }

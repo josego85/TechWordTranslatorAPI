@@ -47,7 +47,7 @@ class CacheableWordRepository implements WordRepositoryInterface
     public function update(Word $word, string $englishWord): ?Word
     {
         $updated = $this->repository->update($word, $englishWord);
-        if ($updated instanceof \App\Models\Word) {
+        if ($updated instanceof Word) {
             $this->cache->forget([
                 $this->cache->generateWordKey($word->id),
                 'words:*',

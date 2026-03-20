@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Exceptions\TranslationException;
 use App\Models\Translation;
 use App\Models\User;
 use App\Models\Word;
+use App\Services\TranslationService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
@@ -225,10 +227,10 @@ class TranslationApiTest extends TestCase
         $word = Word::factory()->create();
 
         // Mock the service to throw an exception
-        $this->mock(\App\Services\TranslationService::class, function($mock) {
+        $this->mock(TranslationService::class, function($mock) {
             $mock->shouldReceive('create')
                 ->once()
-                ->andThrow(new \App\Exceptions\TranslationException('Failed to create translation'));
+                ->andThrow(new TranslationException('Failed to create translation'));
         });
 
         $data = [
@@ -251,11 +253,11 @@ class TranslationApiTest extends TestCase
         $translation = Translation::factory()->for($word)->create();
 
         // Mock the service to throw a not found exception for show
-        $this->mock(\App\Services\TranslationService::class, function($mock) use ($translation) {
+        $this->mock(TranslationService::class, function($mock) use ($translation) {
             $mock->shouldReceive('get')
                 ->with($translation->id)
                 ->once()
-                ->andThrow(new \App\Exceptions\TranslationException('Translation not found'));
+                ->andThrow(new TranslationException('Translation not found'));
         });
 
         $response = $this->getJson("/api/v1/translations/{$translation->id}");
@@ -272,11 +274,11 @@ class TranslationApiTest extends TestCase
         $translation = Translation::factory()->for($word)->create();
 
         // Mock the service to throw a not found exception
-        $this->mock(\App\Services\TranslationService::class, function($mock) use ($translation) {
+        $this->mock(TranslationService::class, function($mock) use ($translation) {
             $mock->shouldReceive('update')
                 ->with($translation->id, \Mockery::any())
                 ->once()
-                ->andThrow(new \App\Exceptions\TranslationException('Translation not found'));
+                ->andThrow(new TranslationException('Translation not found'));
         });
 
         $data = [

@@ -78,7 +78,7 @@ class WordController extends Controller
     public function update(UpdateWordRequest $request)
     {
         $id          = $request->getWordId();
-        $englishWord = $request->input('english_word');
+        $englishWord = $request->string('english_word')->toString();
 
         try {
             $word = $this->wordService->update($id, $englishWord);

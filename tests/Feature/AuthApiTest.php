@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Http\Middleware\JWTMiddleware;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
@@ -20,8 +22,8 @@ class AuthApiTest extends TestCase
     {
         parent::setUp();
         $this->withoutMiddleware([
-            \Illuminate\Routing\Middleware\ThrottleRequests::class,
-            \App\Http\Middleware\JWTMiddleware::class,
+            ThrottleRequests::class,
+            JWTMiddleware::class,
         ]);
         Log::spy();
     }

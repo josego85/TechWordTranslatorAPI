@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Models\Translation;
+use App\Models\Word;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin \App\Models\Word
+ * @mixin Word
  */
 class WordResource extends JsonResource
 {
