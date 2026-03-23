@@ -38,4 +38,14 @@ class CacheService
 
         return "words:perPage:$perPage:page:$page$searchPart";
     }
+
+    public function generateTranslationKey(int $id): string
+    {
+        return "translation:$id";
+    }
+
+    public function generateTranslationsKey(int $perPage, int $page): string
+    {
+        return "translations:perPage:$perPage:page:$page";
+    }
 }
