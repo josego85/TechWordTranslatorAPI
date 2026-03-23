@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/badge/Version-1.16.0-blue.svg)](https://github.com/josego85/TechWordTranslatorAPI)
 [![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](LICENSE)
 [![PHP Version](https://img.shields.io/badge/PHP-8.4.16-blue.svg)](https://www.php.net/)
-[![Laravel Version](https://img.shields.io/badge/Laravel-12.44.0-green.svg)](https://laravel.com/)
+[![Laravel Version](https://img.shields.io/badge/Laravel-12.55.1-green.svg)](https://laravel.com/)
 [![MySQL Version](https://img.shields.io/badge/MySQL-8.4.7-orange.svg?logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Redis Version](https://img.shields.io/badge/Redis-7.4.7-red.svg?logo=redis&logoColor=white)](https://redis.io/)
 [![Node.js Version](https://img.shields.io/badge/Node.js-v22.21.1-green.svg?logo=node.js&logoColor=white)](https://nodejs.org/)

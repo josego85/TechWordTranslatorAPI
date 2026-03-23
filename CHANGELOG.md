@@ -20,7 +20,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Changed
 
-- **ci**: Bumped GitHub Actions SHAs — `actions/checkout` v5→v5.0.2, `actions/dependency-review-action` v4.8.2→v4.9.0, `actions/cache` v5.0.1→v5.0.3, `github/codeql-action` v4.31.10→v4.32.6
+- **ci**: Bumped `actions/upload-artifact` v6.0.0 → v7.0.0 (#79)
+- **ci**: Bumped `actions/checkout` v5→v5.0.2, `actions/dependency-review-action` v4.8.2→v4.9.0, `actions/cache` v5.0.1→v5.0.4, `github/codeql-action` v4.31.10→v4.34.1 (#77)
+- **deps**: Upgraded `axios` 1.13.5 → 1.13.6 (patch — HTTP client security/maintenance release)
 - **deps**: Upgraded `predis/predis` 3.4.1 → 3.4.2 (patch — Redis/Valkey client used for JWT blacklist)
 - **deps**: Upgraded `php-open-source-saver/jwt-auth` 2.8.3 → 2.9.0 (minor — JWT auth library; Laravel 12 / PHP 8.4 compatibility improvements)
 - **deps**: Upgraded `laravel/framework` 12.53.0 → 12.55.1 — includes `Rule::string()` fluent validation builder (12.55.0) and associated patch fixes
