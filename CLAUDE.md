@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-03-09 (Policies + Sanctum service tokens)
+Last updated: 2026-03-23 (Cache for Translation endpoints)
 
 ---
 
@@ -538,8 +538,11 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
   - `word:{id}` — single word
   - `words:perPage:{n}:page:{n}` — paginated list
   - `words:perPage:{n}:page:{n}:search:{hash}` — filtered list
-- **Invalidation:** on Word create/update/delete
-- **Pending:** cache for Translation endpoints, cache with tags for selective invalidation
+  - `translation:{id}` — single translation
+  - `translations:perPage:{n}:page:{n}` — paginated list
+- **Invalidation:** on Word and Translation create/update/delete
+- **Decorator pattern:** `CacheableWordRepository` and `CacheableTranslationRepository` wrap their base repos; both registered in `AppServiceProvider`
+- **Pending:** cache with tags for selective invalidation
 
 ---
 
@@ -547,12 +550,15 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 
 ### In Progress
 
-- PHPUnit test coverage (goal: exceed 74%)
 - Opcache configuration
 - Grafana monitoring
 - Swagger/OpenAPI documentation
-- Cache for Translation endpoints
 - Docs for Xdebug, Nginx, Pint
+
+### Completed (2026-03-23)
+
+- ✅ Cache for Translation endpoints — `CacheableTranslationRepository` decorator, coverage 92.18%
+- ✅ PHPUnit test coverage exceeded 74% (currently 92.18% lines)
 
 ### Recommended Next Steps
 

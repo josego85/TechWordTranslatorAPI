@@ -9,6 +9,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Added
 
+- **cache**: Added `CacheableTranslationRepository` — decorator wrapping `TranslationRepository` with Redis caching (TTL 24h); keys `translation:{id}` and `translations:perPage:{n}:page:{n}`; invalidation on create/update/delete; wired in `AppServiceProvider` replacing the previously commented-out scaffold
+- **cache**: Added `generateTranslationKey()` and `generateTranslationsKey()` to `CacheService` — mirrors the existing Word key generators
+- **tests**: Added `CacheableTranslationRepositoryTest` — 8 unit tests covering all 5 repository methods including cache-miss delegation, cache-hit via `remember()`, and invalidation guards on update/delete failure
 - **docs**: Added `CLAUDE.md` — comprehensive reference guide for Claude Code covering architecture, security layers, CI/CD workflows, quality gates, naming conventions, and development commands
 - **auth**: Added `sanctum` guard in `config/auth.php` for Sanctum opaque token authentication
 - **auth**: Added `ServiceTokenController` (SRP) — creates and revokes Sanctum service tokens for machine-to-machine clients (MCP server); scoped to `['words:write', 'translations:write']` abilities; protected by `jwt.verify` so only authenticated humans can issue tokens

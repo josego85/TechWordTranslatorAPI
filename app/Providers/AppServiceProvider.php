@@ -8,6 +8,7 @@ use App\Interfaces\TranslationRepositoryInterface;
 use App\Interfaces\WordRepositoryInterface;
 use App\Models\Translation;
 use App\Models\Word;
+use App\Repositories\CacheableTranslationRepository;
 use App\Repositories\CacheableWordRepository;
 use App\Repositories\TranslationRepository;
 use App\Repositories\WordRepository;
@@ -42,12 +43,10 @@ class AppServiceProvider extends ServiceProvider
                 $app->make(Translation::class)
             );
 
-            // return new CacheableTranslationRepository(
-            //     $repository,
-            //     $app->make(CacheService::class)
-            // );
-
-            return $repository;
+            return new CacheableTranslationRepository(
+                $repository,
+                $app->make(CacheService::class)
+            );
         });
     }
 
