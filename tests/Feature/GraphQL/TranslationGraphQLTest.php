@@ -84,7 +84,7 @@ class TranslationGraphQLTest extends TestCase
     {
         $word        = Word::factory()->create();
         $translation = Translation::factory()->for($word)->create([
-            'language'    => 'es',
+            'language' => 'es',
             'translation' => 'Servidor',
         ]);
 
@@ -181,7 +181,7 @@ class TranslationGraphQLTest extends TestCase
     {
         $word        = Word::factory()->create();
         $translation = Translation::factory()->for($word)->create([
-            'language'    => 'es',
+            'language' => 'es',
             'translation' => 'Cortafuegos',
         ]);
 

@@ -188,8 +188,8 @@ class MutationGraphQLTest extends TestCase
         $response->assertJsonPath('data.createTranslation.language', 'es');
         $response->assertJsonPath('data.createTranslation.translation', 'Algoritmo');
         $this->assertDatabaseHas('translations', [
-            'word_id'     => $word->id,
-            'language'    => 'es',
+            'word_id' => $word->id,
+            'language' => 'es',
             'translation' => 'Algoritmo',
         ]);
     }
@@ -233,7 +233,7 @@ class MutationGraphQLTest extends TestCase
         $this->actingAs($this->user, 'api');
         $word        = Word::factory()->create();
         $translation = Translation::factory()->for($word)->create([
-            'language'    => 'es',
+            'language' => 'es',
             'translation' => 'Old',
         ]);
 

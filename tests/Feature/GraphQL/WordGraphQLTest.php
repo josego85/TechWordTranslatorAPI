@@ -39,7 +39,7 @@ class WordGraphQLTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 'words' => [
-                    'data'          => [['id', 'english_word']],
+                    'data' => [['id', 'english_word']],
                     'paginatorInfo' => ['total', 'currentPage'],
                 ],
             ],

@@ -13,9 +13,9 @@ class TranslationObserver
     {
         Log::info('Translation created', [
             'translation_id' => $translation->id,
-            'word_id'        => $translation->word_id,
-            'language'       => $translation->language,
-            'ip'             => request()->ip() ?? 'cli',
+            'word_id' => $translation->word_id,
+            'language' => $translation->language,
+            'ip' => request()->ip() ?? 'cli',
         ]);
     }
 
@@ -23,9 +23,9 @@ class TranslationObserver
     {
         Log::info('Translation updated', [
             'translation_id' => $translation->id,
-            'word_id'        => $translation->word_id,
-            'language'       => $translation->language,
-            'ip'             => request()->ip() ?? 'cli',
+            'word_id' => $translation->word_id,
+            'language' => $translation->language,
+            'ip' => request()->ip() ?? 'cli',
         ]);
     }
 
@@ -33,7 +33,7 @@ class TranslationObserver
     {
         Log::warning('Translation deleted', [
             'translation_id' => $translation->id,
-            'ip'             => request()->ip() ?? 'cli',
+            'ip' => request()->ip() ?? 'cli',
         ]);
     }
 }

@@ -12,18 +12,18 @@ class WordObserver
     public function created(Word $word): void
     {
         Log::info('Word created', [
-            'word_id'      => $word->id,
+            'word_id' => $word->id,
             'english_word' => $word->english_word,
-            'ip'           => request()->ip() ?? 'cli',
+            'ip' => request()->ip() ?? 'cli',
         ]);
     }
 
     public function updated(Word $word): void
     {
         Log::info('Word updated', [
-            'word_id'      => $word->id,
+            'word_id' => $word->id,
             'english_word' => $word->english_word,
-            'ip'           => request()->ip() ?? 'cli',
+            'ip' => request()->ip() ?? 'cli',
         ]);
     }
 
@@ -31,7 +31,7 @@ class WordObserver
     {
         Log::warning('Word deleted', [
             'word_id' => $word->id,
-            'ip'      => request()->ip() ?? 'cli',
+            'ip' => request()->ip() ?? 'cli',
         ]);
     }
 }
