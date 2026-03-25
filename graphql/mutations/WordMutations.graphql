@@ -1,0 +1,26 @@
+extend type Mutation {
+    createWord(
+        english_word: String! @rules(apply: ["required", "max:255"])
+    ): Word
+        @guard(with: ["api", "sanctum"])
+        @can(ability: "write", model: "App\\Models\\Word")
+        @field(resolver: "App\\GraphQL\\Mutations\\WordMutations@create")
+        @clearCache(type: "Query", field: "words")
+
+    updateWord(
+        id: ID!
+        english_word: String @rules(apply: ["max:255"])
+    ): Word
+        @guard(with: ["api", "sanctum"])
+        @can(ability: "write", model: "App\\Models\\Word")
+        @field(resolver: "App\\GraphQL\\Mutations\\WordMutations@update")
+        @clearCache(type: "Query", field: "words")
+        @clearCache(type: "Query", field: "word")
+
+    deleteWord(id: ID!): Word
+        @guard(with: ["api", "sanctum"])
+        @can(ability: "write", model: "App\\Models\\Word")
+        @field(resolver: "App\\GraphQL\\Mutations\\WordMutations@delete")
+        @clearCache(type: "Query", field: "words")
+        @clearCache(type: "Query", field: "word")
+}

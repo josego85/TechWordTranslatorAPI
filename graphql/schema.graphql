@@ -4,3 +4,5 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 #import types/Translation.graphql
 #import queries/WordQueries.graphql
 #import queries/TranslationQueries.graphql
+#import mutations/WordMutations.graphql
+#import mutations/TranslationMutations.graphql

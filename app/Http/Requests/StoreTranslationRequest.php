@@ -29,8 +29,8 @@ class StoreTranslationRequest extends FormRequest
     {
         return [
             'word_id' => ['required', 'integer', 'exists:words,id'],
-            'language' => ['required', Rule::string()->max(10)],
-            'translation' => ['required', Rule::string()->max(255)],
+            'language' => ['required', Rule::string()->max(5)],
+            'translation' => ['required', Rule::string()->max(500)],
         ];
     }
 
