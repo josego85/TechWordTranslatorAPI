@@ -553,7 +553,10 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 - Opcache configuration
 - Grafana monitoring
 - Swagger/OpenAPI documentation
-- Docs for Xdebug, Nginx, Pint
+
+### Completed (2026-03-25)
+
+- ✅ Docs for Xdebug, Nginx, Pint — `docs/development/xdebug.md`, `nginx.md`, `pint.md`; `docs/guides/graphql.md` updated with mutations, auth, cache, security
 
 ### Completed (2026-03-24)
 

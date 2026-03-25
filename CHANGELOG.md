@@ -17,6 +17,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - **cache**: Added `generateTranslationKey()` and `generateTranslationsKey()` to `CacheService` — mirrors the existing Word key generators
 - **tests**: Added `CacheableTranslationRepositoryTest` — 8 unit tests covering all 5 repository methods including cache-miss delegation, cache-hit via `remember()`, and invalidation guards on update/delete failure
 - **docs**: Added `CLAUDE.md` — comprehensive reference guide for Claude Code covering architecture, security layers, CI/CD workflows, quality gates, naming conventions, and development commands
+- **docs**: Added `docs/development/xdebug.md` — Xdebug 3 setup guide: actual `xdebug.ini` config, VS Code `launch.json`, PHPStorm server mapping, and coverage generation
+- **docs**: Added `docs/development/nginx.md` — dev Nginx config reference (`docker/dev/nginx/default.conf`): directive explanation, port mapping, SSL/production notes
+- **docs**: Added `docs/development/pint.md` — Laravel Pint usage guide: commands, enforced rules with justification, CI enforcement, and editor integration
 - **auth**: Added `sanctum` guard in `config/auth.php` for Sanctum opaque token authentication
 - **auth**: Added `ServiceTokenController` (SRP) — creates and revokes Sanctum service tokens for machine-to-machine clients (MCP server); scoped to `['words:write', 'translations:write']` abilities; protected by `jwt.verify` so only authenticated humans can issue tokens
 - **routes**: Added `POST /api/v1/service-tokens` and `DELETE /api/v1/service-tokens/{tokenId}` under `jwt.verify` (JWT-only, human users)
@@ -27,6 +30,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Changed
 
+- **docs**: Updated `docs/guides/graphql.md` — added mutations section (all 6 CRUD operations with examples), authentication header usage, cache behavior, security limits table, and authorization rules
+- **docs**: Updated `docs/development/README.md` — replaced stale PHP-CS-Fixer references with current toolchain (`composer ci`, Pint, PHPStan, Rector); corrected branch naming to match CI/CD conventions; added links to all tool guides
 - **graphql**: Enabled `max_query_complexity` and `max_query_depth` in `config/lighthouse.php` via env vars (`LIGHTHOUSE_MAX_QUERY_COMPLEXITY=200`, `LIGHTHOUSE_MAX_QUERY_DEPTH=5`) — prevents DoS via deeply nested queries; added to `.env.example`
 - **validation**: Fixed `StoreTranslationRequest` and `UpdateTranslationRequest` — `language` max corrected from 10 → 5 (matches `VARCHAR(5)` DB column), `translation` max corrected from 255 → 500 (matches TEXT practical limit)
 - **logging**: Removed `Log::info()/warning()` calls and `use Illuminate\Support\Facades\Log` from `WordController` and `TranslationController` — audit logging moved to Model Observers
