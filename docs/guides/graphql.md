@@ -1,152 +1,181 @@
-# GraphQL API Reference
+# GraphQL API
 
-## Endpoint
+**Endpoint:** `POST /graphql` (also accepts `GET`)
+
+**Client:** [Altair GraphQL Client](https://altairgraphql.dev/) — available for Chrome, Firefox, Edge.
+
+Set endpoint to `http://localhost:8000/graphql`.
+
+---
+
+## Authentication
+
+Mutations require a JWT token. Pass it as a header:
 
 ```
-POST /graphql
+Authorization: Bearer <token>
 ```
 
-**Testing GraphQL queries:**
-Install [Altair GraphQL Client](https://altairgraphql.dev/) browser extension:
-- Chrome: [Altair GraphQL Client](https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja)
-- Firefox: [Altair GraphQL Client](https://addons.mozilla.org/en-US/firefox/addon/altair-graphql-client/)
-- Edge: Available in Microsoft Edge Add-ons
+Obtain a token via `POST /api/v1/user/login`. See [REST auth guide](rest.md).
 
-Then set endpoint to: `http://localhost:8000/graphql`
+---
 
-## Example Queries
+## Queries (public, cached 24h)
 
-### Fetch paginated words with search
+### Words
+
 ```graphql
+# Paginated + search
 query {
   words(first: 15, page: 1, search: "auth") {
     data {
       id
       english_word
-      translations {
-        language
-        translation
-      }
+      translations { language translation }
     }
-    paginatorInfo {
-      currentPage
-      lastPage
-      total
-      hasMorePages
-    }
+    paginatorInfo { currentPage lastPage total hasMorePages }
   }
 }
-```
 
-### Fetch all words (default pagination)
-```graphql
-query {
-  words {
-    data {
-      id
-      english_word
-      translations {
-        language
-        translation
-      }
-    }
-    paginatorInfo {
-      total
-    }
-  }
-}
-```
-
-### Fetch single word
-```graphql
+# Single word
 query {
   word(id: 1) {
     id
     english_word
-    translations {
-      language
-      translation
-    }
+    translations { language translation }
   }
 }
 ```
 
-### Fetch translations by language
+`first` max: 100. Default: 15. Search matches English word and all translations.
+
+### Translations
+
 ```graphql
+# Filter by language and/or word
 query {
-  translationsByLanguage(language: "es") {
-    id
-    translation
-    word {
-      english_word
-    }
+  translations(language: "es", word_id: 5) {
+    id language translation
+    word { english_word }
+  }
+}
+
+# All translations for a language
+query {
+  translationsByLanguage(language: "de") {
+    id translation
+    word { english_word }
+  }
+}
+
+# Single translation
+query {
+  translation(id: 1) {
+    id language translation
   }
 }
 ```
 
-### Fetch translations with filters
+---
+
+## Mutations (JWT required)
+
+### Words
+
 ```graphql
-query {
-  translations(language: "de", word_id: 5) {
-    id
-    language
-    translation
-    word {
-      english_word
-    }
+mutation {
+  createWord(english_word: "Middleware") {
+    id english_word created_at
+  }
+}
+
+mutation {
+  updateWord(id: 1, english_word: "API Gateway") {
+    id english_word updated_at
+  }
+}
+
+mutation {
+  deleteWord(id: 1) {
+    id english_word
   }
 }
 ```
 
-## Schema Highlights
+### Translations
 
-### Queries
-- **words(first: Int, page: Int, search: String): [Word!]!**
-  - `first`: Items per page (max 100, default 15)
-  - `page`: Page number
-  - `search`: Search in english_word and translations
+```graphql
+mutation {
+  createTranslation(word_id: 1, language: "es", translation: "Middleware") {
+    id language translation
+  }
+}
 
-- **word(id: ID!): Word**
+mutation {
+  updateTranslation(id: 1, language: "es", translation: "Intermediario") {
+    id language translation updated_at
+  }
+}
 
-- **translations(language: String, word_id: ID): [Translation!]!**
+mutation {
+  deleteTranslation(id: 1) {
+    id language translation
+  }
+}
+```
 
-- **translation(id: ID!): Translation**
+---
 
-- **translationsByLanguage(language: String!): [Translation!]!**
+## Schema
 
 ### Types
 
-**Word**
-- `id: ID!`
-- `english_word: String!`
-- `translations: [Translation!]!`
-- `created_at: DateTime!`
-- `updated_at: DateTime!`
-
-**Translation**
-- `id: ID!`
-- `word_id: ID!`
-- `language: String!` (ISO 639-1: en, es, de, fr, etc)
-- `translation: String!`
-- `word: Word!`
-- `created_at: DateTime!`
-- `updated_at: DateTime!`
-
-## Search Functionality
-
-Search across English words and all translations:
 ```graphql
-query {
-  words(search: "auth") {
-    data {
-      english_word
-      translations {
-        language
-        translation
-      }
-    }
-  }
+type Word {
+  id: ID!
+  english_word: String!
+  translations: [Translation!]!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Translation {
+  id: ID!
+  word_id: ID!
+  language: String!   # ISO 639-1: en, es, de, fr, ...
+  translation: String!
+  word: Word!
+  created_at: DateTime!
+  updated_at: DateTime!
 }
 ```
 
-Finds: "Authentication", "Autenticación", "Authentifizierung", etc.
+---
+
+## Cache
+
+All 5 query fields use `@cache(maxAge: 86400)` (24h, Redis tagged cache).
+
+Mutations automatically invalidate the relevant cache entries via `@clearCache`. No manual intervention needed.
+
+---
+
+## Security Limits
+
+Configured via environment variables (see `.env.example`):
+
+| Setting | Default | Purpose |
+|---------|---------|---------|
+| `LIGHTHOUSE_MAX_QUERY_COMPLEXITY` | `200` | Prevents expensive nested queries |
+| `LIGHTHOUSE_MAX_QUERY_DEPTH` | `5` | Limits nesting depth |
+| `LIGHTHOUSE_SECURITY_DISABLE_INTROSPECTION` | `true` | Hides schema in production |
+
+---
+
+## Authorization
+
+Mutations use the same dual-auth policy as REST:
+- JWT user (`api` guard) → always allowed
+- Sanctum token (`sanctum` guard) → must have `words:write` or `translations:write` ability
+
+Unauthorized mutations return a `403` error in the GraphQL `errors` array.

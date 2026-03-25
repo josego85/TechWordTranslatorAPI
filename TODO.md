@@ -18,9 +18,9 @@
 - Monitor (Grafana)
 - Add Swagger/OpenAPI documentation
 - Docker compose dev and prod environments
-- Add comprehensive docs for Xdebug configuration
-- Add comprehensive docs for Nginx setup
-- Add comprehensive docs for Laravel Pint usage and configuration
+- ~~Add comprehensive docs for Xdebug configuration~~ (`docs/development/xdebug.md`)
+- ~~Add comprehensive docs for Nginx setup~~ (`docs/development/nginx.md`)
+- ~~Add comprehensive docs for Laravel Pint usage and configuration~~ (`docs/development/pint.md`)
 
 ## Recommended Next Steps 🚀
 
