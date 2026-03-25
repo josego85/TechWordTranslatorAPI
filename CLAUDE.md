@@ -555,19 +555,22 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 - Swagger/OpenAPI documentation
 - Docs for Xdebug, Nginx, Pint
 
-### Completed (2026-03-23)
+### Completed (2026-03-24)
 
-- ✅ Cache for Translation endpoints — `CacheableTranslationRepository` decorator, coverage 92.18%
-- ✅ PHPUnit test coverage exceeded 74% (currently 92.18% lines)
+- ✅ GraphQL integration — tests, security limits, cache (`@cache`), mutations (custom PHP resolvers → Services), Model Observers for audit logging — 196 tests, 566 assertions → see `docs/tasks/graphql-integration/`
+- ✅ Cache for Translation endpoints — `CacheableTranslationRepository` decorator
+- ✅ PHPUnit test coverage exceeded 74% (196 tests, 566 assertions)
 
 ### Recommended Next Steps
 
 - ISO 639-1 language code validation in Request layer
-- Cache with tags for selective invalidation
+- Cache with tags for selective invalidation (REST layer — GraphQL already uses tagged cache)
 - Unit tests for Models and Repositories
-- Integration tests for GraphQL queries
 - E2E tests for REST API
 - Performance benchmarks for search functionality
+- Opcache configuration
+- Grafana monitoring
+- Swagger/OpenAPI documentation
 
 ---
 

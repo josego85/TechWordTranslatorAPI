@@ -2,11 +2,11 @@ extend type Query {
   translations(
     language: String @eq
     word_id: ID @eq
-  ): [Translation!]! @all(model: "App\\Models\\Translation")
+  ): [Translation!]! @all(model: "App\\Models\\Translation") @cache(maxAge: 86400)
 
-  translation(id: ID! @whereKey): Translation @find(model: "App\\Models\\Translation")
+  translation(id: ID! @whereKey): Translation @find(model: "App\\Models\\Translation") @cache(maxAge: 86400)
 
   translationsByLanguage(
     language: String! @eq
-  ): [Translation!]! @all(model: "App\\Models\\Translation")
+  ): [Translation!]! @all(model: "App\\Models\\Translation") @cache(maxAge: 86400)
 }

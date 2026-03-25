@@ -3,8 +3,6 @@
 declare(strict_types=1);
 use GraphQL\Error\DebugFlag;
 use GraphQL\Validator\Rules\DisableIntrospection;
-use GraphQL\Validator\Rules\QueryComplexity;
-use GraphQL\Validator\Rules\QueryDepth;
 use Nuwave\Lighthouse\Execution\AuthenticationErrorHandler;
 use Nuwave\Lighthouse\Execution\AuthorizationErrorHandler;
 use Nuwave\Lighthouse\Execution\ReportingErrorHandler;
@@ -136,7 +134,7 @@ return [
     | Should the `@cache` directive use a tagged cache?
     |
     */
-    'cache_directive_tags' => false,
+    'cache_directive_tags' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -238,8 +236,8 @@ return [
     */
 
     'security' => [
-        'max_query_complexity' => QueryComplexity::DISABLED,
-        'max_query_depth' => QueryDepth::DISABLED,
+        'max_query_complexity' => (int) env('LIGHTHOUSE_MAX_QUERY_COMPLEXITY', 200),
+        'max_query_depth' => (int) env('LIGHTHOUSE_MAX_QUERY_DEPTH', 5),
         'disable_introspection' => (bool) env('LIGHTHOUSE_SECURITY_DISABLE_INTROSPECTION', false)
             ? DisableIntrospection::ENABLED
             : DisableIntrospection::DISABLED,

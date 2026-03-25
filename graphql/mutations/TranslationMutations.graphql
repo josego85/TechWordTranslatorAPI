@@ -1,0 +1,32 @@
+extend type Mutation {
+    createTranslation(
+        word_id: ID! @rules(apply: ["required", "exists:words,id"])
+        language: String! @rules(apply: ["required", "max:5"])
+        translation: String! @rules(apply: ["required", "max:500"])
+    ): Translation
+        @guard(with: ["api", "sanctum"])
+        @can(ability: "write", model: "App\\Models\\Translation")
+        @field(resolver: "App\\GraphQL\\Mutations\\TranslationMutations@create")
+        @clearCache(type: "Query", field: "translations")
+        @clearCache(type: "Query", field: "translationsByLanguage")
+
+    updateTranslation(
+        id: ID!
+        language: String @rules(apply: ["max:5"])
+        translation: String @rules(apply: ["max:500"])
+    ): Translation
+        @guard(with: ["api", "sanctum"])
+        @can(ability: "write", model: "App\\Models\\Translation")
+        @field(resolver: "App\\GraphQL\\Mutations\\TranslationMutations@update")
+        @clearCache(type: "Query", field: "translations")
+        @clearCache(type: "Query", field: "translation")
+        @clearCache(type: "Query", field: "translationsByLanguage")
+
+    deleteTranslation(id: ID!): Translation
+        @guard(with: ["api", "sanctum"])
+        @can(ability: "write", model: "App\\Models\\Translation")
+        @field(resolver: "App\\GraphQL\\Mutations\\TranslationMutations@delete")
+        @clearCache(type: "Query", field: "translations")
+        @clearCache(type: "Query", field: "translation")
+        @clearCache(type: "Query", field: "translationsByLanguage")
+}

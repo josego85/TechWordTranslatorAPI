@@ -14,7 +14,6 @@ use App\Http\Requests\UpdateWordRequest;
 use App\Http\Resources\WordCollection;
 use App\Http\Resources\WordResource;
 use App\Services\WordService;
-use Illuminate\Support\Facades\Log;
 
 class WordController extends Controller
 {
@@ -62,8 +61,6 @@ class WordController extends Controller
         try {
             $word = $this->wordService->create($data);
 
-            Log::info('Word created', ['word_id' => $word->id, 'english_word' => $word->english_word, 'ip' => $request->ip()]);
-
             return response()->json(new WordResource($word), 201);
         } catch (WordNotFoundException $e) {
             return response()->json([
@@ -83,8 +80,6 @@ class WordController extends Controller
         try {
             $word = $this->wordService->update($id, $englishWord);
 
-            Log::info('Word updated', ['word_id' => $word->id, 'english_word' => $word->english_word, 'ip' => $request->ip()]);
-
             return response()->json(new WordResource($word));
         } catch (WordNotFoundException $e) {
             return response()->json([
@@ -100,8 +95,6 @@ class WordController extends Controller
     {
         try {
             $this->wordService->delete($id);
-
-            Log::warning('Word deleted', ['word_id' => $id, 'ip' => $request->ip()]);
 
             return response()->json(null, 204);
         } catch (WordNotFoundException $e) {

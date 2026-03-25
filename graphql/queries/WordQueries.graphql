@@ -3,7 +3,7 @@ extend type Query {
         first: Int @rules(apply: ["min:1", "max:100"])
         page: Int
         search: String @scope(name: "search")
-    ): [Word!]! @paginate(model: "App\\Models\\Word", defaultCount: 15)
+    ): [Word!]! @paginate(model: "App\\Models\\Word", defaultCount: 15) @cache(maxAge: 86400)
 
-    word(id: ID! @whereKey): Word @find(model: "App\\Models\\Word")
+    word(id: ID! @whereKey): Word @find(model: "App\\Models\\Word") @cache(maxAge: 86400)
 }

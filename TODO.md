@@ -4,12 +4,16 @@
 
 - ~~Add filter and order by name in endpoints~~ (v1.14.0 - Search functionality added)
 - ~~Security improvements~~ (CORS, rate limiting, password validation, JWT TTL, security headers, CSP, per-email soft lockout, content audit trail — see SECURITY_AUDIT.md)
-- ~~Add logs~~ (auth events + Word/Translation CRUD mutations via Log:: — partition by date pending if volume requires it)
-- ~~Add cache for Translation endpoints~~ (v1.17.0 - CacheableTranslationRepository decorator, Redis keys `translation:{id}` + `translations:perPage:{n}:page:{n}`, 8 unit tests, 92.18% coverage)
+- ~~Add logs~~ (auth events + Word/Translation CRUD via Model Observers — fires for REST, GraphQL, and CLI)
+- ~~Add cache for Translation endpoints~~ (CacheableTranslationRepository decorator, Redis keys `translation:{id}` + `translations:perPage:{n}:page:{n}`)
+- ~~Add PHPUnit tests coverage~~ (196 tests, 566 assertions, 92.18% line coverage)
+- ~~Integration tests for GraphQL queries and mutations~~ (WordGraphQLTest, TranslationGraphQLTest, MutationGraphQLTest — 34 tests)
+- ~~GraphQL mutations~~ (createWord/updateWord/deleteWord + createTranslation/updateTranslation/deleteTranslation via custom resolvers → Services)
+- ~~GraphQL cache~~ (`@cache(maxAge: 86400)` on all 5 query fields, Redis tagged cache)
+- ~~GraphQL security limits~~ (`max_query_complexity: 200`, `max_query_depth: 5` via env vars)
 
 ## In Progress
 
-- Add PHPUnit tests coverage
 - Add Opcache configuration
 - Monitor (Grafana)
 - Add Swagger/OpenAPI documentation
@@ -21,10 +25,7 @@
 ## Recommended Next Steps 🚀
 
 - Add Request validation for ISO 639-1 language codes
-- Implement cache with tags for selective invalidation
+- Implement cache with tags for selective invalidation (REST layer)
 - Unit tests for models and repositories
-- Integration tests for GraphQL queries
 - E2E tests for REST API endpoints
-- Update Swagger/OpenAPI documentation with new schema
-- Add GraphQL pagination tests
 - Performance benchmarks for search functionality

@@ -8,6 +8,8 @@ use App\Interfaces\TranslationRepositoryInterface;
 use App\Interfaces\WordRepositoryInterface;
 use App\Models\Translation;
 use App\Models\Word;
+use App\Observers\TranslationObserver;
+use App\Observers\WordObserver;
 use App\Repositories\CacheableTranslationRepository;
 use App\Repositories\CacheableWordRepository;
 use App\Repositories\TranslationRepository;
@@ -55,6 +57,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Word::observe(WordObserver::class);
+        Translation::observe(TranslationObserver::class);
     }
 }

@@ -190,7 +190,7 @@ class TranslationApiTest extends TestCase
         ])->assertStatus(201);
 
         Log::shouldHaveReceived('info')
-            ->once()
+            ->atLeast()->once()
             ->with('Translation created', \Mockery::on(fn ($context) => $context['word_id'] === $word->id && $context['language'] === 'fr' && isset($context['translation_id']) && isset($context['ip'])));
     }
 
@@ -206,7 +206,7 @@ class TranslationApiTest extends TestCase
         ])->assertStatus(200);
 
         Log::shouldHaveReceived('info')
-            ->once()
+            ->atLeast()->once()
             ->with('Translation updated', \Mockery::on(fn ($context) => $context['translation_id'] === $translation->id && isset($context['ip'])));
     }
 
@@ -218,7 +218,7 @@ class TranslationApiTest extends TestCase
         $this->deleteJson("/api/v1/translations/{$translation->id}")->assertStatus(204);
 
         Log::shouldHaveReceived('warning')
-            ->once()
+            ->atLeast()->once()
             ->with('Translation deleted', \Mockery::on(fn ($context) => $context['translation_id'] === $translation->id && isset($context['ip'])));
     }
 

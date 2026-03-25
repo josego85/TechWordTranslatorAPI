@@ -27,8 +27,8 @@ class UpdateTranslationRequest extends FormRequest
         return [
             'translation_id' => ['required', 'integer', 'exists:translations,id'],
             'word_id' => ['sometimes', 'integer', 'exists:words,id'],
-            'language' => ['sometimes', Rule::string()->max(10)],
-            'translation' => ['sometimes', Rule::string()->max(255)],
+            'language' => ['sometimes', Rule::string()->max(5)],
+            'translation' => ['sometimes', Rule::string()->max(500)],
         ];
     }
 

@@ -9,6 +9,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Added
 
+- **graphql**: Added GraphQL mutations for Word and Translation (`createWord`, `updateWord`, `deleteWord`, `createTranslation`, `updateTranslation`, `deleteTranslation`) — custom PHP resolvers via `@field` delegating to `WordService`/`TranslationService`; protected by `@guard(with: ["api", "sanctum"])` + `@can` Policy; cache invalidation via `@clearCache`
+- **graphql**: Added `WordObserver` and `TranslationObserver` — audit logging on `created`/`updated`/`deleted` Eloquent events; registered in `AppServiceProvider`; fires for REST, GraphQL, and CLI mutations (SRP — replaces controller-level `Log::` calls)
+- **graphql**: Added `@cache(maxAge: 86400)` to all 5 GraphQL query fields (`words`, `word`, `translations`, `translation`, `translationsByLanguage`) with `cache_directive_tags: true` (Redis tagged cache, 24h TTL)
+- **tests**: Added `tests/Feature/GraphQL/WordGraphQLTest.php` (9 tests), `TranslationGraphQLTest.php` (8 tests), and `MutationGraphQLTest.php` (17 tests) — full integration coverage for GraphQL queries, cache hit assertions, and mutation CRUD with auth/validation scenarios
 - **cache**: Added `CacheableTranslationRepository` — decorator wrapping `TranslationRepository` with Redis caching (TTL 24h); keys `translation:{id}` and `translations:perPage:{n}:page:{n}`; invalidation on create/update/delete; wired in `AppServiceProvider` replacing the previously commented-out scaffold
 - **cache**: Added `generateTranslationKey()` and `generateTranslationsKey()` to `CacheService` — mirrors the existing Word key generators
 - **tests**: Added `CacheableTranslationRepositoryTest` — 8 unit tests covering all 5 repository methods including cache-miss delegation, cache-hit via `remember()`, and invalidation guards on update/delete failure
@@ -23,6 +27,9 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Changed
 
+- **graphql**: Enabled `max_query_complexity` and `max_query_depth` in `config/lighthouse.php` via env vars (`LIGHTHOUSE_MAX_QUERY_COMPLEXITY=200`, `LIGHTHOUSE_MAX_QUERY_DEPTH=5`) — prevents DoS via deeply nested queries; added to `.env.example`
+- **validation**: Fixed `StoreTranslationRequest` and `UpdateTranslationRequest` — `language` max corrected from 10 → 5 (matches `VARCHAR(5)` DB column), `translation` max corrected from 255 → 500 (matches TEXT practical limit)
+- **logging**: Removed `Log::info()/warning()` calls and `use Illuminate\Support\Facades\Log` from `WordController` and `TranslationController` — audit logging moved to Model Observers
 - **ci**: Bumped `actions/upload-artifact` v6.0.0 → v7.0.0 (#79)
 - **ci**: Bumped `actions/checkout` v5→v5.0.2, `actions/dependency-review-action` v4.8.2→v4.9.0, `actions/cache` v5.0.1→v5.0.4, `github/codeql-action` v4.31.10→v4.34.1 (#77)
 - **deps**: Upgraded `axios` 1.13.5 → 1.13.6 (patch — HTTP client security/maintenance release)

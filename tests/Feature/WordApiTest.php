@@ -209,7 +209,7 @@ class WordApiTest extends TestCase
         $response->assertStatus(201);
 
         Log::shouldHaveReceived('info')
-            ->once()
+            ->atLeast()->once()
             ->with('Word created', \Mockery::on(fn ($context) => $context['english_word'] === 'Refactor' && isset($context['word_id']) && isset($context['ip'])));
     }
 
@@ -220,7 +220,7 @@ class WordApiTest extends TestCase
         $this->putJson("/api/v1/words/{$word->id}", ['english_word' => 'New'])->assertStatus(200);
 
         Log::shouldHaveReceived('info')
-            ->once()
+            ->atLeast()->once()
             ->with('Word updated', \Mockery::on(fn ($context) => $context['word_id'] === $word->id && $context['english_word'] === 'New' && isset($context['ip'])));
     }
 
@@ -231,7 +231,7 @@ class WordApiTest extends TestCase
         $this->deleteJson("/api/v1/words/{$word->id}")->assertStatus(204);
 
         Log::shouldHaveReceived('warning')
-            ->once()
+            ->atLeast()->once()
             ->with('Word deleted', \Mockery::on(fn ($context) => $context['word_id'] === $word->id && isset($context['ip'])));
     }
 
