@@ -53,6 +53,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Security
 
+- **deps**: Upgraded `picomatch` to resolve high severity vulnerabilities — method injection in POSIX character classes causing incorrect glob matching (GHSA-3v7f-55p6-f55p) and ReDoS via extglob quantifiers (GHSA-c2c7-rcm5-vvqj); fixed via `npm audit fix` updating `picomatch` in `node_modules/vite-plugin-full-reload`
 - **deps**: Upgraded `league/commonmark` 2.8.1 → 2.8.2 — fixes CVE-2026-33347 (embed extension `allowed_domains` bypass, severity: medium). Transitive dependency via `laravel/framework`; only `composer.lock` updated
 
 ---
