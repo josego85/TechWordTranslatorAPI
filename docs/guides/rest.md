@@ -8,6 +8,7 @@ All list endpoints use **offset-based pagination**:
   - `per_page` (integer, default: 15, max: 100)
   - `page` (integer, default: 1)
   - `search` (string, optional)
+  - `category` (string, optional) - Filter by category slug (e.g. `networking`, `security`)
 
 - **Response Format**
   ```json
@@ -16,6 +17,10 @@ All list endpoints use **offset-based pagination**:
       {
         "id": 1,
         "word": "Computer",
+        "categories": [
+          { "slug": "hardware", "name": "Hardware" },
+          { "slug": "operating-systems", "name": "Operating Systems" }
+        ],
         "created_at": "2025-11-21T13:20:22.000000Z",
         "updated_at": "2025-11-21T13:20:22.000000Z",
         "translations": [
@@ -80,6 +85,7 @@ GET /api/v1/words
 - `per_page` (integer, optional, default: 15, max: 100) - Items per page
 - `page` (integer, optional, default: 1) - Page number
 - `search` (string, optional) - Search in english_word and all translations
+- `category` (string, optional) - Filter by category slug (e.g. `networking`, `security`)
 
 **Examples**
 
@@ -98,6 +104,11 @@ Get page 2 with 20 items:
 curl "http://localhost:8000/api/v1/words?per_page=20&page=2"
 ```
 
+Filter by category:
+```bash
+curl "http://localhost:8000/api/v1/words?category=networking"
+```
+
 ### Get single word
 
 ```
@@ -109,6 +120,10 @@ GET /api/v1/words/{id}
 {
   "id": 1,
   "word": "Computer",
+  "categories": [
+    { "slug": "hardware", "name": "Hardware" },
+    { "slug": "operating-systems", "name": "Operating Systems" }
+  ],
   "created_at": "2025-11-21T13:20:22.000000Z",
   "updated_at": "2025-11-21T13:20:22.000000Z",
   "translations": [
@@ -145,11 +160,24 @@ POST /api/v1/words
 }
 ```
 
+Categories are assigned automatically by the LLM. To override them, pass the optional `categories` field with an array of valid slugs:
+
+```json
+{
+  "english_word": "Algorithm",
+  "translations": { "es": "Algoritmo", "de": "Algorithmus" },
+  "categories": ["algorithms", "mathematics"]
+}
+```
+
 **Response** (201 Created)
 ```json
 {
   "id": 26,
   "word": "Algorithm",
+  "categories": [
+    { "slug": "algorithms", "name": "Algorithms" }
+  ],
   "created_at": "2025-11-21T14:30:00.000000Z",
   "updated_at": "2025-11-21T14:30:00.000000Z",
   "translations": [

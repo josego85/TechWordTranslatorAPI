@@ -17,7 +17,7 @@
 [![CI](https://github.com/josego85/TechWordTranslatorAPI/workflows/CI/badge.svg)](https://github.com/josego85/TechWordTranslatorAPI/actions/workflows/ci.yml)
 ![Last Commit](https://img.shields.io/github/last-commit/josego85/TechWordTranslatorAPI?logo=git&logoColor=white)
 
-> A RESTful API providing translations of IT-related terms into Spanish and German.
+> A RESTful API (+ GraphQL) providing translations of IT-related terms between English, Spanish, and German — with automatic thematic classification via local LLM (Ollama).
 
 ---
 
@@ -28,6 +28,7 @@
 - [API Documentation](docs/api/README.md)
 - [REST API Reference](docs/guides/rest.md)
 - [GraphQL API Reference](docs/guides/graphql.md)
+- [Auto-Classification Guide](docs/guides/classification.md)
 - [Security & Performance](docs/guides/security.md)
 - [Development Guide](docs/development/README.md)
 - [Support](docs/SUPPORT.md)
@@ -38,6 +39,8 @@
 ## 🚀 Core Features
 
 - English ↔ Spanish ↔ German translations  
+- Automatic thematic classification via local LLM (Ollama + `prism-php/prism`) — 13 categories, many-to-many  
+- Filter words by category (`?category=networking`)  
 - Cursor-based pagination support  
 - JWT-based authentication  
 - Dockerized environment for easy setup  
@@ -58,6 +61,7 @@
 - GraphQL endpoint for flexible querying  
 - Custom Content-Security-Policy headers  
 - Redis-based caching system ([documentation](docs/cache/redis.md))
+- Automatic word classification ([documentation](docs/guides/classification.md))
 
 ---
 

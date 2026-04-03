@@ -16,11 +16,17 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - **seeders**: Added `CategorySeeder` (13 categories), `UserSeeder` (dev user `dev@techword.local`); `WordSeeder` updated with hardcoded categories for all 25 seed words
 - **docs**: Added `docs/requests/auth/login.http` and `docs/requests/words/create-word.http` — VS Code REST Client examples for login and word creation with auto/manual classification
 - **tests**: Added `ClassificationServiceTest` (6 tests), `CategoryRepositoryTest` (3 tests); updated `WordServiceTest` and `WordApiTest` — 208 tests, 590 assertions, 92.21% line coverage
+- **docs**: Added `docs/guides/classification.md` — full guide for auto-classification: how it works, Ollama setup (Linux/Mac), env vars, REST and GraphQL integration, graceful degradation table
 
 ### Changed
 
 - **words**: `WordResource` now exposes `categories: [{slug, name}]` in all word responses (REST and GraphQL)
 - **cache**: `CacheService::generateWordsKey()` includes `category` segment to cache per-category filtered results
+- **docs**: Updated `README.md` — description, Core Features (classification + category filter), Additional Features, Quick Links
+- **docs**: Updated `docs/guides/rest.md` — `categories` field in all word responses, `?category=` query param, optional `categories[]` in create/update request body
+- **docs**: Updated `docs/guides/graphql.md` — `Category` type in schema, `categories { slug name }` in word queries and mutations, `category:` filter arg, `categories:` override arg in mutations
+- **docs**: Updated `docs/guides/setup.md` — optional Ollama installation section with env var instructions
+- **docs**: Updated `CLAUDE.md` — version, tech stack (Prism + Ollama), directory structure, DB schema (categories + word_category), cache key patterns, test structure, env vars, Open Tasks
 
 ---
 

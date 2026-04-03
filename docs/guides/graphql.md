@@ -31,9 +31,23 @@ query {
     data {
       id
       english_word
+      categories { slug name }
       translations { language translation }
     }
     paginatorInfo { currentPage lastPage total hasMorePages }
+  }
+}
+
+# Filter by category
+query {
+  words(first: 15, category: "networking") {
+    data {
+      id
+      english_word
+      categories { slug name }
+      translations { language translation }
+    }
+    paginatorInfo { currentPage total }
   }
 }
 
@@ -42,6 +56,7 @@ query {
   word(id: 1) {
     id
     english_word
+    categories { slug name }
     translations { language translation }
   }
 }
@@ -83,15 +98,28 @@ query {
 ### Words
 
 ```graphql
+# Auto-classification (Ollama assigns categories automatically)
 mutation {
   createWord(english_word: "Middleware") {
-    id english_word created_at
+    id english_word
+    categories { slug name }
+    created_at
+  }
+}
+
+# Manual category override
+mutation {
+  createWord(english_word: "mutex", categories: ["algorithms", "operating-systems"]) {
+    id english_word
+    categories { slug name }
   }
 }
 
 mutation {
   updateWord(id: 1, english_word: "API Gateway") {
-    id english_word updated_at
+    id english_word
+    categories { slug name }
+    updated_at
   }
 }
 
@@ -131,9 +159,16 @@ mutation {
 ### Types
 
 ```graphql
+type Category {
+  id: ID!
+  slug: String!
+  name: String!
+}
+
 type Word {
   id: ID!
   english_word: String!
+  categories: [Category!]!
   translations: [Translation!]!
   created_at: DateTime!
   updated_at: DateTime!
