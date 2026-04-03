@@ -20,6 +20,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Changed
 
+- **ci**: Upgraded `codecov/codecov-action` from v5 to v6 — aligns with latest Codecov upload API ([#86](https://github.com/josego85/TechWordTranslatorAPI/pull/86))
+- **ci**: Upgraded `github/codeql-action` from 4.34.1 to 4.35.1 — includes upstream CodeQL CLI improvements and bug fixes ([#84](https://github.com/josego85/TechWordTranslatorAPI/pull/84))
 - **words**: `WordResource` now exposes `categories: [{slug, name}]` in all word responses (REST and GraphQL)
 - **cache**: `CacheService::generateWordsKey()` includes `category` segment to cache per-category filtered results
 - **docs**: Updated `README.md` — description, Core Features (classification + category filter), Additional Features, Quick Links
