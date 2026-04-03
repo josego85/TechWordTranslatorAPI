@@ -29,3 +29,5 @@
 - Unit tests for models and repositories
 - E2E tests for REST API endpoints
 - Performance benchmarks for search functionality
+- Add husky
+- Perfomance dockerfile dev app
