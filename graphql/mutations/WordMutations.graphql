@@ -1,6 +1,7 @@
 extend type Mutation {
     createWord(
         english_word: String! @rules(apply: ["required", "max:255"])
+        categories: [String!] @rules(apply: ["sometimes", "array", "max:3"])
     ): Word
         @guard(with: ["api", "sanctum"])
         @can(ability: "write", model: "App\\Models\\Word")
@@ -10,6 +11,7 @@ extend type Mutation {
     updateWord(
         id: ID!
         english_word: String @rules(apply: ["max:255"])
+        categories: [String!] @rules(apply: ["sometimes", "array", "max:3"])
     ): Word
         @guard(with: ["api", "sanctum"])
         @can(ability: "write", model: "App\\Models\\Word")

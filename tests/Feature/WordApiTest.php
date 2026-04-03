@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Exceptions\WordNotFoundException;
+use App\Models\Category;
 use App\Models\Translation;
 use App\Models\User;
 use App\Models\Word;
 use App\Services\WordService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Log;
+use Prism\Prism\Facades\Prism;
+use Prism\Prism\Testing\TextResponseFake;
 use Tests\TestCase;
 
 class WordApiTest extends TestCase
@@ -43,6 +46,7 @@ class WordApiTest extends TestCase
                     '*' => [
                         'id',
                         'word',
+                        'categories',
                         'created_at',
                         'updated_at',
                         'translations' => [
@@ -103,23 +107,62 @@ class WordApiTest extends TestCase
 
     public function test_create_word_successfully(): void
     {
-        $data = [
-            'english_word' => 'Test',
-        ];
+        // Prism::fake — no LLM call in tests; word saved without categories
+        Prism::fake([]);
 
-        $response = $this->postJson('/api/v1/words', $data);
+        $response = $this->postJson('/api/v1/words', ['english_word' => 'Test']);
 
         $response->assertStatus(201)
-            ->assertJsonStructure([
-                'id',
-                'word',
-                'created_at',
-                'updated_at',
-            ]);
+            ->assertJsonStructure(['id', 'word', 'categories', 'created_at', 'updated_at']);
 
-        $this->assertDatabaseHas('words', [
-            'english_word' => 'Test',
+        $this->assertDatabaseHas('words', ['english_word' => 'Test']);
+    }
+
+    public function test_create_word_attaches_classified_categories(): void
+    {
+        Category::create(['slug' => 'networking', 'name' => 'Networking']);
+        Category::create(['slug' => 'security',   'name' => 'Security']);
+
+        Prism::fake([
+            TextResponseFake::make()->withText('networking, security'),
         ]);
+
+        $response = $this->postJson('/api/v1/words', ['english_word' => 'firewall']);
+
+        $response->assertStatus(201);
+        $categories = collect($response->json('categories'));
+        $this->assertTrue($categories->pluck('slug')->contains('networking'));
+        $this->assertTrue($categories->pluck('slug')->contains('security'));
+    }
+
+    public function test_create_word_accepts_manual_category_override(): void
+    {
+        Category::create(['slug' => 'hardware', 'name' => 'Hardware']);
+
+        Prism::fake([]);
+
+        $response = $this->postJson('/api/v1/words', [
+            'english_word' => 'CPU',
+            'categories' => ['hardware'],
+        ]);
+
+        $response->assertStatus(201);
+        $this->assertSame('hardware', $response->json('categories.0.slug'));
+    }
+
+    public function test_get_words_filtered_by_category(): void
+    {
+        $category = Category::create(['slug' => 'databases', 'name' => 'Databases']);
+        $wordA    = Word::factory()->create(['english_word' => 'SQL']);
+        $wordB    = Word::factory()->create(['english_word' => 'Router']);
+        $wordA->categories()->attach($category->id);
+
+        $response = $this->getJson('/api/v1/words?category=databases');
+
+        $response->assertStatus(200);
+        $words = collect($response->json('data'));
+        $this->assertCount(1, $words);
+        $this->assertSame('SQL', $words->first()['word']);
     }
 
     public function test_create_word_fails_without_english_word(): void
@@ -132,13 +175,10 @@ class WordApiTest extends TestCase
 
     public function test_update_word_successfully(): void
     {
+        Prism::fake([]);
         $word = Word::factory()->create(['english_word' => 'Old Name']);
 
-        $data = [
-            'english_word' => 'New Name',
-        ];
-
-        $response = $this->putJson("/api/v1/words/{$word->id}", $data);
+        $response = $this->putJson("/api/v1/words/{$word->id}", ['english_word' => 'New Name']);
 
         $response->assertStatus(200)
             ->assertJson([
@@ -204,6 +244,7 @@ class WordApiTest extends TestCase
 
     public function test_create_word_logs_info(): void
     {
+        Prism::fake([]);
         $response = $this->postJson('/api/v1/words', ['english_word' => 'Refactor']);
 
         $response->assertStatus(201);
@@ -215,6 +256,7 @@ class WordApiTest extends TestCase
 
     public function test_update_word_logs_info(): void
     {
+        Prism::fake([]);
         $word = Word::factory()->create(['english_word' => 'Old']);
 
         $this->putJson("/api/v1/words/{$word->id}", ['english_word' => 'New'])->assertStatus(200);
@@ -263,7 +305,7 @@ class WordApiTest extends TestCase
         // Mock the service to throw a not found exception
         $this->mock(WordService::class, function($mock) use ($word) {
             $mock->shouldReceive('update')
-                ->with($word->id, \Mockery::any())
+                ->with($word->id, \Mockery::any(), \Mockery::any())
                 ->once()
                 ->andThrow(new WordNotFoundException('Word not found'));
         });

@@ -32,11 +32,12 @@ class CacheService
         return "word:$id";
     }
 
-    public function generateWordsKey(int $perPage, int $page, ?string $search = null): string
+    public function generateWordsKey(int $perPage, int $page, ?string $search = null, ?string $category = null): string
     {
-        $searchPart = $search !== null ? ':search:' . md5($search) : '';
+        $searchPart   = $search !== null ? ':search:' . md5($search) : '';
+        $categoryPart = $category !== null ? ':category:' . $category : '';
 
-        return "words:perPage:$perPage:page:$page$searchPart";
+        return "words:perPage:$perPage:page:$page$searchPart$categoryPart";
     }
 
     public function generateTranslationKey(int $id): string

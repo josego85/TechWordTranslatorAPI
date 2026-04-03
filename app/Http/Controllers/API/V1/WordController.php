@@ -28,6 +28,7 @@ class WordController extends Controller
             perPage: $request->getPerPage(),
             page: $request->getPage(),
             search: $request->getSearch(),
+            category: $request->getCategory(),
         );
 
         return new WordCollection($paginator);
@@ -76,9 +77,11 @@ class WordController extends Controller
     {
         $id          = $request->getWordId();
         $englishWord = $request->string('english_word')->toString();
+        /** @var list<string>|null $categories */
+        $categories  = $request->input('categories');
 
         try {
-            $word = $this->wordService->update($id, $englishWord);
+            $word = $this->wordService->update($id, $englishWord, $categories);
 
             return response()->json(new WordResource($word));
         } catch (WordNotFoundException $e) {

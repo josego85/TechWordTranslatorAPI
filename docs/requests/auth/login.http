@@ -1,0 +1,29 @@
+# Login — obtain JWT token
+#
+# Prerequisite: user must be registered in the system.
+# Response: copy the "access_token" field and use it in subsequent requests.
+#
+# Recommended extension: REST Client (humao.rest-client) for VS Code.
+
+@baseUrl = http://localhost:8000
+
+###
+
+# @name login
+POST {{baseUrl}}/api/v1/user/login
+Content-Type: application/json
+
+{
+  "email": "dev@techword.local",
+  "password": "DevTechWord2026!"
+}
+
+# Expected response (200 OK):
+# {
+#   "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+#   "token_type": "bearer",
+#   "expires_in": 900
+# }
+#
+# Use the access_token in the Authorization header of protected requests:
+#   Authorization: Bearer {{login.response.body.access_token}}

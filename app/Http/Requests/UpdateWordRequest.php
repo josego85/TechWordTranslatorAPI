@@ -27,6 +27,8 @@ class UpdateWordRequest extends FormRequest
         return [
             'word' => ['required', 'integer', 'min:1', 'exists:words,id'],
             'english_word' => ['required', Rule::string()->max(255)],
+            'categories' => ['sometimes', 'array', 'max:3'],
+            'categories.*' => ['string', 'max:50'],
         ];
     }
 

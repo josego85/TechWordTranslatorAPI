@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Tests\Unit\Services;
 
 use App\Exceptions\WordNotFoundException;
+use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\WordRepositoryInterface;
 use App\Models\Word;
+use App\Services\ClassificationService;
 use App\Services\WordService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Mockery;
@@ -17,6 +19,10 @@ class WordServiceTest extends TestCase
 {
     protected MockInterface|WordRepositoryInterface $wordRepositoryMock;
 
+    protected MockInterface|ClassificationService $classifierMock;
+
+    protected MockInterface|CategoryRepositoryInterface $categoryRepositoryMock;
+
     protected WordService $wordService;
 
     #[\Override]
@@ -24,8 +30,15 @@ class WordServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->wordRepositoryMock = Mockery::mock(WordRepositoryInterface::class);
-        $this->wordService        = new WordService($this->wordRepositoryMock);
+        $this->wordRepositoryMock     = Mockery::mock(WordRepositoryInterface::class);
+        $this->classifierMock         = Mockery::mock(ClassificationService::class);
+        $this->categoryRepositoryMock = Mockery::mock(CategoryRepositoryInterface::class);
+
+        $this->wordService = new WordService(
+            $this->wordRepositoryMock,
+            $this->classifierMock,
+            $this->categoryRepositoryMock,
+        );
     }
 
     #[\Override]
@@ -37,36 +50,32 @@ class WordServiceTest extends TestCase
 
     public function test_get_all_returns_paginated_words(): void
     {
-        $perPage = 15;
-        $page    = 1;
-        $search  = null;
-
+        $perPage           = 15;
+        $page              = 1;
         $expectedPaginator = new LengthAwarePaginator([], 0, $perPage, $page);
 
         $this->wordRepositoryMock
             ->shouldReceive('getAll')
             ->once()
-            ->with($perPage, $page, $search)
+            ->with($perPage, $page, null, null)
             ->andReturn($expectedPaginator);
 
-        $result = $this->wordService->getAll($perPage, $page, $search);
+        $result = $this->wordService->getAll($perPage, $page);
 
-        $this->assertInstanceOf(LengthAwarePaginator::class, $result);
         $this->assertSame($expectedPaginator, $result);
     }
 
     public function test_get_all_with_search_returns_filtered_results(): void
     {
-        $perPage = 10;
-        $page    = 1;
-        $search  = 'test';
-
+        $perPage           = 10;
+        $page              = 1;
+        $search            = 'test';
         $expectedPaginator = new LengthAwarePaginator([], 0, $perPage, $page);
 
         $this->wordRepositoryMock
             ->shouldReceive('getAll')
             ->once()
-            ->with($perPage, $page, $search)
+            ->with($perPage, $page, $search, null)
             ->andReturn($expectedPaginator);
 
         $result = $this->wordService->getAll($perPage, $page, $search);
@@ -84,6 +93,16 @@ class WordServiceTest extends TestCase
             ->once()
             ->with(['english_word' => 'test'])
             ->andReturn($expectedWord);
+
+        // Classify returns [] — syncCategories returns early, no pivot interaction
+        $this->classifierMock
+            ->shouldReceive('classify')
+            ->once()
+            ->with('test')
+            ->andReturn([]);
+
+        $expectedWord->shouldReceive('getAttribute')->with('english_word')->andReturn('test');
+        $expectedWord->shouldReceive('load')->with('categories')->andReturnSelf();
 
         $result = $this->wordService->create($data);
 
@@ -118,7 +137,6 @@ class WordServiceTest extends TestCase
 
         $result = $this->wordService->get($wordId);
 
-        $this->assertInstanceOf(Word::class, $result);
         $this->assertSame($expectedWord, $result);
     }
 
@@ -145,17 +163,15 @@ class WordServiceTest extends TestCase
         $existingWord = Mockery::mock(Word::class);
         $updatedWord  = Mockery::mock(Word::class);
 
-        $this->wordRepositoryMock
-            ->shouldReceive('get')
-            ->once()
-            ->with($wordId)
-            ->andReturn($existingWord);
+        $existingWord->shouldReceive('getAttribute')->with('english_word')->andReturn('original');
 
-        $this->wordRepositoryMock
-            ->shouldReceive('update')
-            ->once()
-            ->with($existingWord, $englishWord)
-            ->andReturn($updatedWord);
+        $this->wordRepositoryMock->shouldReceive('get')->once()->with($wordId)->andReturn($existingWord);
+        $this->wordRepositoryMock->shouldReceive('update')->once()->with($existingWord, $englishWord)->andReturn($updatedWord);
+
+        // syncCategories calls $updatedWord->english_word then classify
+        $updatedWord->shouldReceive('getAttribute')->with('english_word')->andReturn($englishWord);
+        $this->classifierMock->shouldReceive('classify')->once()->with($englishWord)->andReturn([]);
+        $updatedWord->shouldReceive('load')->with('categories')->andReturnSelf();
 
         $result = $this->wordService->update($wordId, $englishWord);
 
@@ -164,19 +180,12 @@ class WordServiceTest extends TestCase
 
     public function test_update_word_throws_exception_when_not_found(): void
     {
-        $wordId      = 999;
-        $englishWord = 'updated';
-
-        $this->wordRepositoryMock
-            ->shouldReceive('get')
-            ->once()
-            ->with($wordId)
-            ->andReturn(null);
+        $this->wordRepositoryMock->shouldReceive('get')->once()->with(999)->andReturn(null);
 
         $this->expectException(WordNotFoundException::class);
-        $this->expectExceptionMessage("Word with id $wordId not found");
+        $this->expectExceptionMessage('Word with id 999 not found');
 
-        $this->wordService->update($wordId, $englishWord);
+        $this->wordService->update(999, 'updated');
     }
 
     public function test_update_word_throws_exception_on_repository_failure(): void
@@ -185,16 +194,10 @@ class WordServiceTest extends TestCase
         $englishWord  = 'updated';
         $existingWord = Mockery::mock(Word::class);
 
-        $this->wordRepositoryMock
-            ->shouldReceive('get')
-            ->once()
-            ->with($wordId)
-            ->andReturn($existingWord);
+        $existingWord->shouldReceive('getAttribute')->with('english_word')->andReturn('original');
 
-        $this->wordRepositoryMock
-            ->shouldReceive('update')
-            ->once()
-            ->andThrow(new \Exception('Database error'));
+        $this->wordRepositoryMock->shouldReceive('get')->once()->with($wordId)->andReturn($existingWord);
+        $this->wordRepositoryMock->shouldReceive('update')->once()->andThrow(new \Exception('Database error'));
 
         $this->expectException(WordNotFoundException::class);
         $this->expectExceptionMessage('Failed to update word');
@@ -207,37 +210,22 @@ class WordServiceTest extends TestCase
         $wordId       = 1;
         $existingWord = Mockery::mock(Word::class);
 
-        $this->wordRepositoryMock
-            ->shouldReceive('get')
-            ->once()
-            ->with($wordId)
-            ->andReturn($existingWord);
-
-        $this->wordRepositoryMock
-            ->shouldReceive('delete')
-            ->once()
-            ->with($existingWord)
-            ->andReturn(true);
+        $this->wordRepositoryMock->shouldReceive('get')->once()->with($wordId)->andReturn($existingWord);
+        $this->wordRepositoryMock->shouldReceive('delete')->once()->with($existingWord)->andReturn(true);
 
         $this->wordService->delete($wordId);
 
-        $this->assertTrue(true); // Assertion to confirm no exception was thrown
+        $this->assertTrue(true);
     }
 
     public function test_delete_word_throws_exception_when_not_found(): void
     {
-        $wordId = 999;
-
-        $this->wordRepositoryMock
-            ->shouldReceive('get')
-            ->once()
-            ->with($wordId)
-            ->andReturn(null);
+        $this->wordRepositoryMock->shouldReceive('get')->once()->with(999)->andReturn(null);
 
         $this->expectException(WordNotFoundException::class);
-        $this->expectExceptionMessage("Word with id $wordId not found");
+        $this->expectExceptionMessage('Word with id 999 not found');
 
-        $this->wordService->delete($wordId);
+        $this->wordService->delete(999);
     }
 
     public function test_delete_word_throws_exception_on_repository_failure(): void
@@ -245,16 +233,8 @@ class WordServiceTest extends TestCase
         $wordId       = 1;
         $existingWord = Mockery::mock(Word::class);
 
-        $this->wordRepositoryMock
-            ->shouldReceive('get')
-            ->once()
-            ->with($wordId)
-            ->andReturn($existingWord);
-
-        $this->wordRepositoryMock
-            ->shouldReceive('delete')
-            ->once()
-            ->andThrow(new \Exception('Database error'));
+        $this->wordRepositoryMock->shouldReceive('get')->once()->with($wordId)->andReturn($existingWord);
+        $this->wordRepositoryMock->shouldReceive('delete')->once()->andThrow(new \Exception('Database error'));
 
         $this->expectException(WordNotFoundException::class);
         $this->expectExceptionMessage('Error deleting word');

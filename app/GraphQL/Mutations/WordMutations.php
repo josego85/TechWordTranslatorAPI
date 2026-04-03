@@ -18,9 +18,13 @@ class WordMutations
 
     public function update(mixed $root, array $args): Word
     {
+        /** @var list<string>|null $categories */
+        $categories = $args['categories'] ?? null;
+
         return $this->service->update(
             (int) $args['id'],
             $args['english_word'],
+            $categories,
         );
     }
 
