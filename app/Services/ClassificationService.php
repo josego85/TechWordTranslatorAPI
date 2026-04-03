@@ -86,7 +86,7 @@ class ClassificationService
      */
     private function parseSlugs(string $raw): array
     {
-        $parts = array_map('trim', explode(',', strtolower(trim($raw))));
+        $parts = array_map(trim(...), explode(',', strtolower(trim($raw))));
 
         $valid = array_values(
             array_filter($parts, fn (string $s) => in_array($s, self::ALLOWED_SLUGS, true))

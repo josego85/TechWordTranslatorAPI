@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'dev@techword.local'],
             [
-                'name'     => 'Dev User',
+                'name' => 'Dev User',
                 'password' => Hash::make('DevTechWord2026!'),
             ]
         );
