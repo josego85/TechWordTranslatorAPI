@@ -22,6 +22,8 @@
 - ~~Add comprehensive docs for Nginx setup~~ (`docs/development/nginx.md`)
 - ~~Add comprehensive docs for Laravel Pint usage and configuration~~ (`docs/development/pint.md`)
 
+- ~~Automatic thematic classification of words via Ollama (LLM)~~ (ClassificationService + CategoryRepository + many-to-many `categories`/`word_category`, 13 slugs, filter by `?category=` — 208 tests, 92.21% coverage)
+
 ## Recommended Next Steps 🚀
 
 - Add Request validation for ISO 639-1 language codes
@@ -29,3 +31,5 @@
 - Unit tests for models and repositories
 - E2E tests for REST API endpoints
 - Performance benchmarks for search functionality
+- Add husky
+- Perfomance dockerfile dev app

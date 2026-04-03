@@ -29,6 +29,8 @@ class StoreWordRequest extends FormRequest
     {
         return [
             'english_word' => ['required', Rule::string()->max(255)],
+            'categories' => ['sometimes', 'array', 'max:3'],
+            'categories.*' => ['string', 'max:50'],
         ];
     }
 

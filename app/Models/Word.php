@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Word extends Model
@@ -49,6 +50,12 @@ class Word extends Model
         return $this->hasMany(Translation::class);
     }
 
+    /** @return BelongsToMany<Category, $this> */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'word_category');
+    }
+
     /**
      * Get translation for a specific language.
      */
@@ -71,16 +78,27 @@ class Word extends Model
     /**
      * Scope a query to search words by English word or translations.
      *
-     * @param  Builder $query
-     * @return Builder
+     * @param  Builder<self> $query
+     * @return Builder<self>
      */
-    protected function scopeSearch($query, string $search)
+    protected function scopeSearch(Builder $query, string $search): Builder
     {
-        return $query->where(function($q) use ($search) {
+        return $query->where(function(Builder $q) use ($search) {
             $q->where('english_word', 'LIKE', "%{$search}%")
-                ->orWhereHas('translations', function($translationQuery) use ($search) {
+                ->orWhereHas('translations', function(Builder $translationQuery) use ($search) {
                     $translationQuery->where('translation', 'LIKE', "%{$search}%");
                 });
         });
+    }
+
+    /**
+     * Scope a query to filter words by category slug (used by GraphQL @scope).
+     *
+     * @param  Builder<self> $query
+     * @return Builder<self>
+     */
+    protected function scopeFilterByCategory(Builder $query, string $category): Builder
+    {
+        return $query->whereHas('categories', fn (Builder $q) => $q->where('slug', $category));
     }
 }

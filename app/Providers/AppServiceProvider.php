@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\TranslationRepositoryInterface;
 use App\Interfaces\WordRepositoryInterface;
+use App\Models\Category;
 use App\Models\Translation;
 use App\Models\Word;
 use App\Observers\TranslationObserver;
 use App\Observers\WordObserver;
 use App\Repositories\CacheableTranslationRepository;
 use App\Repositories\CacheableWordRepository;
+use App\Repositories\CategoryRepository;
 use App\Repositories\TranslationRepository;
 use App\Repositories\WordRepository;
 use App\Services\CacheService;
@@ -26,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Bind CacheService as a singleton
-        $this->app->singleton(CacheService::class, fn ($app) => new CacheService);
+        $this->app->singleton(CacheService::class, fn () => new CacheService);
 
         // Bind WordRepositoryInterface with caching decorator
         $this->app->bind(WordRepositoryInterface::class, function($app) {
@@ -50,6 +53,10 @@ class AppServiceProvider extends ServiceProvider
                 $app->make(CacheService::class)
             );
         });
+
+        $this->app->bind(CategoryRepositoryInterface::class, fn ($app) => new CategoryRepository(
+            $app->make(Category::class)
+        ));
     }
 
     /**

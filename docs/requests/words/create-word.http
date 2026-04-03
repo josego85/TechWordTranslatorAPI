@@ -1,0 +1,54 @@
+# Create word with automatic category classification
+#
+# Prerequisite: run docs/requests/auth/login.http first and copy the token.
+#
+# Behaviour:
+#   - The "english_word" field is required.
+#   - The API automatically calls Ollama (llama3.2) to classify the word
+#     into 1-3 categories from the list: networking, databases, security, algorithms,
+#     data-structures, operating-systems, programming-languages, web, cloud,
+#     devops, hardware, artificial-intelligence, other.
+#   - If Ollama is unavailable, the word is saved without categories (does not fail).
+#   - The "categories" field is optional: if provided, skips automatic classification
+#     and uses the given categories instead (manual override).
+#
+# Recommended extension: REST Client (humao.rest-client) for VS Code.
+
+@baseUrl = http://localhost:8000
+@token   = <paste-access_token-from-login-response-here>
+
+###
+
+# Automatic classification (no "categories" in the body — Ollama classifies)
+POST {{baseUrl}}/api/v1/words
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "english_word": "firewall"
+}
+
+# Expected response (201 Created):
+# {
+#   "id": 1,
+#   "word": "firewall",
+#   "categories": [
+#     { "slug": "networking", "name": "Networking" },
+#     { "slug": "security",   "name": "Security" }
+#   ],
+#   "created_at": "2026-04-02T10:00:00.000000Z",
+#   "updated_at": "2026-04-02T10:00:00.000000Z",
+#   "translations": []
+# }
+
+###
+
+# Manual category override (skips the Ollama call)
+POST {{baseUrl}}/api/v1/words
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "english_word": "CPU",
+  "categories": ["hardware"]
+}

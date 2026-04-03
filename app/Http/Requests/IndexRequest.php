@@ -15,6 +15,7 @@ class IndexRequest extends FormRequest
             'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
             'page' => ['sometimes', 'integer', 'min:1'],
             'search' => ['sometimes', Rule::string()->min(1)->max(255)],
+            'category' => ['sometimes', Rule::string()->min(1)->max(50)],
         ];
     }
 
@@ -31,5 +32,10 @@ class IndexRequest extends FormRequest
     public function getSearch(): ?string
     {
         return $this->string('search')->toString() ?: null;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->string('category')->toString() ?: null;
     }
 }

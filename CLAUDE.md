@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-03-23 (Cache for Translation endpoints)
+Last updated: 2026-04-03 (Automatic thematic classification via Ollama + Prism)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-03-23 (Cache for Translation endpoints)
 **TechWordTranslatorAPI** is a RESTful API (+ GraphQL) for translating IT-world terms between English, Spanish, and German (extensible to any ISO 639-1 language). Built with Laravel 12, PHP 8.4, JWT authentication, and Redis cache.
 
 - **Repository:** github.com/josego85/TechWordTranslatorAPI
-- **Current version:** 1.16.0
+- **Current version:** 1.17.0 (1.18.0 in progress — branch `feature/auto-classification`)
 - **License:** MIT
 - **Main branch:** `main`
 
@@ -26,6 +26,8 @@ Last updated: 2026-03-23 (Cache for Translation endpoints)
 | Cache/Queue | Redis | 7.4.7 |
 | Authentication | JWT (php-open-source-saver/jwt-auth) | 2.9.0 |
 | GraphQL | Lighthouse (nuwave/lighthouse) | 6.65.0 |
+| LLM integration | prism-php/prism (Ollama provider) | — |
+| Local LLM | Ollama + llama3.2 (native host install) | — |
 | Web server | Nginx | 1.29.4 |
 | Node.js | Frontend build | 22.21.1 |
 | Containers | Docker + Docker Compose | — |
@@ -71,12 +73,12 @@ app/
 │   ├── Middleware/            # JWTMiddleware, SecurityHeaders
 │   ├── Requests/              # Form requests with validation + Policy authorization
 │   └── Resources/             # JSON:API resources (WordResource, TranslationResource)
-├── Interfaces/                # Contracts: WordRepositoryInterface, TranslationRepositoryInterface
-├── Models/                    # User, Word, Translation
+├── Interfaces/                # Contracts: WordRepositoryInterface, TranslationRepositoryInterface, CategoryRepositoryInterface
+├── Models/                    # User, Word, Translation, Category
 ├── Policies/                  # WordPolicy, TranslationPolicy — write authorization via Gate
 ├── Providers/                 # AuthServiceProvider — model→policy mappings registered here
-├── Repositories/              # WordRepository, TranslationRepository, CacheableWordRepository
-├── Services/                  # WordService, TranslationService, CacheService
+├── Repositories/              # WordRepository, TranslationRepository, CacheableWordRepository, CategoryRepository
+├── Services/                  # WordService, TranslationService, CacheService, ClassificationService
 ├── Support/Csp/               # ContentPolicy (Spatie CSP)
 └── Exceptions/                # WordNotFoundException, TranslationException
 
@@ -85,7 +87,7 @@ routes/
 └── web.php                    # Web routes
 
 database/
-├── migrations/                # 4 migrations (users, words, translations, refactor)
+├── migrations/                # 6 migrations (users, words, translations, refactor, categories, word_category pivot)
 ├── factories/
 └── seeders/
 
@@ -115,8 +117,8 @@ POST  /api/v1/user/logout     [jwt.verify]
 ### Words
 
 ```
-GET    /api/v1/words           Paginated, searchable via ?search=
-GET    /api/v1/words/{id}      With embedded translations
+GET    /api/v1/words           Paginated, searchable via ?search=, filterable via ?category=
+GET    /api/v1/words/{id}      With embedded translations and categories
 POST   /api/v1/words           [auth:api,sanctum] + WordPolicy::write
 PUT    /api/v1/words/{id}      [auth:api,sanctum] + WordPolicy::write
 DELETE /api/v1/words/{id}      [auth:api,sanctum] + WordPolicy::write
@@ -152,14 +154,21 @@ GET/POST /graphql              AttemptAuthentication (optional)
 ### Normalized schema (post-migration 2025_11_21)
 
 ```sql
-users:        id, name, email(unique), password, email_verified_at, remember_token, timestamps
-words:        id, english_word, timestamps
-translations: id, word_id(FK→words), language(5), translation(text), timestamps
-              UNIQUE KEY (word_id, language)
-              INDEX (language)
+users:         id, name, email(unique), password, email_verified_at, remember_token, timestamps
+words:         id, english_word, timestamps
+translations:  id, word_id(FK→words), language(5), translation(text), timestamps
+               UNIQUE KEY (word_id, language)
+               INDEX (language)
+categories:    id, slug(unique, 50), name(100), timestamps
+               13 predefined slugs (networking, databases, security, algorithms, data-structures,
+               operating-systems, programming-languages, web, cloud, devops, hardware,
+               artificial-intelligence, other)
+word_category: word_id(FK→words), category_id(FK→categories)
+               PRIMARY KEY (word_id, category_id) — pivot, no timestamps
 ```
 
 > The `translations` table is normalized: one row per language per word. Supports unlimited ISO 639-1 languages (not just `es`/`de`).
+> The `categories` / `word_category` tables implement a proper many-to-many — a word can belong to 1–3 categories.
 
 ### Existing migrations
 
@@ -167,6 +176,8 @@ translations: id, word_id(FK→words), language(5), translation(text), timestamp
 2. `2023_08_10_142806_create_words_table.php`
 3. `2023_08_10_152932_create_translations_table.php`
 4. `2025_11_21_131414_refactor_translations_table_to_normalized_structure.php`
+5. `{ts}_create_categories_table.php`
+6. `{ts}_create_word_category_table.php`
 
 ---
 
@@ -337,7 +348,7 @@ docker compose exec app composer test
 - **Throttling:** Disabled in `TestCase::setUp()`
 - **JWT Middleware:** Disabled in base `TestCase` (enabled in auth integration tests)
 
-### Coverage threshold: **74%** (enforced in CI — will fail if below)
+### Coverage threshold: **74%** (enforced in CI — currently 92.21%, 208 tests, 590 assertions)
 
 ### Test structure
 
@@ -346,14 +357,20 @@ tests/
 ├── Feature/               # HTTP integration tests
 │   ├── AuthApiTest.php
 │   ├── WordApiTest.php
-│   └── TranslationApiTest.php
+│   ├── TranslationApiTest.php
+│   ├── ServiceTokenApiTest.php
+│   └── GraphQL/           # WordGraphQLTest, TranslationGraphQLTest, MutationGraphQLTest
 └── Unit/
     ├── Models/
-    ├── Services/          # WordServiceTest, TranslationServiceTest, CacheServiceTest
+    ├── Services/          # WordServiceTest, TranslationServiceTest, CacheServiceTest, ClassificationServiceTest
+    ├── Repositories/      # CategoryRepositoryTest
     ├── Middleware/        # JWTMiddlewareTest, SecurityHeadersTest
+    ├── Policies/          # WordPolicyTest, TranslationPolicyTest
     ├── Requests/          # RegisterRequestTest, LoginRequestTest
     └── Resources/         # TranslationCollectionTest
 ```
+
+> `ClassificationServiceTest` uses `Prism::fake()` — no real Ollama connection needed in tests.
 
 ### Running specific tests
 
@@ -489,6 +506,11 @@ CORS_ALLOWED_ORIGINS="http://localhost:3000"  # Set to real domain in production
 # CSP
 CSP_ENABLED=true
 
+# Ollama — AI word classification (native host install, NOT Docker)
+# Install: curl -fsSL https://ollama.com/install.sh | sh && ollama pull llama3.2
+OLLAMA_URL=http://host.docker.internal:11434   # Mac/Windows; use http://172.17.0.1:11434 on Linux
+OLLAMA_MODEL=llama3.2
+
 # SonarQube (development)
 SONAR_TOKEN=
 ```
@@ -535,9 +557,10 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 - **Driver:** Redis (`predis/predis`)
 - **Default TTL:** 1440 minutes (24h)
 - **Key patterns:**
-  - `word:{id}` — single word
+  - `word:{id}` — single word (includes eager-loaded categories)
   - `words:perPage:{n}:page:{n}` — paginated list
   - `words:perPage:{n}:page:{n}:search:{hash}` — filtered list
+  - `words:perPage:{n}:page:{n}:category:{slug}` — category-filtered list
   - `translation:{id}` — single translation
   - `translations:perPage:{n}:page:{n}` — paginated list
 - **Invalidation:** on Word and Translation create/update/delete
@@ -554,6 +577,10 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 - Grafana monitoring
 - Swagger/OpenAPI documentation
 
+### Completed (2026-04-03)
+
+- ✅ Automatic thematic classification — `ClassificationService` (Prism + Ollama), `Category` model, `CategoryRepository`, `categories`/`word_category` tables, 13 slugs, `?category=` filter (REST + GraphQL), `categories[]` override in requests — 208 tests, 590 assertions, 92.21% line coverage → see `docs/tasks/auto-classification/`
+
 ### Completed (2026-03-25)
 
 - ✅ Docs for Xdebug, Nginx, Pint — `docs/development/xdebug.md`, `nginx.md`, `pint.md`; `docs/guides/graphql.md` updated with mutations, auth, cache, security
@@ -562,7 +589,7 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 
 - ✅ GraphQL integration — tests, security limits, cache (`@cache`), mutations (custom PHP resolvers → Services), Model Observers for audit logging — 196 tests, 566 assertions → see `docs/tasks/graphql-integration/`
 - ✅ Cache for Translation endpoints — `CacheableTranslationRepository` decorator
-- ✅ PHPUnit test coverage exceeded 74% (196 tests, 566 assertions)
+- ✅ PHPUnit test coverage exceeded 74% (208 tests, 590 assertions, 92.21%)
 
 ### Recommended Next Steps
 

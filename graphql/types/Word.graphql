@@ -1,6 +1,7 @@
 type Word {
     id: ID!
     english_word: String!
+    categories: [Category!]! @belongsToMany
     translations: [Translation!]! @hasMany
     created_at: DateTime!
     updated_at: DateTime!

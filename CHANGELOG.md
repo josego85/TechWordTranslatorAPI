@@ -5,6 +5,31 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- **classification**: Added automatic thematic classification of technical words via Ollama (llama3.2) using `prism-php/prism` — `ClassificationService` assigns 1–3 categories on word create/update; falls back gracefully (word saved without categories) if Ollama is unavailable
+- **classification**: Added `categories` table and `word_category` pivot (many-to-many) — 13 predefined slugs: `networking`, `databases`, `security`, `algorithms`, `data-structures`, `operating-systems`, `programming-languages`, `web`, `cloud`, `devops`, `hardware`, `artificial-intelligence`, `other`
+- **classification**: Added `categories: [String!]` optional override on `POST /api/v1/words` and `PUT /api/v1/words/{id}` — skips Ollama when provided
+- **classification**: Added `?category=` filter on `GET /api/v1/words` (REST) and `category: String @scope` on `words` GraphQL query
+- **seeders**: Added `CategorySeeder` (13 categories), `UserSeeder` (dev user `dev@techword.local`); `WordSeeder` updated with hardcoded categories for all 25 seed words
+- **docs**: Added `docs/requests/auth/login.http` and `docs/requests/words/create-word.http` — VS Code REST Client examples for login and word creation with auto/manual classification
+- **tests**: Added `ClassificationServiceTest` (6 tests), `CategoryRepositoryTest` (3 tests); updated `WordServiceTest` and `WordApiTest` — 208 tests, 590 assertions, 92.21% line coverage
+- **docs**: Added `docs/guides/classification.md` — full guide for auto-classification: how it works, Ollama setup (Linux/Mac), env vars, REST and GraphQL integration, graceful degradation table
+
+### Changed
+
+- **words**: `WordResource` now exposes `categories: [{slug, name}]` in all word responses (REST and GraphQL)
+- **cache**: `CacheService::generateWordsKey()` includes `category` segment to cache per-category filtered results
+- **docs**: Updated `README.md` — description, Core Features (classification + category filter), Additional Features, Quick Links
+- **docs**: Updated `docs/guides/rest.md` — `categories` field in all word responses, `?category=` query param, optional `categories[]` in create/update request body
+- **docs**: Updated `docs/guides/graphql.md` — `Category` type in schema, `categories { slug name }` in word queries and mutations, `category:` filter arg, `categories:` override arg in mutations
+- **docs**: Updated `docs/guides/setup.md` — optional Ollama installation section with env var instructions
+- **docs**: Updated `CLAUDE.md` — version, tech stack (Prism + Ollama), directory structure, DB schema (categories + word_category), cache key patterns, test structure, env vars, Open Tasks
+
+---
+
 ## [v1.17.0] - 2026-04-01
 
 ### Added
