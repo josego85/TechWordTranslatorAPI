@@ -33,7 +33,7 @@ class WordRepository implements WordRepositoryInterface
 
         match ($sort) {
             'alpha-desc' => $query->orderBy('english_word', 'desc'),
-            default      => $query->orderBy('english_word', 'asc'),
+            default => $query->orderBy('english_word', 'asc'),
         };
 
         return $query->paginate(perPage: $perPage, page: $page);
