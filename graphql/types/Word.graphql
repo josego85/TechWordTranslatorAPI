@@ -1,3 +1,8 @@
+enum WordSort {
+    ALPHA_ASC
+    ALPHA_DESC
+}
+
 type Word {
     id: ID!
     english_word: String!

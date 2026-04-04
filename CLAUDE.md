@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-04-03 (Automatic thematic classification via Ollama + Prism)
+Last updated: 2026-04-04 (Sort param on GET /api/v1/words)
 
 ---
 
@@ -117,7 +117,7 @@ POST  /api/v1/user/logout     [jwt.verify]
 ### Words
 
 ```
-GET    /api/v1/words           Paginated, searchable via ?search=, filterable via ?category=
+GET    /api/v1/words           Paginated; ?search=, ?category=, ?sort= (alpha-asc|alpha-desc, default: alpha-asc)
 GET    /api/v1/words/{id}      With embedded translations and categories
 POST   /api/v1/words           [auth:api,sanctum] + WordPolicy::write
 PUT    /api/v1/words/{id}      [auth:api,sanctum] + WordPolicy::write
@@ -348,7 +348,7 @@ docker compose exec app composer test
 - **Throttling:** Disabled in `TestCase::setUp()`
 - **JWT Middleware:** Disabled in base `TestCase` (enabled in auth integration tests)
 
-### Coverage threshold: **74%** (enforced in CI — currently 92.21%, 208 tests, 590 assertions)
+### Coverage threshold: **74%** (enforced in CI — currently 92.21%, 211 tests, 598 assertions)
 
 ### Test structure
 
@@ -561,6 +561,7 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
   - `words:perPage:{n}:page:{n}` — paginated list
   - `words:perPage:{n}:page:{n}:search:{hash}` — filtered list
   - `words:perPage:{n}:page:{n}:category:{slug}` — category-filtered list
+  - `words:perPage:{n}:page:{n}:sort:{alpha-asc|alpha-desc}` — sorted list (combinable with search/category)
   - `translation:{id}` — single translation
   - `translations:perPage:{n}:page:{n}` — paginated list
 - **Invalidation:** on Word and Translation create/update/delete
@@ -576,6 +577,11 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 - Opcache configuration
 - Grafana monitoring
 - Swagger/OpenAPI documentation
+
+### Completed (2026-04-04)
+
+- ✅ Alphabetical sort on `GET /api/v1/words` — `?sort=alpha-asc` (default) / `?sort=alpha-desc`; validated in `IndexRequest` (`Rule::in`), applied via `match` in `WordRepository::getAll()`; cache key includes `:sort:` segment
+- ✅ Sort on GraphQL `words` query — `WordSort` enum (`ALPHA_ASC` | `ALPHA_DESC`, default `ALPHA_ASC`), `scopeSortBy` on `Word` model wired via `@scope(name: "sortBy")`; 3 new tests — 211 tests, 598 assertions
 
 ### Completed (2026-04-03)
 

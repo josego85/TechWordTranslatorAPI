@@ -4,6 +4,7 @@ extend type Query {
         page: Int
         search: String @scope(name: "search")
         category: String @scope(name: "filterByCategory")
+        sort: WordSort = ALPHA_ASC @scope(name: "sortBy")
     ): [Word!]! @paginate(model: "App\\Models\\Word", defaultCount: 15) @cache(maxAge: 86400)
 
     word(id: ID! @whereKey): Word @find(model: "App\\Models\\Word") @cache(maxAge: 86400)

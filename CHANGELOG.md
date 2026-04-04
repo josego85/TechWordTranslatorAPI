@@ -10,6 +10,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 ### Added
 
 - **words**: Added `?sort=` query param on `GET /api/v1/words` — accepts `alpha-asc` (default) or `alpha-desc`; validated via `Rule::in` in `IndexRequest`
+- **graphql**: Added `WordSort` enum (`ALPHA_ASC` | `ALPHA_DESC`) and `sort` arg on `words` GraphQL query — wired via `scopeSortBy` on `Word` model with `@scope(name: "sortBy")`; default `ALPHA_ASC`; 3 new tests — 211 tests, 598 assertions
 - **classification**: Added automatic thematic classification of technical words via Ollama (llama3.2) using `prism-php/prism` — `ClassificationService` assigns 1–3 categories on word create/update; falls back gracefully (word saved without categories) if Ollama is unavailable
 - **classification**: Added `categories` table and `word_category` pivot (many-to-many) — 13 predefined slugs: `networking`, `databases`, `security`, `algorithms`, `data-structures`, `operating-systems`, `programming-languages`, `web`, `cloud`, `devops`, `hardware`, `artificial-intelligence`, `other`
 - **classification**: Added `categories: [String!]` optional override on `POST /api/v1/words` and `PUT /api/v1/words/{id}` — skips Ollama when provided

@@ -101,4 +101,19 @@ class Word extends Model
     {
         return $query->whereHas('categories', fn (Builder $q) => $q->where('slug', $category));
     }
+
+    /**
+     * Scope a query to sort words alphabetically (used by GraphQL @scope).
+     * Values match the WordSort enum: ALPHA_ASC | ALPHA_DESC.
+     *
+     * @param  Builder<self> $query
+     * @return Builder<self>
+     */
+    protected function scopeSortBy(Builder $query, string $sort): Builder
+    {
+        return match ($sort) {
+            'ALPHA_DESC' => $query->orderBy('english_word', 'desc'),
+            default => $query->orderBy('english_word', 'asc'),
+        };
+    }
 }

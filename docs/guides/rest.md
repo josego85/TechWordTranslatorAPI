@@ -9,6 +9,7 @@ All list endpoints use **offset-based pagination**:
   - `page` (integer, default: 1)
   - `search` (string, optional)
   - `category` (string, optional) - Filter by category slug (e.g. `networking`, `security`)
+  - `sort` (string, optional, default: `alpha-asc`) - Sort order: `alpha-asc` or `alpha-desc`
 
 - **Response Format**
   ```json
@@ -86,10 +87,11 @@ GET /api/v1/words
 - `page` (integer, optional, default: 1) - Page number
 - `search` (string, optional) - Search in english_word and all translations
 - `category` (string, optional) - Filter by category slug (e.g. `networking`, `security`)
+- `sort` (string, optional, default: `alpha-asc`) - `alpha-asc` (A→Z) or `alpha-desc` (Z→A)
 
 **Examples**
 
-Get all words (first page):
+Get all words (first page, alphabetical):
 ```bash
 curl http://localhost:8000/api/v1/words
 ```
@@ -107,6 +109,16 @@ curl "http://localhost:8000/api/v1/words?per_page=20&page=2"
 Filter by category:
 ```bash
 curl "http://localhost:8000/api/v1/words?category=networking"
+```
+
+Sort Z→A:
+```bash
+curl "http://localhost:8000/api/v1/words?sort=alpha-desc"
+```
+
+Combined — networking terms, Z→A:
+```bash
+curl "http://localhost:8000/api/v1/words?category=networking&sort=alpha-desc"
 ```
 
 ### Get single word
@@ -235,6 +247,19 @@ The `search` parameter searches across:
 - "Authentication" (English word)
 - "Autenticación" (Spanish translation)
 - "Authentifizierung" (German translation)
+
+---
+
+## Sorting
+
+The `sort` parameter controls the order of results. It applies to `english_word` alphabetically.
+
+| Value | Description |
+|---|---|
+| `alpha-asc` | A → Z (default) |
+| `alpha-desc` | Z → A |
+
+Sorting is combinable with `search`, `category`, and `per_page`/`page`.
 
 ---
 
