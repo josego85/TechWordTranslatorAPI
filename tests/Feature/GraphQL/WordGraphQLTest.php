@@ -261,4 +261,62 @@ class WordGraphQLTest extends TestCase
         $this->assertCount(0, DB::getQueryLog());
         DB::disableQueryLog();
     }
+
+    public function test_can_query_words_sorted_alpha_asc(): void
+    {
+        Word::factory()->create(['english_word' => 'Zebra']);
+        Word::factory()->create(['english_word' => 'Alpha']);
+        Word::factory()->create(['english_word' => 'Microservice']);
+
+        $response = $this->graphQL(/** @lang GraphQL */ '
+            {
+                words(first: 10, sort: ALPHA_ASC) {
+                    data { english_word }
+                }
+            }
+        ');
+
+        $words = $response->json('data.words.data');
+        $this->assertEquals('Alpha', $words[0]['english_word']);
+        $this->assertEquals('Microservice', $words[1]['english_word']);
+        $this->assertEquals('Zebra', $words[2]['english_word']);
+    }
+
+    public function test_can_query_words_sorted_alpha_desc(): void
+    {
+        Word::factory()->create(['english_word' => 'Zebra']);
+        Word::factory()->create(['english_word' => 'Alpha']);
+        Word::factory()->create(['english_word' => 'Microservice']);
+
+        $response = $this->graphQL(/** @lang GraphQL */ '
+            {
+                words(first: 10, sort: ALPHA_DESC) {
+                    data { english_word }
+                }
+            }
+        ');
+
+        $words = $response->json('data.words.data');
+        $this->assertEquals('Zebra', $words[0]['english_word']);
+        $this->assertEquals('Microservice', $words[1]['english_word']);
+        $this->assertEquals('Alpha', $words[2]['english_word']);
+    }
+
+    public function test_words_default_sort_is_alpha_asc(): void
+    {
+        Word::factory()->create(['english_word' => 'Zebra']);
+        Word::factory()->create(['english_word' => 'Alpha']);
+
+        $response = $this->graphQL(/** @lang GraphQL */ '
+            {
+                words(first: 10) {
+                    data { english_word }
+                }
+            }
+        ');
+
+        $words = $response->json('data.words.data');
+        $this->assertEquals('Alpha', $words[0]['english_word']);
+        $this->assertEquals('Zebra', $words[1]['english_word']);
+    }
 }

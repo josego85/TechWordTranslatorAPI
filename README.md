@@ -41,6 +41,7 @@
 - English ↔ Spanish ↔ German translations  
 - Automatic thematic classification via local LLM (Ollama + `prism-php/prism`) — 13 categories, many-to-many  
 - Filter words by category (`?category=networking`)  
+- Alphabetical sorting (`?sort=alpha-asc` / `?sort=alpha-desc`)  
 - Cursor-based pagination support  
 - JWT-based authentication  
 - Dockerized environment for easy setup  

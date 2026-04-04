@@ -12,7 +12,7 @@ class WordRepository implements WordRepositoryInterface
 {
     public function __construct(protected Word $model) {}
 
-    public function getAll(int $perPage, int $page, ?string $search = null, ?string $category = null): LengthAwarePaginator
+    public function getAll(int $perPage, int $page, ?string $search = null, ?string $category = null, ?string $sort = null): LengthAwarePaginator
     {
         $query = $this->model
             ->select(['id', 'english_word', 'created_at', 'updated_at'])
@@ -31,7 +31,12 @@ class WordRepository implements WordRepositoryInterface
             $query->whereHas('categories', fn ($q) => $q->where('slug', $category));
         }
 
-        return $query->orderBy('id')->paginate(perPage: $perPage, page: $page);
+        match ($sort) {
+            'alpha-desc' => $query->orderBy('english_word', 'desc'),
+            default => $query->orderBy('english_word', 'asc'),
+        };
+
+        return $query->paginate(perPage: $perPage, page: $page);
     }
 
     public function get(int $id): ?Word

@@ -57,7 +57,7 @@ class WordServiceTest extends TestCase
         $this->wordRepositoryMock
             ->shouldReceive('getAll')
             ->once()
-            ->with($perPage, $page, null, null)
+            ->with($perPage, $page, null, null, null)
             ->andReturn($expectedPaginator);
 
         $result = $this->wordService->getAll($perPage, $page);
@@ -75,7 +75,7 @@ class WordServiceTest extends TestCase
         $this->wordRepositoryMock
             ->shouldReceive('getAll')
             ->once()
-            ->with($perPage, $page, $search, null)
+            ->with($perPage, $page, $search, null, null)
             ->andReturn($expectedPaginator);
 
         $result = $this->wordService->getAll($perPage, $page, $search);

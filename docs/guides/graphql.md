@@ -51,6 +51,22 @@ query {
   }
 }
 
+# Sort A→Z (default) or Z→A
+query {
+  words(first: 15, sort: ALPHA_ASC) {
+    data { id english_word }
+    paginatorInfo { currentPage total }
+  }
+}
+
+# Combined — networking terms, Z→A
+query {
+  words(first: 15, category: "networking", sort: ALPHA_DESC) {
+    data { id english_word categories { slug } }
+    paginatorInfo { currentPage total }
+  }
+}
+
 # Single word
 query {
   word(id: 1) {
@@ -63,6 +79,8 @@ query {
 ```
 
 `first` max: 100. Default: 15. Search matches English word and all translations.
+
+`sort` accepts the `WordSort` enum: `ALPHA_ASC` (A→Z, default) or `ALPHA_DESC` (Z→A). Combinable with `search` and `category`.
 
 ### Translations
 

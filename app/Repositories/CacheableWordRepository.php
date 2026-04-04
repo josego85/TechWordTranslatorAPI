@@ -16,13 +16,13 @@ class CacheableWordRepository implements WordRepositoryInterface
         private readonly CacheService $cache
     ) {}
 
-    public function getAll(int $perPage, int $page, ?string $search = null, ?string $category = null): LengthAwarePaginator
+    public function getAll(int $perPage, int $page, ?string $search = null, ?string $category = null, ?string $sort = null): LengthAwarePaginator
     {
-        $key = $this->cache->generateWordsKey($perPage, $page, $search, $category);
+        $key = $this->cache->generateWordsKey($perPage, $page, $search, $category, $sort);
 
         return $this->cache->remember(
             $key,
-            fn () => $this->repository->getAll($perPage, $page, $search, $category)
+            fn () => $this->repository->getAll($perPage, $page, $search, $category, $sort)
         );
     }
 
