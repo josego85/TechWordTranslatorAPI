@@ -9,6 +9,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Added
 
+- **words**: Added `?sort=` query param on `GET /api/v1/words` — accepts `alpha-asc` (default) or `alpha-desc`; validated via `Rule::in` in `IndexRequest`
 - **classification**: Added automatic thematic classification of technical words via Ollama (llama3.2) using `prism-php/prism` — `ClassificationService` assigns 1–3 categories on word create/update; falls back gracefully (word saved without categories) if Ollama is unavailable
 - **classification**: Added `categories` table and `word_category` pivot (many-to-many) — 13 predefined slugs: `networking`, `databases`, `security`, `algorithms`, `data-structures`, `operating-systems`, `programming-languages`, `web`, `cloud`, `devops`, `hardware`, `artificial-intelligence`, `other`
 - **classification**: Added `categories: [String!]` optional override on `POST /api/v1/words` and `PUT /api/v1/words/{id}` — skips Ollama when provided
@@ -20,6 +21,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Changed
 
+- **words**: `WordRepository::getAll()` — replaced `orderBy('id')` with alphabetical sort on `english_word`; direction controlled by `?sort=` param
+- **cache**: `CacheService::generateWordsKey()` — includes `:sort:` segment so each sort order has its own cache entry
 - **ci**: Upgraded `codecov/codecov-action` from v5 to v6 — aligns with latest Codecov upload API ([#86](https://github.com/josego85/TechWordTranslatorAPI/pull/86))
 - **ci**: Upgraded `github/codeql-action` from 4.34.1 to 4.35.1 — includes upstream CodeQL CLI improvements and bug fixes ([#84](https://github.com/josego85/TechWordTranslatorAPI/pull/84))
 - **words**: `WordResource` now exposes `categories: [{slug, name}]` in all word responses (REST and GraphQL)

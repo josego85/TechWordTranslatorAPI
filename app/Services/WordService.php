@@ -18,9 +18,9 @@ class WordService
         private readonly CategoryRepositoryInterface $categoryRepository,
     ) {}
 
-    public function getAll(int $perPage, int $page, ?string $search = null, ?string $category = null): LengthAwarePaginator
+    public function getAll(int $perPage, int $page, ?string $search = null, ?string $category = null, ?string $sort = null): LengthAwarePaginator
     {
-        return $this->repository->getAll($perPage, $page, $search, $category);
+        return $this->repository->getAll($perPage, $page, $search, $category, $sort);
     }
 
     /**

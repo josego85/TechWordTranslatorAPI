@@ -9,7 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface WordRepositoryInterface
 {
-    public function getAll(int $perPage, int $page, ?string $search = null, ?string $category = null): LengthAwarePaginator;
+    public function getAll(int $perPage, int $page, ?string $search = null, ?string $category = null, ?string $sort = null): LengthAwarePaginator;
 
     public function get(int $id): ?Word;
 

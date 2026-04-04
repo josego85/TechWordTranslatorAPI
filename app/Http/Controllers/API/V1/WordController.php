@@ -29,6 +29,7 @@ class WordController extends Controller
             page: $request->getPage(),
             search: $request->getSearch(),
             category: $request->getCategory(),
+            sort: $request->getSort(),
         );
 
         return new WordCollection($paginator);

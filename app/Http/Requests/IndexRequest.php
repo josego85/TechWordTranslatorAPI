@@ -16,6 +16,7 @@ class IndexRequest extends FormRequest
             'page' => ['sometimes', 'integer', 'min:1'],
             'search' => ['sometimes', Rule::string()->min(1)->max(255)],
             'category' => ['sometimes', Rule::string()->min(1)->max(50)],
+            'sort' => ['sometimes', Rule::in(['alpha-asc', 'alpha-desc'])],
         ];
     }
 
@@ -37,5 +38,10 @@ class IndexRequest extends FormRequest
     public function getCategory(): ?string
     {
         return $this->string('category')->toString() ?: null;
+    }
+
+    public function getSort(): ?string
+    {
+        return $this->string('sort')->toString() ?: null;
     }
 }
