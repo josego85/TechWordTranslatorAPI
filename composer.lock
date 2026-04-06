@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0731309392a45030d1c8e582578a5aa",
+    "content-hash": "2a6c9534a93bcb45fcf50f9e52760cfc",
     "packages": [
         {
             "name": "brick/math",
@@ -2836,30 +2836,30 @@
         },
         {
             "name": "nuwave/lighthouse",
-            "version": "v6.65.0",
+            "version": "v6.66.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nuwave/lighthouse.git",
-                "reference": "994038374ed1f94d33a0a4af272040fc07c6639b"
+                "reference": "70dfc72804c83870c092bb14f4e38d1eafd97cc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nuwave/lighthouse/zipball/994038374ed1f94d33a0a4af272040fc07c6639b",
-                "reference": "994038374ed1f94d33a0a4af272040fc07c6639b",
+                "url": "https://api.github.com/repos/nuwave/lighthouse/zipball/70dfc72804c83870c092bb14f4e38d1eafd97cc1",
+                "reference": "70dfc72804c83870c092bb14f4e38d1eafd97cc1",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "haydenpierce/class-finder": "^0.4 || ^0.5",
-                "illuminate/auth": "^9 || ^10 || ^11 || ^12",
-                "illuminate/bus": "^9 || ^10 || ^11 || ^12",
-                "illuminate/contracts": "^9 || ^10 || ^11 || ^12",
-                "illuminate/http": "^9 || ^10 || ^11 || ^12",
-                "illuminate/pagination": "^9 || ^10 || ^11 || ^12",
-                "illuminate/queue": "^9 || ^10 || ^11 || ^12",
-                "illuminate/routing": "^9 || ^10 || ^11 || ^12",
-                "illuminate/support": "^9 || ^10 || ^11 || ^12",
-                "illuminate/validation": "^9 || ^10 || ^11 || ^12",
+                "illuminate/auth": "^9 || ^10 || ^11 || ^12 || ^13",
+                "illuminate/bus": "^9 || ^10 || ^11 || ^12 || ^13",
+                "illuminate/contracts": "^9 || ^10 || ^11 || ^12 || ^13",
+                "illuminate/http": "^9 || ^10 || ^11 || ^12 || ^13",
+                "illuminate/pagination": "^9 || ^10 || ^11 || ^12 || ^13",
+                "illuminate/queue": "^9 || ^10 || ^11 || ^12 || ^13",
+                "illuminate/routing": "^9 || ^10 || ^11 || ^12 || ^13",
+                "illuminate/support": "^9 || ^10 || ^11 || ^12 || ^13",
+                "illuminate/validation": "^9 || ^10 || ^11 || ^12 || ^13",
                 "laragraph/utils": "^1.5 || ^2",
                 "php": "^8",
                 "thecodingmachine/safe": "^1 || ^2 || ^3",
@@ -2870,9 +2870,9 @@
                 "bensampo/laravel-enum": "^5 || ^6",
                 "ergebnis/composer-normalize": "^2.2.2",
                 "fakerphp/faker": "^1.21",
-                "google/protobuf": "^3.21",
+                "google/protobuf": "^3.21 || ^4.33.6",
                 "larastan/larastan": "^2.9.14 || ^3.0.4",
-                "laravel/framework": "^9 || ^10 || ^11 || ^12",
+                "laravel/framework": "^9 || ^10 || ^11 || ^12 || ^13",
                 "laravel/legacy-factories": "^1.1.1",
                 "laravel/pennant": "^1",
                 "laravel/scout": "^8 || ^9 || ^10",
@@ -2881,7 +2881,7 @@
                 "mll-lab/php-cs-fixer-config": "^5",
                 "mockery/mockery": "^1.5",
                 "nesbot/carbon": "^2.62.1 || ^3.8.4",
-                "orchestra/testbench": "^7.50 || ^8.32 || ^9.10 || ^10.1",
+                "orchestra/testbench": "^7.50 || ^8.32 || ^9.10 || ^10.1 || ^11",
                 "phpbench/phpbench": "^1.2.6",
                 "phpstan/extension-installer": "^1",
                 "phpstan/phpstan": "^1.12.18 || ^2",
@@ -2962,7 +2962,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2026-02-14T15:42:43+00:00"
+            "time": "2026-03-30T07:31:53+00:00"
         },
         {
             "name": "php-open-source-saver/jwt-auth",
