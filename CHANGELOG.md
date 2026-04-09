@@ -5,7 +5,7 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
-## [Unreleased]
+## [v1.18.0] - 2026-04-09
 
 ### Added
 
@@ -22,6 +22,8 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ### Changed
 
+- **deps**: Upgraded `laravel-vite-plugin` from 2.0.0 to 3.0.1 — required for Vite 8 compatibility
+- **deps**: Upgraded `axios` from 1.13.6 to 1.15.0
 - **words**: `WordRepository::getAll()` — replaced `orderBy('id')` with alphabetical sort on `english_word`; direction controlled by `?sort=` param
 - **cache**: `CacheService::generateWordsKey()` — includes `:sort:` segment so each sort order has its own cache entry
 - **ci**: Upgraded `codecov/codecov-action` from v5 to v6 — aligns with latest Codecov upload API ([#86](https://github.com/josego85/TechWordTranslatorAPI/pull/86))
@@ -33,6 +35,10 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 - **docs**: Updated `docs/guides/graphql.md` — `Category` type in schema, `categories { slug name }` in word queries and mutations, `category:` filter arg, `categories:` override arg in mutations
 - **docs**: Updated `docs/guides/setup.md` — optional Ollama installation section with env var instructions
 - **docs**: Updated `CLAUDE.md` — version, tech stack (Prism + Ollama), directory structure, DB schema (categories + word_category), cache key patterns, test structure, env vars, Open Tasks
+
+### Security
+
+- **deps**: Upgraded `vite` from 7.1.12 to 8.0.8 — fixes 3 high-severity CVEs: path traversal in optimized deps `.map` handling ([GHSA-4w7w-66w2-5vf9](https://github.com/advisories/GHSA-4w7w-66w2-5vf9)), `server.fs.deny` bypass ([GHSA-v2wj-q39q-566r](https://github.com/advisories/GHSA-v2wj-q39q-566r)), arbitrary file read via dev server WebSocket ([GHSA-p9ff-h696-f583](https://github.com/advisories/GHSA-p9ff-h696-f583))
 
 ---
 
