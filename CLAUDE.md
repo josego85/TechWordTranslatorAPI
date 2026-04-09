@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-04-04 (Sort param on GET /api/v1/words)
+Last updated: 2026-04-09 (Vite 8 security upgrade)
 
 ---
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-04 (Sort param on GET /api/v1/words)
 **TechWordTranslatorAPI** is a RESTful API (+ GraphQL) for translating IT-world terms between English, Spanish, and German (extensible to any ISO 639-1 language). Built with Laravel 12, PHP 8.4, JWT authentication, and Redis cache.
 
 - **Repository:** github.com/josego85/TechWordTranslatorAPI
-- **Current version:** 1.17.0 (1.18.0 in progress — branch `feature/auto-classification`)
-- **License:** MIT
+- **Current version:** 1.18.0
+- **License:** GPL-3.0-or-later
 - **Main branch:** `main`
 
 ---
@@ -30,6 +30,8 @@ Last updated: 2026-04-04 (Sort param on GET /api/v1/words)
 | Local LLM | Ollama + llama3.2 (native host install) | — |
 | Web server | Nginx | 1.29.4 |
 | Node.js | Frontend build | 22.21.1 |
+| Vite | Frontend bundler | 8.0.8 |
+| laravel-vite-plugin | Vite/Laravel bridge | 3.0.1 |
 | Containers | Docker + Docker Compose | — |
 
 ---
