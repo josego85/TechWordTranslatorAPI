@@ -5,6 +5,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.18.1] - 2026-04-15
+
+### Security
+
+- **deps**: Upgrade `webonyx/graphql-php` 15.31.4 → 15.31.5 — patches medium-severity DoS via quadratic complexity in `OverlappingFieldsCanBeMerged` validation (GHSA-68jq-c3rv-pcrr)
+
+---
+
 ## [v1.18.0] - 2026-04-09
 
 ### Added
