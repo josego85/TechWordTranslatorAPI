@@ -5,6 +5,15 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.18.1] - 2026-04-15
+
+### Security
+
+- **graphql**: Upgraded `webonyx/graphql-php` 15.31.4 → 15.31.5 — patches [GHSA-68jq-c3rv-pcrr](https://github.com/advisories/GHSA-68jq-c3rv-pcrr), a medium-severity Denial of Service caused by quadratic algorithmic complexity in the `OverlappingFieldsCanBeMerged` validation rule; a crafted GraphQL query could trigger excessive CPU usage
+- **npm**: Upgraded `follow-redirects` to 1.16.0 — patches [GHSA-r4q5-vmmm-2653](https://github.com/advisories/GHSA-r4q5-vmmm-2653), a moderate-severity information disclosure where custom `Authorization` headers were leaked to cross-domain redirect targets
+
+---
+
 ## [v1.18.0] - 2026-04-09
 
 ### Added
