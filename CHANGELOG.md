@@ -5,6 +5,22 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [v1.18.2] - 2026-05-09
+
+### Security
+
+- **graphql**: Upgraded `webonyx/graphql-php` 15.31.5 → 15.32.3 — patches two high-severity DoS vulnerabilities:
+  - Quadratic validation cost in `OverlappingFieldsCanBeMerged` via inline fragments — a crafted GraphQL document using inline fragment spreads could trigger O(n²) validation time before the query complexity limit is applied ([GHSA-fc86-6rv6-2jpm](https://github.com/advisories/GHSA-fc86-6rv6-2jpm)); fixed in `>=15.32.2`
+  - Unbounded recursion in the parser — a crafted deeply nested input causes a stack overflow and kills the PHP-FPM worker ([GHSA-r7cg-qjjm-xhqq](https://github.com/advisories/GHSA-r7cg-qjjm-xhqq)); fixed in `>=15.32.3`
+- **npm**: Upgraded `axios` 1.15.0 → 1.16.0 — patches 13 high-severity CVEs across four vulnerability classes:
+  - **Prototype pollution gadgets** — authentication bypass via `validateStatus` merge strategy ([GHSA-w9j2-pvgh-6h63](https://github.com/advisories/GHSA-w9j2-pvgh-6h63)), invisible JSON response tampering via `parseReviver` ([GHSA-3w6x-2g7m-8v23](https://github.com/advisories/GHSA-3w6x-2g7m-8v23)), credential injection and request hijacking via HTTP adapter read-side gadgets ([GHSA-q8qp-cvcw-x6jj](https://github.com/advisories/GHSA-q8qp-cvcw-x6jj)), header injection ([GHSA-6chq-wfr3-2hj9](https://github.com/advisories/GHSA-6chq-wfr3-2hj9)), XSRF token cross-origin leakage via `withXSRFToken` boolean coercion ([GHSA-xx6v-rp6x-q39c](https://github.com/advisories/GHSA-xx6v-rp6x-q39c)), response tampering / data exfiltration / request hijacking gadget suite ([GHSA-pf86-5x62-jrwf](https://github.com/advisories/GHSA-pf86-5x62-jrwf))
+  - **Injection** — null byte injection via reverse-encoding in `AxiosURLSearchParams` ([GHSA-xhjh-pmcv-23jw](https://github.com/advisories/GHSA-xhjh-pmcv-23jw)), CRLF injection in `multipart/form-data` body via unsanitized `blob.type` in `formDataToStream` ([GHSA-445q-vr5w-6q77](https://github.com/advisories/GHSA-445q-vr5w-6q77))
+  - **SSRF / proxy bypass** — incomplete `NO_PROXY` fix bypassed via RFC 1122 loopback subnet `127.0.0.0/8` ([GHSA-pmwg-cvhr-8vh7](https://github.com/advisories/GHSA-pmwg-cvhr-8vh7)), `no_proxy` bypass via IP alias allowing SSRF ([GHSA-m7pr-hjqh-92cm](https://github.com/advisories/GHSA-m7pr-hjqh-92cm))
+  - **Limit bypass / DoS** — HTTP adapter streamed uploads bypass `maxBodyLength` when `maxRedirects: 0` ([GHSA-5c9x-8gcm-mpgx](https://github.com/advisories/GHSA-5c9x-8gcm-mpgx)), streamed responses bypass `maxContentLength` ([GHSA-vf2m-468p-8v99](https://github.com/advisories/GHSA-vf2m-468p-8v99)), unbounded recursion in `toFormData` causes DoS via deeply nested request data ([GHSA-62hf-57xw-28j9](https://github.com/advisories/GHSA-62hf-57xw-28j9))
+- **npm**: Upgraded `postcss` 8.5.9 → 8.5.14 (transitive dependency via `vite`) — patches [GHSA-qx2v-qp2m-jg93](https://github.com/advisories/GHSA-qx2v-qp2m-jg93), a moderate-severity XSS where unescaped `</style>` tags in CSS stringify output could allow script injection in downstream HTML consumers
+
+---
+
 ## [v1.18.1] - 2026-04-15
 
 ### Security
