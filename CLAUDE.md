@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-04-15 (webonyx/graphql-php DoS patch)
+Last updated: 2026-05-09 (v1.18.2 security patch — graphql-php 15.32.3, axios 1.16.0, postcss 8.5.14)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-04-15 (webonyx/graphql-php DoS patch)
 **TechWordTranslatorAPI** is a RESTful API (+ GraphQL) for translating IT-world terms between English, Spanish, and German (extensible to any ISO 639-1 language). Built with Laravel 12, PHP 8.4, JWT authentication, and Redis cache.
 
 - **Repository:** github.com/josego85/TechWordTranslatorAPI
-- **Current version:** 1.18.1
+- **Current version:** 1.18.2
 - **License:** GPL-3.0-or-later
 - **Main branch:** `main`
 
@@ -579,6 +579,10 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 - Opcache configuration
 - Grafana monitoring
 - Swagger/OpenAPI documentation
+
+### Completed (2026-05-09)
+
+- ✅ Security patch v1.18.2 — `webonyx/graphql-php` 15.31.5 → 15.32.3 (2 high DoS CVEs: GHSA-fc86-6rv6-2jpm inline-fragment quadratic validation, GHSA-r7cg-qjjm-xhqq parser stack overflow); `axios` 1.15.0 → 1.16.0 (13 high CVEs — prototype pollution, injection, SSRF, limit bypass); `postcss` 8.5.9 → 8.5.14 via vite (GHSA-qx2v-qp2m-jg93 XSS); `composer audit` + `npm audit` clean; 211 tests, 598 assertions green
 
 ### Completed (2026-04-15)
 
