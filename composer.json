@@ -12,7 +12,7 @@
         "guzzlehttp/guzzle": "7.10.0",
         "laravel/framework": "12.55.1",
         "laravel/sanctum": "v4.3.1",
-        "laravel/tinker": "v2.11.1",
+        "laravel/tinker": "v3.0.2",
         "nuwave/lighthouse": "6.65.0",
         "php-open-source-saver/jwt-auth": "2.9.0",
         "predis/predis": "3.4.2",
