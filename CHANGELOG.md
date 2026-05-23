@@ -5,7 +5,11 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
-## [Unreleased]
+## [1.18.2] - 2026-05-23
+
+### Changed
+
+- **ci**: Upgraded `actions/cache` 5.0.4 → 5.0.5, `github/codeql-action` 4.35.1 → 4.35.4, `actions/upload-artifact` 7.0.0 → 7.0.1 — routine GitHub Actions SHA-pinned bumps ([#99](https://github.com/josego85/TechWordTranslatorAPI/pull/99))
 
 ### Security
 

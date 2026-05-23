@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-05-23 (5 Symfony CVEs identified — symfony/* 7.4.8 → 7.4.12 pending)
+Last updated: 2026-05-23 (v1.18.2 — GitHub Actions bumps; 5 Symfony CVEs pending)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-05-23 (5 Symfony CVEs identified — symfony/* 7.4.8 → 7.4.
 **TechWordTranslatorAPI** is a RESTful API (+ GraphQL) for translating IT-world terms between English, Spanish, and German (extensible to any ISO 639-1 language). Built with Laravel 12, PHP 8.4, JWT authentication, and Redis cache.
 
 - **Repository:** github.com/josego85/TechWordTranslatorAPI
-- **Current version:** 1.18.1
+- **Current version:** 1.18.2
 - **License:** GPL-3.0-or-later
 - **Main branch:** `main`
 
@@ -580,6 +580,10 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 - Opcache configuration
 - Grafana monitoring
 - Swagger/OpenAPI documentation
+
+### Completed (2026-05-23)
+
+- ✅ v1.18.2 — GitHub Actions bumps: `actions/cache` 5.0.4 → 5.0.5, `github/codeql-action` 4.35.1 → 4.35.4, `actions/upload-artifact` 7.0.0 → 7.0.1 ([#99](https://github.com/josego85/TechWordTranslatorAPI/pull/99))
 
 ### Completed (2026-05-09)
 
