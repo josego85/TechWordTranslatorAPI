@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-05-09 (v1.18.1 security patch — graphql-php 15.32.3, axios 1.16.0, postcss 8.5.14, follow-redirects 1.16.0)
+Last updated: 2026-05-23 (5 Symfony CVEs identified — symfony/* 7.4.8 → 7.4.12 pending)
 
 ---
 
@@ -576,6 +576,7 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 
 ### In Progress
 
+- **Security**: Upgrade `symfony/*` 7.4.8 → 7.4.12 — 5 CVEs (CVE-2026-45075, CVE-2026-45068, CVE-2026-45067, CVE-2026-45070, CVE-2026-45065); no direct code changes needed, pure version bump; run `composer update symfony/http-kernel symfony/mailer symfony/mime symfony/routing --with-all-dependencies` then `composer audit` + `composer ci`
 - Opcache configuration
 - Grafana monitoring
 - Swagger/OpenAPI documentation

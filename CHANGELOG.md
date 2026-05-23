@@ -5,6 +5,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [Unreleased]
+
+### Security
+
+- **symfony** 7.4.8 → 7.4.12 (pending): 5 CVEs in 4 transitive packages — `http-kernel` CVE-2026-45075 (HEAD bypasses `#[IsGranted]` / `#[IsSignatureValid]` / `#[IsCsrfTokenValid]` attribute auth filters), `mailer` CVE-2026-45068 (argument injection in `SendmailTransport` via dash-prefixed recipient), `mime` CVE-2026-45067 + CVE-2026-45070 (SMTP/header injection via CRLF in `Mime\Address` and non-token chars in MIME param names), `routing` CVE-2026-45065 (unanchored regex alternation in `UrlGenerator` enables off-site `//host` URL injection); direct exposure is zero for this project (no Symfony attribute auth, no email stack, no route regex constraints) — upgrade required for supply chain hygiene
+
+---
+
 ## [v1.18.1] - 2026-05-09
 
 ### Security
