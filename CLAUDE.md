@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-05-23 (v1.18.2 — GitHub Actions bumps; 5 Symfony CVEs pending)
+Last updated: 2026-05-30 (v1.18.3 in progress — 8 Symfony CVEs pending upgrade to 7.4.13)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-05-23 (v1.18.2 — GitHub Actions bumps; 5 Symfony CVEs pendi
 **TechWordTranslatorAPI** is a RESTful API (+ GraphQL) for translating IT-world terms between English, Spanish, and German (extensible to any ISO 639-1 language). Built with Laravel 12, PHP 8.4, JWT authentication, and Redis cache.
 
 - **Repository:** github.com/josego85/TechWordTranslatorAPI
-- **Current version:** 1.18.2
+- **Current version:** 1.18.3 (in progress)
 - **License:** GPL-3.0-or-later
 - **Main branch:** `main`
 
@@ -576,7 +576,7 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 
 ### In Progress
 
-- **Security**: Upgrade `symfony/*` 7.4.8 → 7.4.12 — 5 CVEs (CVE-2026-45075, CVE-2026-45068, CVE-2026-45067, CVE-2026-45070, CVE-2026-45065); no direct code changes needed, pure version bump; run `composer update symfony/http-kernel symfony/mailer symfony/mime symfony/routing --with-all-dependencies` then `composer audit` + `composer ci`
+- **Security v1.18.3**: Upgrade `symfony/*` 7.4.x → 7.4.13 + `symfony/polyfill-intl-idn` 1.37.0 → 1.38.1 — 8 CVEs total (original 5: CVE-2026-45075/45068/45067/45070/45065; new 3 reported 2026-05-26: CVE-2026-48736 http-foundation SSRF/IpUtils IPv6 transition bypass, CVE-2026-46644 polyfill-intl-idn IDN insecure equivalence low, CVE-2026-48784 routing UrlGenerator dot-segment collapse); no code changes needed, pure version bump; run `composer update symfony/http-foundation symfony/routing symfony/polyfill-intl-idn symfony/console symfony/error-handler symfony/finder symfony/process symfony/uid symfony/var-dumper --with-all-dependencies` then `composer audit` + `composer ci`
 - Opcache configuration
 - Grafana monitoring
 - Swagger/OpenAPI documentation
