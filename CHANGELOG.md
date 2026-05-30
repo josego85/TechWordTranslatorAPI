@@ -5,6 +5,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [1.18.3] - 2026-05-30
+
+### Security
+
+- **symfony** 7.4.x → 7.4.13 + **polyfill-intl-idn** 1.37.0 → 1.38.1 (pending): 3 new CVEs reported 2026-05-26 — `http-foundation` CVE-2026-48736 (PKSA-y6py-qpv1-h52p, `IpUtils::PRIVATE_SUBNETS` omits IPv6 transition forms 6to4/NAT64/Teredo/IPv4-compat → SSRF bypass in `NoPrivateNetworkHttpClient`; project doesn't instantiate that client, but `IpUtils::checkIp` is called by Laravel for trusted-proxy/rate-limit IP resolution, so IPv6 bypass remains a concern), `polyfill-intl-idn` CVE-2026-46644 (PKSA-dwsq-ppd2-mb1x, low — xn-- Punycode payload decoding to ASCII-only creates insecure IDN equivalence; consumed by `symfony/mime` `IdnAddressEncoder` but project uses SMTP transport, not HTTP/IDN email addresses), `routing` CVE-2026-48784 (PKSA-bf7t-jnpz-492k — `UrlGenerator` dot-segment encoding skips every other `../` or `./` → RFC 3986 normalization collapses URL off-route; project uses `route()` helper for parameter extraction only, no dot-segment URL generation); **no code changes required** — pure `composer update symfony/http-foundation symfony/routing symfony/polyfill-intl-idn --with-all-dependencies`; upgrades all remaining symfony/* 7.4.8 packages (console, error-handler, finder, process, uid, var-dumper) to 7.4.13 as well; supersedes the pending 7.4.12 upgrade
+
+---
+
 ## [1.18.2] - 2026-05-23
 
 ### Changed
