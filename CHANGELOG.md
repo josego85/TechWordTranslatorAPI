@@ -5,6 +5,14 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [1.18.4] - 2026-06-04
+
+### Security
+
+- **laravel/framework** 12.55.1 → 12.61.1 — CVE-2026-48019 ([GHSA-5vg9-5847-vvmq](https://github.com/laravel/framework/security/advisories/GHSA-5vg9-5847-vvmq)): CRLF injection in the default `email` validation rule; no application code changes required. Side-effect: `symfony/http-kernel` + `symfony/mime` → 7.4.13, closes all 8 Symfony CVEs pending since v1.18.3
+
+---
+
 ## [1.18.3] - 2026-05-30
 
 ### Security

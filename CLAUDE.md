@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-05-30 (v1.18.3 in progress — 8 Symfony CVEs pending upgrade to 7.4.13)
+Last updated: 2026-06-04 (v1.18.4 released — laravel/framework 12.61.1 + CVE-2026-48019 patched)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-05-30 (v1.18.3 in progress — 8 Symfony CVEs pending upgrade
 **TechWordTranslatorAPI** is a RESTful API (+ GraphQL) for translating IT-world terms between English, Spanish, and German (extensible to any ISO 639-1 language). Built with Laravel 12, PHP 8.4, JWT authentication, and Redis cache.
 
 - **Repository:** github.com/josego85/TechWordTranslatorAPI
-- **Current version:** 1.18.3 (in progress)
+- **Current version:** 1.18.4
 - **License:** GPL-3.0-or-later
 - **Main branch:** `main`
 
@@ -20,7 +20,7 @@ Last updated: 2026-05-30 (v1.18.3 in progress — 8 Symfony CVEs pending upgrade
 
 | Layer | Technology | Version |
 |-------|-----------|---------|
-| Framework | Laravel | 12.55.1 |
+| Framework | Laravel | 12.61.1 |
 | Language | PHP | ^8.4 |
 | Database | MySQL | 8.4.7 |
 | Cache/Queue | Redis | 7.4.7 |
@@ -576,10 +576,13 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 
 ### In Progress
 
-- **Security v1.18.3**: Upgrade `symfony/*` 7.4.x → 7.4.13 + `symfony/polyfill-intl-idn` 1.37.0 → 1.38.1 — 8 CVEs total (original 5: CVE-2026-45075/45068/45067/45070/45065; new 3 reported 2026-05-26: CVE-2026-48736 http-foundation SSRF/IpUtils IPv6 transition bypass, CVE-2026-46644 polyfill-intl-idn IDN insecure equivalence low, CVE-2026-48784 routing UrlGenerator dot-segment collapse); no code changes needed, pure version bump; run `composer update symfony/http-foundation symfony/routing symfony/polyfill-intl-idn symfony/console symfony/error-handler symfony/finder symfony/process symfony/uid symfony/var-dumper --with-all-dependencies` then `composer audit` + `composer ci`
 - Opcache configuration
 - Grafana monitoring
 - Swagger/OpenAPI documentation
+
+### Completed (2026-06-04)
+
+- ✅ Security patch v1.18.4 — `laravel/framework` 12.55.1 → 12.61.1 (CVE-2026-48019 CRLF injection in default email rule GHSA-5vg9-5847-vvmq); side-effect: `symfony/http-kernel` + `symfony/mime` → 7.4.13 closing all 8 pending Symfony CVEs; `composer audit` clean; 211 tests, 598 assertions green — no code changes required
 
 ### Completed (2026-05-23)
 
