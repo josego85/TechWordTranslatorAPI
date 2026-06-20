@@ -5,6 +5,17 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [1.18.5] - 2026-06-20
+
+### Security
+
+- **guzzlehttp/guzzle** 7.10.0 → 7.12.1 — CVE-2026-55767 ([GHSA-cwxw-98qj-8qjx](https://github.com/guzzle/guzzle/security/advisories/GHSA-cwxw-98qj-8qjx)): dot-only cookie domains matched all hosts; CVE-2026-55568 ([GHSA-wpwq-4j6v-78m3](https://github.com/guzzle/guzzle/security/advisories/GHSA-wpwq-4j6v-78m3)): HTTPS proxy silently downgraded to cleartext; no application code changes required
+- **guzzlehttp/psr7** 2.11.0 → 2.12.1 — CVE-2026-55766 ([GHSA-vm85-hxw5-5432](https://github.com/guzzle/psr7/security/advisories/GHSA-vm85-hxw5-5432)): CRLF injection in HTTP start-line serialization; no application code changes required
+- **vite** 8.0.8 → 8.0.16 — [GHSA-v6wh-96g9-6wx3](https://github.com/advisories/GHSA-v6wh-96g9-6wx3): NTLMv2 hash disclosure via UNC path handling; [GHSA-fx2h-pf6j-xcff](https://github.com/advisories/GHSA-fx2h-pf6j-xcff): `server.fs.deny` bypass on Windows alternate paths; both Windows-only, zero production exposure (Linux/Docker)
+- **form-data** 4.0.5 → 4.0.6 (transitive via axios) — [GHSA-hmw2-7cc7-3qxx](https://github.com/advisories/GHSA-hmw2-7cc7-3qxx): CRLF injection via unescaped multipart field names and filenames; pinned via `overrides` in `package.json`
+
+---
+
 ## [1.18.4] - 2026-06-04
 
 ### Security
