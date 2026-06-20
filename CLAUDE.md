@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-06-04 (v1.18.4 released — laravel/framework 12.61.1 + CVE-2026-48019 patched)
+Last updated: 2026-06-20 (v1.18.5 released — guzzle 7.12.1 + psr7 2.12.1 + vite 8.0.16 + form-data 4.0.6)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-06-04 (v1.18.4 released — laravel/framework 12.61.1 + CVE-2
 **TechWordTranslatorAPI** is a RESTful API (+ GraphQL) for translating IT-world terms between English, Spanish, and German (extensible to any ISO 639-1 language). Built with Laravel 12, PHP 8.4, JWT authentication, and Redis cache.
 
 - **Repository:** github.com/josego85/TechWordTranslatorAPI
-- **Current version:** 1.18.4
+- **Current version:** 1.18.5
 - **License:** GPL-3.0-or-later
 - **Main branch:** `main`
 
@@ -30,7 +30,7 @@ Last updated: 2026-06-04 (v1.18.4 released — laravel/framework 12.61.1 + CVE-2
 | Local LLM | Ollama + llama3.2 (native host install) | — |
 | Web server | Nginx | 1.29.4 |
 | Node.js | Frontend build | 22.21.1 |
-| Vite | Frontend bundler | 8.0.8 |
+| Vite | Frontend bundler | 8.0.16 |
 | laravel-vite-plugin | Vite/Laravel bridge | 3.0.1 |
 | Containers | Docker + Docker Compose | — |
 
@@ -579,6 +579,10 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 - Opcache configuration
 - Grafana monitoring
 - Swagger/OpenAPI documentation
+
+### Completed (2026-06-20)
+
+- ✅ Security patch v1.18.5 — `guzzlehttp/guzzle` 7.10.0 → 7.12.1 (CVE-2026-55767, CVE-2026-55568); `guzzlehttp/psr7` 2.11.0 → 2.12.1 (CVE-2026-55766); `vite` 8.0.8 → 8.0.16 (GHSA-v6wh-96g9-6wx3, GHSA-fx2h-pf6j-xcff); `form-data` 4.0.5 → 4.0.6 via `overrides` (GHSA-hmw2-7cc7-3qxx); `composer audit` + `npm audit` clean; 211 tests, 598 assertions green — no code changes required
 
 ### Completed (2026-06-04)
 
