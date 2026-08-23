@@ -5,6 +5,19 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html) 
 
 ---
 
+## [1.18.6] - 2026-08-23
+
+### Security
+
+- **guzzlehttp/guzzle** 7.12.1 → 7.15.3 — 7 CVEs incl. high-severity noncanonical host bypass ([GHSA-v5mv-p594-2x33](https://github.com/advisories/GHSA-v5mv-p594-2x33)); no application code changes required
+- **guzzlehttp/psr7** 2.12.1 → 2.13.0 — CVE-2026-59882 ([GHSA-c2w2-prh8-qm98](https://github.com/advisories/GHSA-c2w2-prh8-qm98)): host confusion via weak URI host validation; required by guzzle 7.15.3's `^2.13` constraint
+- **league/commonmark** 2.8.2 → 2.10.0 (transitive via `laravel/framework`) — high-severity quadratic-time DoS ([GHSA-2q4p-g7hv-5rgv](https://github.com/advisories/GHSA-2q4p-g7hv-5rgv)) plus 4 other DoS advisories
+- **axios** 1.16.0 → 1.19.0 — 10 high-severity CVEs (DoS via recursion, `maxBodyLength` bypass, prototype pollution, NO_PROXY/proxy bypass); pinned exact version, required a manual bump
+- **postcss** 8.5.15 → 8.5.26 + **nanoid** 3.3.14 → 3.3.18 (transitive via `vite`) — sourcemap path traversal and infinite-loop DoS advisories
+- `composer audit` + `npm audit` clean; 211 tests, 598 assertions green
+
+---
+
 ## [1.18.5] - 2026-06-20
 
 ### Security

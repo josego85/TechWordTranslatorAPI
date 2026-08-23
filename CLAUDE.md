@@ -1,7 +1,7 @@
 # CLAUDE.md — TechWordTranslatorAPI
 
 Reference guide for Claude Code when working on this project.
-Last updated: 2026-06-20 (v1.18.5 released — guzzle 7.12.1 + psr7 2.12.1 + vite 8.0.16 + form-data 4.0.6)
+Last updated: 2026-08-23 (v1.18.6 released — guzzle 7.15.3 + psr7 2.13.0 + league/commonmark 2.10.0 + axios 1.19.0 + postcss 8.5.26 + nanoid 3.3.18)
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-06-20 (v1.18.5 released — guzzle 7.12.1 + psr7 2.12.1 + vit
 **TechWordTranslatorAPI** is a RESTful API (+ GraphQL) for translating IT-world terms between English, Spanish, and German (extensible to any ISO 639-1 language). Built with Laravel 12, PHP 8.4, JWT authentication, and Redis cache.
 
 - **Repository:** github.com/josego85/TechWordTranslatorAPI
-- **Current version:** 1.18.5
+- **Current version:** 1.18.6
 - **License:** GPL-3.0-or-later
 - **Main branch:** `main`
 
@@ -579,6 +579,10 @@ Tests:        Class + Test             (WordApiTest, WordServiceTest)
 - Opcache configuration
 - Grafana monitoring
 - Swagger/OpenAPI documentation
+
+### Completed (2026-08-23)
+
+- ✅ Security patch v1.18.6 — `guzzlehttp/guzzle` 7.12.1 → 7.15.3 (CVE-2026-69246 high, CVE-2026-69245, CVE-2026-67354, CVE-2026-67355, CVE-2026-67353, CVE-2026-59883, CVE-2026-67339); `guzzlehttp/psr7` 2.12.1 → 2.13.0 (CVE-2026-59882); `league/commonmark` 2.8.2 → 2.10.0, transitive via `laravel/framework` (CVE-2026-71488 high, CVE-2026-71478, plus 4 unassigned DoS advisories — nested XML, colliding heading slugs, duplicate footnotes, adjacent inline attribute blocks); guzzle 7.15.3 required bumping psr7 constraint to `^2.13` (was pinned `2.12.1`, incompatible with guzzle's new `^2.13` requirement); `axios` 1.16.0 → 1.19.0 (10 high CVEs — DoS via recursion, maxBodyLength bypass, prototype pollution, NO_PROXY bypass, proxy leak via interceptor cloning); `postcss` 8.5.15 → 8.5.26 + `nanoid` 3.3.14 → 3.3.18, transitive via `vite` (postcss sourcemap path traversal GHSA-fxqj-rqcc-2cmp/GHSA-r28c-9q8g-f849; nanoid infinite loop GHSA-28wg-ghj8-5hjv/GHSA-2v37-7h3g-55p8); `composer audit` + `npm audit` clean; 211 tests, 598 assertions, PHPStan level 5 clean, Pint clean — no code changes required; vendor/ was root-owned from Docker builds, ran `composer update` via `docker compose exec app` instead of the host; `npm run build` untestable locally — host Node 18.19.1 is below vite 8's minimum (^20.19 || >=22.12), documented Node 22.21.1 not installed on this host
 
 ### Completed (2026-06-20)
 
